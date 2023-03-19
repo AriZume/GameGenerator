@@ -7,3 +7,11 @@ kai evala sthn main thn synarthsh pou kanei input ta onomatakai ta swzei se mia 
 Etzer- In class Player removed giveNumOfPlayers, it's unnecessary since we have GameCreation.givePlayers()
 
 kapadokos- create manual class and insert manual in 5 case in main change the exit to 6 option from 5
+
+kapadokos-  for runtime public static void WiningCondision() {
+        for (Player c : listOfPlayers){
+            if (c.getPosition() >= GameCreation.giveTiles()-1){
+                System.out.println("you win!! :"+ c.getName());
+            }
+
+        }
