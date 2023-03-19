@@ -23,11 +23,7 @@ public class Main {
             case 2:
                 GameCreation.getGameDetails();
                 CreateBoard.GenerateBoard();
-                /*
-                CreatePlayers.generateRandomNames();
-                Player.printName();
-                Player.printPosition();
-                */
+                Player.giveNamesToPlayers();
                 break;
 
             case 3:
