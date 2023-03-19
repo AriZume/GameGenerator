@@ -22,7 +22,7 @@ public class Main {
 
             case 2:
                 GameCreation.getGameDetails();
-                CreateBoard.GenerateBoard();
+                CreateBoard.generateBoard();
                 Player.giveNamesToPlayers();
                 break;
 
