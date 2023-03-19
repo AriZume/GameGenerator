@@ -3,19 +3,18 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Player {
-    public static int giveNumOfPlayers() {
-        return GameCreation.givePlayers();
-    }
 
     private String name;
     private int position;
 
-    public Player(String name) {
+    public Player(String name)
+    {
         this.name = name;
         this.position = 0; //Always starts from 0
     }
 
-    public String toString() {
+    public String toString()
+    {
         return "Name: " + name + ", Position: " + position;
     }
 
@@ -29,7 +28,8 @@ public class Player {
         return name;
     }
 
-    public int getPosition() {
+    public int getPosition()
+    {
         return position;
     }
 
@@ -43,7 +43,8 @@ public class Player {
         System.out.println(name);
     }
 
-    public void printPosition() {
+    public void printPosition()
+    {
         System.out.println(position);
     }
 
