@@ -3,25 +3,19 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Player {
-    Player()
-    {
-        name = " ";
-        position = 0;
-    }
-
-
     public String name;
-    private int position;
+    public int position;
 
     public Player(String name) {
         this.name = name;
         this.position = 0; //Always starts from 0
     }
 
+    /*
     public String toString() {
         return "Name: " + name + ", Position: " + position;
     }
-
+     */
     public void setName(String newName) {
         name = newName;
 

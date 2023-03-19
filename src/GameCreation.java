@@ -40,6 +40,8 @@ public class GameCreation {
         getPlayers = players;
         getDice = dice;
     }
+
+
 }
 
 //TODO: FUNCTION THAT BRINGS THE ELEMENTS FROM TILES PLAYERS ETC.
