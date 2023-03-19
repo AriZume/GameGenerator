@@ -22,7 +22,7 @@ public class Main {
 
             case 2:
                 GameCreation.getGameDetails();
-                CreateBoard.generateBoard();
+                CreateBoard.GenerateBoard();
                 Player.giveNamesToPlayers();
                 break;
 
@@ -47,7 +47,8 @@ public class Main {
                 System.out.println("Tiles: " + GameCreation.giveTiles() + "\nPlayers: " + GameCreation.givePlayers() + "\nDice: " + GameCreation.giveDice());
                 break;
             case 5:
-                ManualofGameGenerator.ShowManual();
+                ManualOfGameGenerator.ShowManual();
+                break;
             default:
                 //
                 System.out.println("Option not valid!");
