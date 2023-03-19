@@ -2,6 +2,7 @@ import java.util.Random;
 public class CreateDice {
     static int total=0;
     public static void diceRandomizer(int numberOfDice){
+        total=0;
         Random ranNum = new Random();
         for (int i = 0; i < numberOfDice; i++) {
             int randomNumber = ranNum.nextInt(6) + 1;

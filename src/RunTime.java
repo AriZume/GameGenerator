@@ -26,19 +26,22 @@ public class RunTime{
                 inGameMenuOption(playerOption);
 
                 int playerRoll = CreateDice.returnNumberOfDice();
-
-                c.setPosition(playerRoll + c.getPosition());
-                boardTiles.set(c.getPosition(), "1");
-                // Clears previous Position
                 int previousIndex = 0;
-                if(c.getPosition() > playerRoll)
-                {
-                    previousIndex = c.getPosition() - playerRoll;
-                }else
-                {
-                    previousIndex = playerRoll - c.getPosition();
+                if((boardTiles.size() - 1) - c.getPosition() <= playerRoll){
+                    System.out.println(c.getName()+ " Won the game!");
+                    boardTiles.set(boardTiles.size() - 1,"1");
+                    c.setPosition(playerRoll + c.getPosition());
+                    // Clears previous Position
+                    previousIndex=rollCheck(c.getPosition(),playerRoll);
+                    boardTiles.set(previousIndex, "0");
                 }
-                boardTiles.set(previousIndex, "0");
+                else {
+                    c.setPosition(playerRoll + c.getPosition());
+                    boardTiles.set(c.getPosition(), "1");
+                    // Clears previous Position
+                    previousIndex=rollCheck(c.getPosition(),playerRoll);
+                    boardTiles.set(previousIndex, "0");
+                }
             }
         }
     }
@@ -55,6 +58,16 @@ public class RunTime{
                 break;
         }
 
+    }
+    private static int rollCheck(int currentPosition, int plrRoll)
+    {
+        if(currentPosition > plrRoll)
+        {
+            return currentPosition - plrRoll;
+        }else
+        {
+            return plrRoll - currentPosition;
+        }
     }
 
 }
