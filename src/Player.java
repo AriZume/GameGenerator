@@ -10,7 +10,7 @@ public class Player {
     }
 
 
-    private String name;
+    public String name;
     private int position;
 
     public Player(String name) {

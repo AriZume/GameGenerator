@@ -14,7 +14,7 @@ public class GameCreation {
         }
         System.out.print("Input number of players: ");
          getPlayers = input.nextInt();
-        while(getPlayers>1 /*|| getPlayers>4*/){ //TODO: set the limit at 2
+        while(getPlayers>1 /*|| getPlayers>4 */){ //TODO: set the limit at 2
             System.out.print("The number of players should be bigger than two!\n Insert number of players: ");
             getPlayers = input.nextInt();
         }

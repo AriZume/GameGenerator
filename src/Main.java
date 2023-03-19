@@ -17,6 +17,7 @@ public class Main {
         switch(input)
         {
             case 1:
+                RunTime.movement();
                 System.out.println("The game WOWOOOWOWOWOW");
                 break;
 
