@@ -3,3 +3,5 @@
 D00M- eftiaksa tous players, me position kai names, (o xrhsths plhktrologei ta onomata) , diegrapsa thn CreatePlayers
 kai evala sthn main thn synarthsh pou kanei input ta onomatakai ta swzei se mia lista me object
  (Kai na yparxei lista pou gemizei objects)
+
+Etzer- In class Player removed giveNumOfPlayers, it's unnecessary since we have GameCreation.givePlayers()
