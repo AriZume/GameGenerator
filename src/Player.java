@@ -3,7 +3,14 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Player {
-       private String name;
+    Player()
+    {
+        name = " ";
+        position = 0;
+    }
+
+
+    private String name;
     private int position;
 
     public Player(String name) {
@@ -43,7 +50,7 @@ public class Player {
         System.out.println(position);
     }
 
-     static List<Player> listOfPlayers = new ArrayList<>();
+    static List<Player> listOfPlayers = new ArrayList<>();
 
     public static void giveNamesToPlayers() {
         Scanner sc = new Scanner(System.in);
@@ -55,12 +62,18 @@ public class Player {
         }
 
     }
-    public static void showPlayerList(){
+
+    public static List getPlayerList() {
+        return listOfPlayers;
+    }
+
+    public static void showPlayerList() {
         System.out.println("=======CURRENT PLAYERS=======");
         int counter = 1;
         for (Player c : listOfPlayers) {
-            System.out.println("Player" +counter+ ": " + c.getName());
+            System.out.println("Player" + counter + ": " + c.getName());
             counter++;
+
         }
     }
 }
