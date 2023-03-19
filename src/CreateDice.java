@@ -11,6 +11,8 @@ public class CreateDice {
         if(numberOfDice==2){
             System.out.println("Total: " + total);
         }
+
+
     }
     public static int returnNumberOfDice(){
         return total;
