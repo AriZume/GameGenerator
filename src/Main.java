@@ -2,13 +2,13 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("\tMENU\t\n1. Start Game\n2. Design Game\n3. Save-Load Game\n4. Show Details\n5. Exit");
+        System.out.println("\tMENU\t\n1. Start Game\n2. Design Game\n3. Save-Load Game\n4. Show Details\n5. Manual for this Program\n6. Exit");
         Scanner input = new Scanner(System.in);
         int option = input.nextInt();
-        while (option != 5)
+        while (option != 6)
         {
             menuOptions(option);
-            System.out.println("\tMENU\t\n1. Start Game\n2. Design Game\n3. Save-Load Game\n4. Show Details\n5. Exit");
+            System.out.println("\tMENU\t\n1. Start Game\n2. Design Game\n3. Save-Load Game\n4. Show Details\n5. Manual for this Program\n6. Exit");
             option = input.nextInt();
         }
     }
@@ -46,6 +46,8 @@ public class Main {
             case 4:
                 System.out.println("Tiles: " + GameCreation.giveTiles() + "\nPlayers: " + GameCreation.givePlayers() + "\nDice: " + GameCreation.giveDice());
                 break;
+            case 5:
+                ManualofGameGenerator.ShowManual();
             default:
                 //
                 System.out.println("Option not valid!");

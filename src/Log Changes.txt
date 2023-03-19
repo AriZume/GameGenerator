@@ -5,3 +5,5 @@ kai evala sthn main thn synarthsh pou kanei input ta onomatakai ta swzei se mia 
  (Kai na yparxei lista pou gemizei objects)
 
 Etzer- In class Player removed giveNumOfPlayers, it's unnecessary since we have GameCreation.givePlayers()
+
+kapadokos- create manual class and insert manual in 5 case in main change the exit to 6 option from 5
