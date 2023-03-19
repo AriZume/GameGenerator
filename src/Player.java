@@ -3,12 +3,16 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Player {
-    public String name;
-    public int position;
+    private String name;
+    private int position;
+    private int prevPos;
+    private int playerTag;
 
     public Player(String name) {
         this.name = name;
         this.position = 0; //Always starts from 0
+        this.prevPos = 0;
+        this.playerTag = 0;
     }
 
     /*
@@ -43,9 +47,26 @@ public class Player {
     public void printPosition() {
         System.out.println(position);
     }
-
+    public void setPrevPos(int newPrevPos)
+    {
+        prevPos = newPrevPos;
+    }
+    public int getPrevPos()
+    {
+        return prevPos;
+    }
+    public void setPlayerTag(int newPlayerTag)
+    {
+        playerTag = newPlayerTag;
+    }
+    public int getPlayerTag()
+    {
+        return playerTag;
+    }
     static List<Player> listOfPlayers = new ArrayList<>();
-
+    public static List getPlayerList() {
+        return listOfPlayers;
+    }
     public static void giveNamesToPlayers() {
         Scanner sc = new Scanner(System.in);
         for (int i = 1; i < GameCreation.givePlayers() + 1; i++) {
@@ -56,16 +77,12 @@ public class Player {
         }
 
     }
-
-    public static List getPlayerList() {
-        return listOfPlayers;
-    }
-
     public static void showPlayerList() {
         System.out.println("=======CURRENT PLAYERS=======");
         int counter = 1;
         for (Player c : listOfPlayers) {
             System.out.println("Player" + counter + ": " + c.getName());
+            c.setPlayerTag(counter);
             counter++;
 
         }

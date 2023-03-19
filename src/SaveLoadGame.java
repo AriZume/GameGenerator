@@ -49,8 +49,6 @@ public class SaveLoadGame {
             System.out.println("An error occurred.");
             e.printStackTrace();
         }
-
-
         GameCreation.loadDetails(info.get(0), info.get(1), info.get(2));
     }
 }
