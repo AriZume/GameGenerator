@@ -21,5 +21,14 @@ public class Main {
             }
             currentPlayers.add(new Player(name));
         }
+
+        System.out.println("Current Players: ");
+        for(Player currentPlayer : currentPlayers)
+        {
+            String name = currentPlayer.getName();
+            int playerPos = currentPlayer.getCurrentPosition();
+            System.out.println(name);
+            System.out.println(playerPos);
+        }
     }
 }

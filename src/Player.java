@@ -14,6 +14,15 @@ public class Player {
         return name;
     }
 
+    public int getCurrentPosition()
+    {
+        return currentPosition;
+    }
+
+    public void setCurrentPosition(int curPos, int roll)
+    {
+        currentPosition = curPos + roll;
+    }
 
 
 }
