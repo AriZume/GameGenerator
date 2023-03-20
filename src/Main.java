@@ -1,14 +1,15 @@
 package MainPackage;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args)
     {
         Board myBoard = new Board();
+        Tile myTiles = new Tile();
 
         Scanner input = new Scanner(System.in);
+
         int count =1;
         while(true)
         {
@@ -23,14 +24,14 @@ public class Main {
         }
         myBoard.showPlayer();
 
-// Dice example
-        int amountOfDice = input.nextInt();
-        while(amountOfDice >2 || amountOfDice <1) {
-            System.out.println("something went wrong or you enter less than 1 or more than 2 enter again :");
-            amountOfDice = input.nextInt();
+        System.out.println("Give the amount of tiles: ");
+        int tileAmount = input.nextInt();
+        count = 1;
+        for(int i = 0; i < tileAmount; i++)
+        {
+            myBoard.setTileNumber(new Tile(count));
+            count++;
         }
-        Dice amountDice = new Dice(amountOfDice);
-        int Roll = amountDice.getTotal();
-        System.out.println(Roll);
+        myBoard.showTileNumber();
     }
 }

@@ -8,7 +8,6 @@ public class Player {
         name = n;
         currentPosition = 0;
     }
-
     public String getName()
     {
         return name;

@@ -1,10 +1,9 @@
 package MainPackage;
 import java.util.Random;
 public class Dice {
-    int diceAmount;
-
-    public Dice(int amount){
-        diceAmount = amount;
+    private int diceAmount;
+    public Dice(){
+        diceAmount = 1;
     }
     public int  rollDice(){
                Random roll = new Random();
@@ -18,5 +17,10 @@ public class Dice {
         else {
             return rollDice();
         }
+    }
+
+    public void setDiceAmount(int amount)
+    {
+        diceAmount = amount;
     }
 }
