@@ -6,7 +6,6 @@ public class Board
 {
     private ArrayList<Tile> totalTiles;
     private ArrayList<Player> totalPlayers;
-
     private ArrayList<Dice> boardDice;
 
     public Board(int diceAmount)
@@ -14,11 +13,18 @@ public class Board
         totalPlayers = new ArrayList<>();
         totalTiles = new ArrayList<>();
         boardDice = new ArrayList<>();
-        for(int i =1; i < diceAmount; i++)
+        for(int i = 0; i < diceAmount; i++)
         {
             boardDice.add(new Dice());
         }
     }
+
+    public void gameStart()
+    {
+        System.out.println("All players are placed on the tile " + totalTiles.get(0).getTileNumber() );
+
+    }
+
     // Players------------
     public void addPlayer(Player newPlayer)
     {
