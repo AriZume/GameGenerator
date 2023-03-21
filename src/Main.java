@@ -1,6 +1,5 @@
 package MainPackage;
 
-import java.util.Objects;
 import java.util.Scanner;
 
 public class Main {
@@ -73,20 +72,15 @@ public class Main {
                     for (int i = 1; i <= tileAmount; i++) {
                         myBoard.addTileNumber(new Tile(i));
                     }
-
+                    /*
                     myBoard.showPlayer();
                     myBoard.showTileNumber();
                     myBoard.getDiceRoll();
-
+                     */
                     break;
                 case 2:
-
                     break;
                 case 3:
-
-                    break;
-                case 4:
-
                     break;
                 default:
                     System.out.println("Option not valid!");
