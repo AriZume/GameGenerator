@@ -6,7 +6,7 @@ public class Player {
     public Player(String n)
     {
         name = n;
-        currentPosition = 0;
+        currentPosition = 1;
     }
     public String getName()
     {
