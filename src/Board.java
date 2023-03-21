@@ -23,7 +23,7 @@ public class Board
     public void startGame()
     {
         Scanner input = new Scanner(System.in);
-        System.out.println("All players are placed on tile " + totalTiles.get(0).getTileNumber());
+        System.out.println("\n\n\nAll players are placed on tile " + totalTiles.get(0).getTileNumber());
         int playerRoll;
         boolean endGame = false;
         while(!endGame)
