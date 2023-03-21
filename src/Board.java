@@ -7,10 +7,17 @@ public class Board
     private ArrayList<Tile> totalTiles;
     private ArrayList<Player> totalPlayers;
 
-    public Board()
+    private ArrayList<Dice> boardDice;
+
+    public Board(int diceAmount)
     {
         totalPlayers = new ArrayList<>();
         totalTiles = new ArrayList<>();
+        boardDice = new ArrayList<>();
+        for(int i =1; i < diceAmount; i++)
+        {
+            boardDice.add(new Dice());
+        }
     }
     // Players------------
     public void addPlayer(Player newPlayer)
@@ -31,7 +38,7 @@ public class Board
     }
 
     //Tiles-----------------
-    public void setTileNumber(Tile newTile)
+    public void addTileNumber(Tile newTile)
     {
         totalTiles.add(newTile);
     }
@@ -42,5 +49,27 @@ public class Board
             int number = currentTile.getTileNumber();
             System.out.println("Number: " + number);
         }
+    }
+
+    public int getDiceRoll()
+    {
+        int number = 0;
+
+        System.out.print("You rolled: ");
+        for(int i = 0; i < boardDice.size(); i++)
+        {
+            number += boardDice.get(i).getNumberRolled();
+            System.out.print(boardDice.get(i).getNumberRolled());
+            if(!((i+1) >= boardDice.size()))
+            {
+                System.out.print(" and ");
+            }else
+            {
+                System.out.println();
+            }
+
+            boardDice.get(i).rollDice();
+        }
+        return number;
     }
 }
