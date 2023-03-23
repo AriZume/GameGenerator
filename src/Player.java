@@ -1,13 +1,16 @@
 package MainPackage;
 
 public class Player {
-    private String name;
+    private final String name;
+
     private int currentPosition;
-    public Player(String n)
+
+    public Player(String playerName)
     {
-        name = n;
+        name = playerName;
         currentPosition = 1;
     }
+
     public String getName()
     {
         return name;
@@ -22,6 +25,5 @@ public class Player {
     {
         currentPosition = curPos + roll;
     }
-
 
 }

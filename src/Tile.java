@@ -1,7 +1,9 @@
 package MainPackage;
 
 public class Tile {
-    private int tileNumber;
+
+    private final int tileNumber;
+
     public Tile(int number)
     {
         tileNumber = number;
