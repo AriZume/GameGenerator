@@ -41,7 +41,7 @@ public class Main
             switch (userOption)
             {
                 case 1:
-                    System.out.println("\tGAME DESIGN\n============\n");
+                    System.out.println("\tGAME DESIGN\n========================");
                     System.out.print("Give player amount : ");
 
                     do
