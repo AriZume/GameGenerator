@@ -12,7 +12,7 @@ public class Main
         int userOption;
         int playerAmount, diceAmount, tileAmount;
 
-
+        //TODO: DELETE PREVIOUS OUTPUT IN CONSOLE
         do
         {
             while (!input.hasNextInt())
@@ -41,21 +41,21 @@ public class Main
             switch (userOption)
             {
                 case 1:
-                    System.out.println("\tGAME DESIGN\n========================");
+                    System.out.println("\t  GAME DESIGN\n========================");
                     System.out.print("Give player amount : ");
 
                     do
                     {
                         while (!input.hasNextInt())
                         {
-                            System.out.println("Player amount should be 2 or more.");
+                            System.out.print("Player amount should be 2 or more: ");
                             input.next();
                         }
 
                         playerAmount = input.nextInt();
                         if (playerAmount < 2)
                         {
-                            System.out.println("Player amount should be 2 or more.");
+                            System.out.print("Player amount should be 2 or more: ");
                         }
                     } while (playerAmount < 2);
 
@@ -65,14 +65,14 @@ public class Main
                     {
                         while (!input.hasNextInt())
                         {
-                            System.out.println("Tiles should be 1 or more.");
+                            System.out.print("Tiles should be 1 or more: ");
                             input.next();
                         }
 
                         tileAmount = input.nextInt();
                         if (tileAmount < 1)
                         {
-                            System.out.println("Tiles should be 1 or more.");
+                            System.out.print("Tiles should be 1 or more: ");
                         }
                     } while (tileAmount < 1);
 
@@ -82,14 +82,14 @@ public class Main
                     {
                         while (!input.hasNextInt())
                         {
-                            System.out.println("Dice amount should be 1 or more.");
+                            System.out.print("Dice amount should be 1 or more: ");
                             input.next();
                         }
 
                         diceAmount = input.nextInt();
                         if (diceAmount < 2)
                         {
-                            System.out.println("Dice amount should be 1 or more.");
+                            System.out.print("Dice amount should be 1 or more: ");
                         }
                     } while (diceAmount < 1);
 
@@ -112,9 +112,11 @@ public class Main
 
                     myBoard.startGame();
                     break;
+                /*
                 case 2:
                     System.out.println("Load is currently unavailable.");
                     break;
+                    */
                 case 3:
                     System.out.println("Can't give you help :(\nPlease donate $19.99 to unlock GameGenerator Premium.");
                     break;
