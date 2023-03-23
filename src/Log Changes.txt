@@ -1,12 +1,3 @@
-*Reminder to update project source code with every Push-Fetch*
+ Na kanoume zaria prin paiksoun oi paixtes gia na ksexwrizoume thn seira twn paixtwn
 
-D00M- eftiaksa tous players, me position kai names, (o xrhsths plhktrologei ta onomata) , diegrapsa thn CreatePlayers
-kai evala sthn main thn synarthsh pou kanei input ta onomatakai ta swzei se mia lista me object
- (Kai na yparxei lista pou gemizei objects)
 
-Etzer- In class Player removed giveNumOfPlayers, it's unnecessary since we have GameCreation.givePlayers()
-
-kapadokos- create manual class and insert manual in 5 case in main change the exit to 6 option from 5
-
-Etzer- Changed Class dice and added getDiceRoll() in class Board,
-	changed Main class. In class Board added gameStart() still in progress
