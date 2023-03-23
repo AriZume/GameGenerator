@@ -7,6 +7,13 @@ public class Board
     private final ArrayList<Tile> totalTiles;
     private final ArrayList<Player> totalPlayers;
     private final ArrayList<Dice> boardDice;
+    int currentPlayer = -1;
+
+    private Player getNextPlayer() {
+        int nextPlayer = currentPlayer++;
+        currentPlayer = currentPlayer%totalPlayers.size();
+        return totalPlayers.get(nextPlayer);
+    }
     public Board(int diceAmount)
     {
         totalPlayers = new ArrayList<>();
@@ -20,40 +27,16 @@ public class Board
 
     public void startGame()
     {
-        Scanner input = new Scanner(System.in);
         System.out.println("\n\n\nAll players are placed on tile " + totalTiles.get(0).getTileNumber());
         int playerRoll;
         boolean endGame = false;
 
         while(!endGame)
         {
-            for (int i = 0; i < totalPlayers.size(); i++)
+           for (Player player:totalPlayers)
             {
-                System.out.println("-----------------------------------------------------------------------");
-                System.out.println("It's " + totalPlayers.get(i).getName() + "'s turn\n(Player " + (i+1) +")");
-                System.out.println("You are placed on tile " + totalTiles.get(totalPlayers.get(i).getCurrentPosition()-1).getTileNumber() + " of " + totalTiles.size());
-                System.out.println("\n1. Roll Dice\n2. Save (Unavailable)\n3. Exit");
-
-                int option;
-                do
-                {
-                    while (!input.hasNextInt())
-                    {
-                        System.out.print("Please select one of the other options: ");
-                        input.next();
-                    }
-                    option = input.nextInt();
-
-                    if (option == 2)
-                    {
-                        System.out.print("Saving is not available. Try a different option: ");
-                        option = -1; // Probably wrong way to do it, but works
-                    }
-                    else if(option > 3 || option <= 0)
-                    {
-                        System.out.print("\nInvalid option.\nPlease select one of the other options: ");
-                    }
-                } while (option > 3 || option <= 0);
+                int option = PlayGameScreen.getOption(player.getName(),
+                        player.getCurrentPosition(), totalTiles.size(),totalPlayers.indexOf(player));
 
                 //IN-GAME MENU
                 switch(option)      //TODO:REPLACE WITH ENHANCED SWITCH
@@ -61,17 +44,16 @@ public class Board
                     case 1:
                         playerRoll = getDiceRoll();
 
-                        totalPlayers.get(i).setCurrentPosition(totalPlayers.get(i).getCurrentPosition(), playerRoll);
+                        player.setCurrentPosition(playerRoll);
                         System.out.println("You made " + playerRoll + " moves forward.");
                         System.out.println("End of turn.\n");
-                        for(Player p : totalPlayers)
-                        {
-                            if(p.getCurrentPosition()> totalTiles.size())
+
+                            if(player.getCurrentPosition()> totalTiles.size())
                             {
-                                totalPlayers.get(i).setCurrentPosition(totalPlayers.get(i).getCurrentPosition(), totalTiles.size()-p.getCurrentPosition());
+                                player.setCurrentPosition(totalTiles.size()-player.getCurrentPosition());
                             }
-                            System.out.println(p.getName() + " is on tile " + p.getCurrentPosition());
-                        }
+                            System.out.println(player.getName() + " is on tile " + player.getCurrentPosition());
+
                         break;
                     case 3:
                         System.out.println("Exiting game.");
@@ -86,15 +68,20 @@ public class Board
                 {
                     break;
                 }
-                else if(totalPlayers.get(i).getCurrentPosition() >= totalTiles.size())
+                else if ( weHaveAWinner(player) )
                 {
-                    System.out.println("\n-----------------------------------------------------------------------\nPlayer " + (i+1) + ": " + totalPlayers.get(i).getName()+" won the game!\n\n\n");
+                    System.out.println("\n-----------------------------------------------------------------------\nPlayer " + (totalPlayers.indexOf(player)+1) + ": " + totalPlayers.get(i).getName()+" won the game!\n\n\n");
                     endGame = true;
                     break;
                 }
             }
         }
     }
+
+    private boolean weHaveAWinner(Player player) {
+        return player.getCurrentPosition() >= totalTiles.size();
+    }
+
     // Players------------
     public void addPlayer(Player newPlayer)
     {

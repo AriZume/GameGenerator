@@ -21,9 +21,14 @@ public class Player {
         return currentPosition;
     }
 
-    public void setCurrentPosition(int curPos, int roll)
+    public void setCurrentPosition(int roll)
     {
-        currentPosition = curPos + roll;
+        currentPosition +=  roll;
+    }
+
+    public int getTileIndex()
+    {
+        return currentPosition-1;
     }
 
 }
