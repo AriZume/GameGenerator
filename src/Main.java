@@ -5,8 +5,10 @@ public class Main
 {
     public static void main(String[] args)
     {
-        Board myBoard;
+        GameHandler myGame;
+        Board myBoard = new Board();
         Scanner input = new Scanner(System.in);
+
         System.out.println("\t\t  MENU\n========================\n1. Design Game and Play\n2. Load Game\n3. Help\n4. Exit");
         int EXIT = 4;
         int userOption;
@@ -87,13 +89,13 @@ public class Main
                         }
 
                         diceAmount = input.nextInt();
-                        if (diceAmount < 2)
+                        if (diceAmount < 1)
                         {
                             System.out.print("Dice amount should be 1 or more: ");
                         }
                     } while (diceAmount < 1);
 
-                    myBoard = new Board(diceAmount);
+                    myGame = new GameHandler(diceAmount, myBoard);
                     System.out.println("Enter names");
                     input.nextLine(); //Probably not correct but works
 
@@ -102,7 +104,7 @@ public class Main
                         System.out.print("Player" + (i + 1) + " : ");
                         String name = input.nextLine();
 
-                        myBoard.addPlayer(new Player(name));
+                        myGame.addPlayer(new Player(name));
                     }
 
                     for (int i = 1; i <= tileAmount; i++)
@@ -110,7 +112,7 @@ public class Main
                         myBoard.addTileNumber(new Tile(i));
                     }
 
-                    myBoard.startGame();
+                    myGame.startGame();
                     break;
                 /*
                 case 2:
