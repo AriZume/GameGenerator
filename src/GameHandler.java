@@ -1,13 +1,17 @@
 package MainPackage;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class GameHandler
 {
-    private final ArrayList<Player> totalPlayers;
-    private final ArrayList<Tile> totalTiles;
+    private  ArrayList<Player> totalPlayers;
+    private  ArrayList<Tile> totalTiles;
     private final int dice;
-    int currentPlayer = 0;
+    private Map<Integer, Runnable> options;
+
 
     /* //NOT SURE HOW TO DO THIS
     private Player getNextPlayer() {
@@ -22,6 +26,10 @@ public class GameHandler
         totalTiles = tileList.getTileList();
         dice = diceAmount;
     }
+    public void setHashMap()
+    {
+        options = new HashMap<>();
+    }
 
     public void addPlayer(Player newPlayer)
     {
@@ -30,9 +38,8 @@ public class GameHandler
     public void startGame()
     {
         System.out.println("\n\nAll players are placed on tile " + totalTiles.get(0).getTileNumber());
-        int playerRoll;
-        boolean endGame = false;
-        while(!endGame)
+        AtomicBoolean endGame = new AtomicBoolean(false);
+        while(!endGame.get())
         {
            for (Player player : totalPlayers)
             {
@@ -40,40 +47,36 @@ public class GameHandler
                              player.getCurrentPosition(), totalTiles.size(),totalPlayers.indexOf(player));
 
                 //IN-GAME MENU
-                switch(option)
+                setHashMap();
+                options.put(1, () ->
                 {
-                    case 1:
-                        playerRoll = getDiceRoll(dice);
+                    int playerRoll = getDiceRoll(dice);
 
-                        player.setCurrentPosition(playerRoll);
+                    player.setCurrentPosition(playerRoll);
 
-                        if(player.getCurrentPosition() > totalTiles.size())
-                        {
-                            player.setCurrentPosition(totalTiles.size()-player.getCurrentPosition());
-                        }
+                    if (player.getCurrentPosition() > totalTiles.size()) {
+                        player.setCurrentPosition(totalTiles.size() - player.getCurrentPosition());
+                    }
+                    PlayGameScreen.endTurnScreen(player.getName(), player.getCurrentPosition(), playerRoll);
+                });
+                options.put(3, () ->
+                {
+                    endGame.getAndSet(true);
+                });
 
-                        PlayGameScreen.endTurnScreen(player.getName(), player.getCurrentPosition(), playerRoll);
-
-                        break;
-                    case 3:
-                        endGame = PlayGameScreen.exitGame();
-
-                        break;
-
-                    default:
-                        System.out.println("Option not available.");
-
-                        break;
-                }
+                options.getOrDefault(option, () ->
+                {
+                    System.out.println("Option not available.");
+                }).run();
 
                 //EXIT GAME OR WIN CHECK
-                if(endGame)
+                if(endGame.get())
                 {
                     break;
                 }
                 else if(weHaveAWinner(player))
                 {
-                    endGame = PlayGameScreen.winnerScreen(totalPlayers.indexOf(player), player.getName());
+                    endGame.set(PlayGameScreen.winnerScreen(totalPlayers.indexOf(player), player.getName()));
                     break;
                 }
             }
@@ -136,5 +139,4 @@ public class GameHandler
         }
     }
     */
-
 }

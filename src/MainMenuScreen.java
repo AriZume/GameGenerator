@@ -1,5 +1,4 @@
 package MainPackage;
-
 import java.util.Scanner;
 
 public class MainMenuScreen {
@@ -8,7 +7,7 @@ public class MainMenuScreen {
     private int tileAmount;
     private int playersAmount;
 
-    private Scanner input = new Scanner(System.in);
+    private final Scanner input = new Scanner(System.in);
 
     public int getOptionMainMenu()
     {
