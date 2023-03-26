@@ -3,6 +3,9 @@ import java.util.HashMap;
 import java.util.Scanner;
 import java.util.Map;
 
+// IMPORTANT
+// TODO: ASK ABOUT JSON FILES FOR SAVING AND LOADING
+
 public class Main
 {
     public static void main(String[] args)
@@ -29,7 +32,7 @@ public class Main
                 System.out.println("---Enter names---");
                 for (int i = 0; i < myMenu.getPlayersAmount(); i++)
                 {
-                    System.out.print("Player " + (i + 1) + " : ");
+                    System.out.print("Player : ");
                     String name = input.nextLine();
 
                     myGame.addPlayer(new Player(name));

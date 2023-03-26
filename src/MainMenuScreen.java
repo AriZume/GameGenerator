@@ -1,4 +1,5 @@
 package MainPackage;
+
 import java.util.Scanner;
 
 public class MainMenuScreen {
@@ -7,12 +8,13 @@ public class MainMenuScreen {
     private int tileAmount;
     private int playersAmount;
 
-    private final Scanner input = new Scanner(System.in);
+    private Scanner input = new Scanner(System.in);
 
     public int getOptionMainMenu()
     {
         int userInput;
         System.out.println("\t\t  MENU\n========================\n1. Design Game and Play\n2. Load Game\n3. Help\n4. Exit");
+
         do
         {
             while (!input.hasNextInt())
@@ -29,17 +31,16 @@ public class MainMenuScreen {
 
         return userInput;
     }
+
     public void setPlayersAmount()
     {
         System.out.print("Give player amount : ");
         this.playersAmount = checkPlayersAmount();
     }
-
     public int getPlayersAmount()
     {
         return playersAmount;
     }
-
     private int checkPlayersAmount()
     {
         int userInput;
@@ -64,12 +65,10 @@ public class MainMenuScreen {
         System.out.print("Give dice amount : ");
         this.diceAmount = checkDiceAmount();
     }
-
     public int getDiceAmount()
     {
         return diceAmount;
     }
-
     private int checkDiceAmount()
     {
         int userInput;
@@ -88,17 +87,17 @@ public class MainMenuScreen {
         } while (userInput < 1);
         return userInput;
     }
+
+
     public void setTileAmount()
     {
         System.out.print("Give tile amount : ");
         this.tileAmount = checkTileAmount();
     }
-
     public int getTileAmount()
     {
         return tileAmount;
     }
-
     private int checkTileAmount()
     {
         int userInput;

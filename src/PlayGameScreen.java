@@ -1,7 +1,37 @@
 package MainPackage;
+
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class PlayGameScreen {
+    public static void priorityScreen(String playerName)
+    {
+        Scanner input = new Scanner(System.in);
+        String userInput;
+
+        System.out.print("\n" + playerName + ", time to roll the dice.\n");
+        System.out.print("Type 'Roll' to roll the dice: ");
+
+        do
+        {
+            userInput = input.nextLine();
+
+            if (!userInput.equals("Roll"))
+            {
+                System.out.print("Please try again: ");
+            }
+        } while(!userInput.equals("Roll"));
+    }
+
+    public  static  void priorityResults(ArrayList<Player> players)
+    {
+        System.out.print("\nPlayer 1 (" + players.get(0).getName() + ") is starting first");
+        for(int i = 1; i < players.size(); i++)
+        {
+            System.out.print("\nPlayer " + (i+1) + " (" + players.get(i).getName() + ")");
+        }
+    }
+
     public static int getOption(String playerName, int tileNumber, int totalNumberOfTiles, int playerIndex) {
         Scanner input = new Scanner(System.in);
 
@@ -38,8 +68,6 @@ public class PlayGameScreen {
             return option;
     }
 
-
-
     public static boolean winnerScreen(int playerNumber, String playerName)
     {
         System.out.println("-----------------------------------------------------------------------\n" +
@@ -47,13 +75,16 @@ public class PlayGameScreen {
         return true;
     }
 
-    public static void endTurnScreen(String name, int currentPos, int playerRoll)
+    public static void endTurnScreen(int playerRoll, ArrayList<Player> players)
     {
         System.out.println("You made " + playerRoll + " moves forward.");
         System.out.println("End of turn.\n");
-
-        System.out.println(name + " is on tile " + currentPos);
+        for(Player player : players)
+        {
+            System.out.println(player.getName() + " is on tile " + player.getCurrentPosition());
+        }
     }
+
     public static boolean exitGame()
     {
         System.out.println("Exiting game.");

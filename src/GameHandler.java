@@ -37,27 +37,29 @@ public class GameHandler
 
     private void setPlayerPriority()
     {
+        System.out.print("\nTime to see who's playing first.");
 
         for(Player player : totalPlayers)
         {
+            PlayGameScreen.priorityScreen(player.getName());
+
             int roll = getDiceRoll(dice);
+
             player.setPriorityRoll(roll);
         }
 
         totalPlayers.sort(Comparator.comparing(Player::getPriorityRoll).reversed());
 
-        for(Player player : totalPlayers)
-        {
-            System.out.println(player.getName());
-        }
+        PlayGameScreen.priorityResults(totalPlayers);
     }
 
     public void startGame()
     {
-        System.out.println("\n\nAll players are placed on tile " + totalTiles.get(0).getTileNumber());
-        AtomicBoolean endGame = new AtomicBoolean(false);
-
         setPlayerPriority();
+
+        System.out.println("\n\nAll players are placed on tile " + totalTiles.get(0).getTileNumber());
+
+        AtomicBoolean endGame = new AtomicBoolean(false);
 
         while(!endGame.get())
         {
@@ -76,7 +78,8 @@ public class GameHandler
                     if (player.getCurrentPosition() > totalTiles.size()) {
                         player.setCurrentPosition(totalTiles.size() - player.getCurrentPosition());
                     }
-                    PlayGameScreen.endTurnScreen(player.getName(), player.getCurrentPosition(), playerRoll);
+
+                    PlayGameScreen.endTurnScreen(playerRoll , totalPlayers);
                 });
                 options.put(3, () ->
                 {
