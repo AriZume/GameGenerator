@@ -1,4 +1,5 @@
 package MainPackage;
+
 import java.util.ArrayList;
 
 public class Board {
@@ -18,8 +19,4 @@ public class Board {
     {
         tiles.add(newTile);
     }
-
-
-
-
 }

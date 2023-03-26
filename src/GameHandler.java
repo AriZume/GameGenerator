@@ -1,17 +1,19 @@
 package MainPackage;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+
 public class GameHandler
 {
-    private  ArrayList<Player> totalPlayers;
-    private  ArrayList<Tile> totalTiles;
+    private ArrayList<Player> totalPlayers;
+    private ArrayList<Tile> totalTiles;
     private final int dice;
     private Map<Integer, Runnable> options;
-
+    int currentPlayer = 0;
 
     /* //NOT SURE HOW TO DO THIS
     private Player getNextPlayer() {
@@ -25,9 +27,6 @@ public class GameHandler
         totalPlayers = new ArrayList<>();
         totalTiles = tileList.getTileList();
         dice = diceAmount;
-    }
-    public void setHashMap()
-    {
         options = new HashMap<>();
     }
 
@@ -35,19 +34,39 @@ public class GameHandler
     {
         totalPlayers.add(newPlayer);
     }
+
+    private void setPlayerPriority()
+    {
+
+        for(Player player : totalPlayers)
+        {
+            int roll = getDiceRoll(dice);
+            player.setPriorityRoll(roll);
+        }
+
+        totalPlayers.sort(Comparator.comparing(Player::getPriorityRoll).reversed());
+
+        for(Player player : totalPlayers)
+        {
+            System.out.println(player.getName());
+        }
+    }
+
     public void startGame()
     {
         System.out.println("\n\nAll players are placed on tile " + totalTiles.get(0).getTileNumber());
         AtomicBoolean endGame = new AtomicBoolean(false);
+
+        setPlayerPriority();
+
         while(!endGame.get())
         {
-           for (Player player : totalPlayers)
+            for (Player player : totalPlayers)
             {
                 int option = PlayGameScreen.getOption(player.getName(),
-                             player.getCurrentPosition(), totalTiles.size(),totalPlayers.indexOf(player));
+                        player.getCurrentPosition(), totalTiles.size(),totalPlayers.indexOf(player));
 
                 //IN-GAME MENU
-                setHashMap();
                 options.put(1, () ->
                 {
                     int playerRoll = getDiceRoll(dice);
@@ -139,4 +158,5 @@ public class GameHandler
         }
     }
     */
+
 }
