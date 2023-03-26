@@ -1,5 +1,4 @@
 package MainPackage;
-
 import java.util.Scanner;
 
 public class PlayGameScreen {
@@ -39,6 +38,8 @@ public class PlayGameScreen {
             return option;
     }
 
+
+
     public static boolean winnerScreen(int playerNumber, String playerName)
     {
         System.out.println("-----------------------------------------------------------------------\n" +
@@ -53,7 +54,6 @@ public class PlayGameScreen {
 
         System.out.println(name + " is on tile " + currentPos);
     }
-
     public static boolean exitGame()
     {
         System.out.println("Exiting game.");

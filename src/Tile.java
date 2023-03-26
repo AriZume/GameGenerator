@@ -13,5 +13,4 @@ public class Tile {
     {
         return tileNumber;
     }
-
 }
