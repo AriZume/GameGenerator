@@ -30,8 +30,6 @@ public class MainMenuScreen {
     }
 
 
-    private Scanner input = new Scanner(System.in);
-
     public int getOptionMainMenu()
     {
         System.out.println("\t\t  MENU\n========================\n1. Design Game and Play\n2. Load Game\n3. Help\n4. Exit");
@@ -70,15 +68,16 @@ public class MainMenuScreen {
 
     public void tilePowerScreen()
     {
-        System.out.print("\nWould you like power-ups on your tiles?\nType 'Y' for Yes or 'N' for No: ");
-        String userInput = input.nextLine();
-        if(userInput.equals('Y'))
+        Scanner input = new Scanner(System.in);
+        System.out.print("Would you like power-ups on your tiles?\nType 'Y' for Yes or 'N' for No: ");
+        String userInput = InputCheck.checkIfYesNo();
+        if(userInput.equals("Y"))
         {
-            System.out.print("\nPlease set the maximum amount of the forward powered up tiles: ");
+            System.out.print("Please set the maximum amount of the forward powered up tiles: ");
             int numInput = input.nextInt();
             setPositiveNumber(numInput);
 
-            System.out.print("\nPlease set the maximum amount of the backward powered up tiles: ");
+            System.out.print("Please set the maximum amount of the backward powered up tiles: ");
             numInput = input.nextInt();
             setNegativeNumber(numInput);
         }
@@ -86,7 +85,8 @@ public class MainMenuScreen {
 
     }
 
-    public void loadScreen(){
+    public void loadScreen()
+    {
         System.out.println("Load is currently unavailable.");
     }
     public void helpScreen() {

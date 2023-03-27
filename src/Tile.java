@@ -24,15 +24,15 @@ public class Tile {
 
     public void setTilePower(int positiveNumber, int negativeNumber)
     {
-        Random tzegkas = new Random();
-        int ranNum = tzegkas.nextInt(2) + 1;
+        Random random = new Random();
+        int ranNum = random.nextInt(2) + 1;
 
         if (ranNum == 1)
         {
-            tilePower = tzegkas.nextInt(positiveNumber) + 1;
+            tilePower =  random.nextInt(positiveNumber) + 1;
         } else
         {
-            tilePower = tzegkas.nextInt(negativeNumber) - 1;
+            tilePower = -random.nextInt(negativeNumber) - 1;
         }
 
     }

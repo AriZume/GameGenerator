@@ -10,17 +10,17 @@ public class PlayGameScreen {
         String userInput;
 
         System.out.print("\n" + playerName + ", time to roll the dice.\n");
-        System.out.print("Type 'Roll' to roll the dice: ");
+        System.out.print("Type 'R' to roll the dice: ");
 
         do
         {
             userInput = input.nextLine();
 
-            if (!userInput.equals("Roll"))
+            if (!userInput.equals("R"))
             {
                 System.out.print("Please try again: ");
             }
-        } while(!userInput.equals("Roll"));
+        } while(!userInput.equals("R"));
     }
 
     public  static  void priorityResults(ArrayList<Player> players)

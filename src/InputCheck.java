@@ -66,4 +66,21 @@ public class InputCheck {
         } while (userInput < 1);
         return userInput;
     }
+
+    public static String checkIfYesNo()
+    {
+        Scanner input  = new Scanner(System.in);
+        String userInput;
+        do
+        {
+            userInput = input.nextLine();
+
+            if (!(userInput.equals("Y") || userInput.equals("N")))
+            {
+                System.out.print("Please try again: ");
+            }
+        } while (!(userInput.equals("Y") || userInput.equals("N")));
+
+        return userInput;
+    }
 }

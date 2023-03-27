@@ -1,4 +1,5 @@
 package MainPackage;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 import java.util.Map;
@@ -25,6 +26,10 @@ public class Main
                 System.out.println("\t  GAME DESIGN\n========================");
                 myMenu.setPlayersAmount();
                 myMenu.setTileAmount();
+                myMenu.tilePowerScreen();
+                System.out.print("Please set power-up number tile treksto");
+                int number = input.nextInt();
+
                 myMenu.setDiceAmount();
 
                     GameHandler myGame = new GameHandler(myMenu.getDiceAmount(), myBoard);
@@ -43,6 +48,12 @@ public class Main
                     myBoard.addTileNumber(new Tile(i));
                 }
 
+                myBoard.randomPowerUpGenerator(number);
+                ArrayList<Tile> tiles = myBoard.getTileList();
+                for (int i = 0; i <= tiles.size(); i++)
+                {
+                    System.out.println(tiles.get(i).getTilePower());
+                }
                 myGame.startGame();
             });
             options.put(2, myMenu::loadScreen);
