@@ -45,9 +45,9 @@ public class Main
 
                 myGame.startGame();
             });
-            options.put(2, () -> System.out.println("Load is currently unavailable."));
-            options.put(3, () -> System.out.println("Can't give you help :(\nPlease donate $19.99 to unlock GameGenerator Premium."));
-            options.getOrDefault(userOption, () -> System.out.println("Option not valid!")).run();
+            options.put(2, myMenu::loadScreen);
+            options.put(3, myMenu::helpScreen);
+            options.getOrDefault(userOption, myMenu::defaultScreen).run();
             userOption = myMenu.getOptionMainMenu();
         }
     }

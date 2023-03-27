@@ -1,5 +1,4 @@
 package MainPackage;
-
 import java.util.Random;
 
 public class Tile {
