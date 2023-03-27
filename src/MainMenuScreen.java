@@ -7,6 +7,8 @@ public class MainMenuScreen {
     private int diceAmount;
     private int tileAmount;
     private int playersAmount;
+    private int positiveNumber;
+    private int negativeNumber;
 
     public int getOptionMainMenu()
     {
@@ -45,5 +47,42 @@ public class MainMenuScreen {
         return tileAmount;
     }
 
+
+    public void tilePowerScreen()
+    {
+        System.out.print("\nWould you like power-ups on your tiles?\nType 'Y' for Yes or 'N' for No: ");
+        String userInput = input.nextLine();
+        if(userInput.equals('Y'))
+        {
+            System.out.print("\nPlease set the maximum amount of the forward powered up tiles: ");
+            int numInput = input.nextInt();
+            setPositiveNumber(numInput);
+
+            System.out.print("\nPlease set the maximum amount of the backward powered up tiles: ");
+            numInput = input.nextInt();
+            setNegativeNumber(numInput);
+        }
+
+    }
+
+    public void setPositiveNumber(int posNumber)
+    {
+        positiveNumber = posNumber;
+    }
+
+    public void setNegativeNumber(int negNumber)
+    {
+        negativeNumber = negNumber;
+    }
+
+    public int getPositiveNumber()
+    {
+        return positiveNumber;
+    }
+
+    public int getNegativeNumber()
+    {
+        return negativeNumber;
+    }
 
 }
