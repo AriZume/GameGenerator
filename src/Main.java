@@ -14,7 +14,7 @@ public class Main
     {
         Board myBoard = new Board();
         MainMenuScreen myMenu = new MainMenuScreen();
-
+        GameHandler myGame;
         Scanner input = new Scanner(System.in);
 
         int EXIT = 4;
@@ -22,46 +22,47 @@ public class Main
 
         while(userOption != EXIT)
         {
-            Map<Integer, Runnable> options = new HashMap<>();
-            options.put(1, () -> {
-                System.out.println("\t  GAME DESIGN\n========================");
-                myMenu.setPlayersAmount();
-                myMenu.setTileAmount();
-                myMenu.tilePowerScreen();
-                System.out.print("Please set power-up number tile treksto");
-                int number = input.nextInt();
-                input.nextLine();
-                myMenu.setDiceAmount();
+            // MAIN MENU
+            switch (userOption)
+            {
+                case 1:
+                    System.out.println("\t  GAME DESIGN\n========================");
+                    myMenu.setPlayersAmount();
+                    myMenu.setTileAmount();
+                    myMenu.setDiceAmount();
+                    System.out.print("Please set power-up number tile: ");
+                    int number = input.nextInt();
+                    input.nextLine();
+                    myMenu.setDiceAmount();
+                    myGame = new GameHandler(myMenu.getDiceAmount(), myBoard);
 
-                GameHandler myGame = new GameHandler(myMenu.getDiceAmount(), myBoard);
+                    System.out.println("---Enter names---");
+                    for (int i = 0; i < myMenu.getPlayersAmount(); i++)
+                    {
+                        System.out.print("Player " + (i + 1) + " : ");
+                        String name = input.nextLine();
 
-                System.out.println("---Enter names---");
-                for (int i = 0; i < myMenu.getPlayersAmount(); i++)
-                {
-                    System.out.print("Player : ");
-                    String name = input.nextLine();
+                        myGame.addPlayer(new Player(name));
+                    }
 
-                    myGame.addPlayer(new Player(name));
-                }
+                    for (int i = 1; i <= myMenu.getTileAmount(); i++)
+                    {
+                        myBoard.addTileNumber(new Tile(i));
+                    }
 
-                for (int i = 1; i <= myMenu.getTileAmount(); i++)
-                {
-                    myBoard.addTileNumber(new Tile(i));
-                }
+                    myGame.startGame();
+                    break;
+                case 2:
+                    myMenu.loadScreen();
+                    break;
+                case 3:
+                    myMenu.helpScreen();
+                    break;
+                default:
+                    myMenu.defaultScreen();
+                    break;
+            }
 
-                myBoard.randomPowerUpGenerator(number, myMenu);
-
-                for (Tile tile : myBoard.getTileList())
-                {
-                    System.out.println(tile.getTilePower());
-                }
-
-
-                myGame.startGame();
-            });
-            options.put(2, myMenu::loadScreen);
-            options.put(3, myMenu::helpScreen);
-            options.getOrDefault(userOption, myMenu::defaultScreen).run();
             userOption = myMenu.getOptionMainMenu();
         }
     }
