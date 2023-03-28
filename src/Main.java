@@ -1,8 +1,6 @@
 package MainPackage;
-import java.util.ArrayList;
-import java.util.HashMap;
+
 import java.util.Scanner;
-import java.util.Map;
 
 // IMPORTANT
 // TODO: ASK ABOUT JSON FILES FOR SAVING AND LOADING
@@ -14,7 +12,7 @@ public class Main
     {
         Board myBoard = new Board();
         MainMenuScreen myMenu = new MainMenuScreen();
-        GameHandler myGame;
+
         Scanner input = new Scanner(System.in);
 
         int EXIT = 4;
@@ -22,32 +20,32 @@ public class Main
 
         while(userOption != EXIT)
         {
-            // MAIN MENU
             switch (userOption)
             {
                 case 1:
                     System.out.println("\t  GAME DESIGN\n========================");
                     myMenu.setPlayersAmount();
+
+
                     myMenu.setTileAmount();
+                    for (int i = 1; i <= myMenu.getTileAmount(); i++)
+                    {
+                        myBoard.addTileNumber(new Tile(i));
+                    }
+
+                    myMenu.tilePowerScreen(myBoard);
+
                     myMenu.setDiceAmount();
-                    System.out.print("Please set power-up number tile: ");
-                    int number = input.nextInt();
-                    input.nextLine();
-                    myMenu.setDiceAmount();
-                    myGame = new GameHandler(myMenu.getDiceAmount(), myBoard);
+
+                    GameHandler myGame = new GameHandler(myMenu.getDiceAmount(), myBoard);
 
                     System.out.println("---Enter names---");
                     for (int i = 0; i < myMenu.getPlayersAmount(); i++)
                     {
-                        System.out.print("Player " + (i + 1) + " : ");
+                        System.out.print("Player : ");
                         String name = input.nextLine();
 
                         myGame.addPlayer(new Player(name));
-                    }
-
-                    for (int i = 1; i <= myMenu.getTileAmount(); i++)
-                    {
-                        myBoard.addTileNumber(new Tile(i));
                     }
 
                     myGame.startGame();
@@ -62,7 +60,6 @@ public class Main
                     myMenu.defaultScreen();
                     break;
             }
-
             userOption = myMenu.getOptionMainMenu();
         }
     }

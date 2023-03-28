@@ -5,8 +5,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class GameHandler
 {
-    private ArrayList<Player> totalPlayers;
-    private ArrayList<Tile> totalTiles;
+    private final ArrayList<Player> totalPlayers;
+    private final ArrayList<Tile> totalTiles;
     private final int dice;
     private Map<Integer, Runnable> options;
 
@@ -151,11 +151,11 @@ public class GameHandler
         if(totalTiles.get(player.getTileIndex()).getTilePower() !=0)
         {
             if (tiles.get(player.getCurrentPosition()).getTilePower() > 0 ) {
-                System.out.println("You hit a power on this tile and you go forward " + tiles.get(player.getCurrentPosition()).getTilePower());
+                System.out.println("You landed on an enhanced tile and go forward " + tiles.get(player.getCurrentPosition()).getTilePower());
             }
             else if (tiles.get(player.getCurrentPosition()).getTilePower() < 0)
             {
-                System.out.println("You hit a power on this tile and you go backwards " + tiles.get(player.getCurrentPosition()).getTilePower());
+                System.out.println("You landed on an enhanced tile and go backwards " + (-1 * tiles.get(player.getCurrentPosition()).getTilePower()));
             }
 
             player.setCurrentPosition(totalTiles.get(player.getCurrentPosition()).getTilePower());
@@ -235,7 +235,7 @@ public class GameHandler
     private boolean winnerScreen(int playerNumber, String playerName)
     {
         System.out.println("-----------------------------------------------------------------------\n" +
-                "Player " + playerNumber + ": " + playerName + " won the game!\n\n\n");
+                "Player " + (playerNumber + 1) + ": " + playerName + " won the game!\n\n\n");
         return true;
     }
 

@@ -10,7 +10,7 @@ public class Player {
     public Player(String playerName)
     {
         name = playerName;
-        currentPosition = 0;
+        currentPosition = 1;
         priorityRoll = 0;
     }
 

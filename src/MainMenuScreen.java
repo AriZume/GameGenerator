@@ -82,21 +82,30 @@ public class MainMenuScreen {
     }
 
     //  --------------
-    public void tilePowerScreen()
+    public int tilePowerScreen(Board myBoard)
     {
         Scanner input = new Scanner(System.in);
-        System.out.print("Would you like power-ups on your tiles?\nType 'Y' for Yes or 'N' for No: ");
+
+        System.out.print("Would you like enhanced tiles on your board?\nType 'Y' for Yes or 'N' for No: ");
         String userInput = InputCheck.checkIfYesNo();
+
         if(userInput.equals("Y"))
         {
-            System.out.print("Please set the maximum amount of the forward powered up tiles: ");
+            System.out.print("How many enhanced tiles would you like: ");
+            int tileAmount = input.nextInt();
+
+            System.out.print("Please set the maximum amount of forward enhanced tiles: ");
             int numInput = InputCheck.checkIfInteger();
             setPositiveNumber(numInput);
 
-            System.out.print("Please set the maximum amount of the backward powered up tiles: ");
+            System.out.print("Please set the maximum amount of backward enhanced tiles: ");
             numInput = InputCheck.checkIfInteger();
             setNegativeNumber(numInput);
+
+            myBoard.randomPowerUpGenerator(tileAmount, getPositiveNumber(), getNegativeNumber());
         }
+
+        return tileAmount;
     }
 
     //  --------------
@@ -107,7 +116,7 @@ public class MainMenuScreen {
 
     //  --------------
     public void helpScreen() {
-        System.out.println("Can't give you help :(\nPlease donate $19.99 to unlock GameGenerator Premium.");
+        System.out.println("There is no help in the free version :(\nPlease donate $19.99 to unlock GameGenerator Premium.");
     }
 
     //  --------------

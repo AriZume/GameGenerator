@@ -25,7 +25,7 @@ public class Board {
     }
 
     //  --------------
-    public void randomPowerUpGenerator(int tileAmount, MainMenuScreen menuScreen)
+    public void randomPowerUpGenerator(int tileAmount, int posNumber, int negNumber)
     {
         ArrayList<Integer> tempList= new ArrayList<>();
 
@@ -35,12 +35,12 @@ public class Board {
             Collections.shuffle(tempList);
         }
 
-        for (int i = 0; i < tileAmount; i++)
+        for (int i = 1; i <= tileAmount; i++)
         {
             for(int j = 0; j < tiles.size(); j++)
             {
                 if (tiles.get(j).getTileNumber() == tempList.get(i)) {
-                    tiles.get(tempList.get(i)-1).setTilePower(menuScreen.getPositiveNumber(), menuScreen.getNegativeNumber());
+                    tiles.get(tempList.get(i)-1).setTilePower(posNumber, negNumber);
                 }
             }
         }
