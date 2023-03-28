@@ -6,35 +6,42 @@ import java.util.Collections;
 public class Board {
     private final ArrayList<Tile> tiles;
 
+    //  CONSTRUCTOR
     public Board()
     {
         tiles = new ArrayList<>();
     }
 
+    // METHODS
     public ArrayList<Tile> getTileList()
     {
         return tiles;
     }
 
+    //  --------------
     public void addTileNumber(Tile newTile)
     {
         tiles.add(newTile);
     }
 
-    public void randomPowerUpGenerator(int userSetting)
+    //  --------------
+    public void randomPowerUpGenerator(int tileAmount, MainMenuScreen menuScreen)
     {
-        ArrayList<Integer> tempList= new ArrayList<Integer>();
-        MainMenuScreen menuScreen = new MainMenuScreen();
-        for (int i=1; i < tiles.size(); i++)
+        ArrayList<Integer> tempList= new ArrayList<>();
+
+        for (int i = 0; i < tiles.size(); i++)
         {
             tempList.add(i);
             Collections.shuffle(tempList);
         }
-        for (int i=0; i < userSetting; i++)
+
+        for (int i = 0; i < tileAmount; i++)
         {
-            if(tiles.get(i).getTileNumber() == tempList.get(i))
+            for(int j = 0; j < tiles.size(); j++)
             {
-                tiles.get(i).setTilePower(menuScreen.getPositiveNumber(), menuScreen.getNegativeNumber());
+                if (tiles.get(j).getTileNumber() == tempList.get(i)) {
+                    tiles.get(tempList.get(i)-1).setTilePower(menuScreen.getPositiveNumber(), menuScreen.getNegativeNumber());
+                }
             }
         }
     }

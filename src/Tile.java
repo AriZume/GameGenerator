@@ -6,22 +6,26 @@ public class Tile {
     private final int tileNumber;
     private int tilePower;
 
+    // CONSTRUCTOR
     public Tile(int number)
     {
         tileNumber = number;
         tilePower = 0;
     }
 
+    // METHODS
     public int getTileNumber()
     {
         return tileNumber;
     }
 
+    //  --------------
     public int getTilePower()
     {
         return tilePower;
     }
 
+    //  --------------
     public void setTilePower(int positiveNumber, int negativeNumber)
     {
         Random random = new Random();

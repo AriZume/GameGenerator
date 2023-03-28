@@ -7,6 +7,7 @@ import java.util.Map;
 // IMPORTANT
 // TODO: ASK ABOUT JSON FILES FOR SAVING AND LOADING
 
+// TODO: MIGHT REMOVE HASHMAP
 public class Main
 {
     public static void main(String[] args)
@@ -29,10 +30,10 @@ public class Main
                 myMenu.tilePowerScreen();
                 System.out.print("Please set power-up number tile treksto");
                 int number = input.nextInt();
-
+                input.nextLine();
                 myMenu.setDiceAmount();
 
-                    GameHandler myGame = new GameHandler(myMenu.getDiceAmount(), myBoard);
+                GameHandler myGame = new GameHandler(myMenu.getDiceAmount(), myBoard);
 
                 System.out.println("---Enter names---");
                 for (int i = 0; i < myMenu.getPlayersAmount(); i++)
@@ -48,12 +49,14 @@ public class Main
                     myBoard.addTileNumber(new Tile(i));
                 }
 
-                myBoard.randomPowerUpGenerator(number);
-                ArrayList<Tile> tiles = myBoard.getTileList();
-                for (int i = 0; i <= tiles.size(); i++)
+                myBoard.randomPowerUpGenerator(number, myMenu);
+
+                for (Tile tile : myBoard.getTileList())
                 {
-                    System.out.println(tiles.get(i).getTilePower());
+                    System.out.println(tile.getTilePower());
                 }
+
+
                 myGame.startGame();
             });
             options.put(2, myMenu::loadScreen);

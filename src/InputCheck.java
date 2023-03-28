@@ -3,6 +3,8 @@ package MainPackage;
 import java.util.Scanner;
 
 public class InputCheck {
+
+    //  METHODS
     public static int checkIfInteger()
     {
         Scanner input  = new Scanner(System.in);
@@ -16,12 +18,16 @@ public class InputCheck {
                 input.next();
             }
             userInput = input.nextInt();
-
-        }while(userInput < 0);
+            if(userInput <= 0)
+            {
+                System.out.println("Please try again: ");
+            }
+        }while(userInput <= 0);
 
         return userInput;
     }
 
+    //  --------------
     public static int checkPlayersAmount()
     {
         int userInput;
@@ -37,6 +43,7 @@ public class InputCheck {
         return userInput;
     }
 
+    //  --------------
     public static int checkDiceAmount()
     {
         int userInput;
@@ -52,6 +59,7 @@ public class InputCheck {
         return userInput;
     }
 
+    //  --------------
     public static int checkTileAmount()
     {
         int userInput;
@@ -67,6 +75,7 @@ public class InputCheck {
         return userInput;
     }
 
+    //  --------------
     public static String checkIfYesNo()
     {
         Scanner input  = new Scanner(System.in);
