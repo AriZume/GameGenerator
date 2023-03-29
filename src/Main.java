@@ -5,7 +5,6 @@ import java.util.Scanner;
 // IMPORTANT
 // TODO: ASK ABOUT JSON FILES FOR SAVING AND LOADING
 
-// TODO: MIGHT REMOVE HASHMAP
 public class Main
 {
     public static void main(String[] args)

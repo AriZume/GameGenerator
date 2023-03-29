@@ -78,18 +78,16 @@ public class InputCheck {
     //  --------------
     public static String checkIfYesNo()
     {
-        Scanner input  = new Scanner(System.in);
+        Scanner input = new Scanner(System.in);
         String userInput;
         do
         {
             userInput = input.nextLine();
-
-            if (!(userInput.equals("Y") || userInput.equals("N") || userInput.equals("y") || userInput.equals("n")))
+            if (!userInput.matches("[yYnN]"))
             {
                 System.out.print("Please try again: ");
             }
-        } while (!(userInput.equals("Y") || userInput.equals("N") || userInput.equals("y") || userInput.equals("n")));
-
+        } while (!userInput.matches("[yYnN]"));
         return userInput;
     }
 }

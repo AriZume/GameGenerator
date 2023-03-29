@@ -82,14 +82,14 @@ public class MainMenuScreen {
     }
 
     //  --------------
-    public int tilePowerScreen(Board myBoard)
+    public void  tilePowerScreen(Board myBoard)
     {
         Scanner input = new Scanner(System.in);
 
         System.out.print("Would you like enhanced tiles on your board?\nType 'Y' for Yes or 'N' for No: ");
         String userInput = InputCheck.checkIfYesNo();
 
-        if(userInput.equals("Y"))
+        if(userInput.equals("Y") || userInput.equals("y"))
         {
             System.out.print("How many enhanced tiles would you like: ");
             int tileAmount = input.nextInt();
@@ -104,8 +104,6 @@ public class MainMenuScreen {
 
             myBoard.randomPowerUpGenerator(tileAmount, getPositiveNumber(), getNegativeNumber());
         }
-
-        return tileAmount;
     }
 
     //  --------------

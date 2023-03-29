@@ -37,10 +37,9 @@ public class Board {
 
         for (int i = 1; i <= tileAmount; i++)
         {
-            for(int j = 0; j < tiles.size(); j++)
-            {
-                if (tiles.get(j).getTileNumber() == tempList.get(i)) {
-                    tiles.get(tempList.get(i)-1).setTilePower(posNumber, negNumber);
+            for (Tile tile : tiles) {
+                if (tile.getTileNumber() == tempList.get(i)) {
+                    tiles.get(tempList.get(i) - 1).setTilePower(posNumber, negNumber);
                 }
             }
         }

@@ -121,10 +121,10 @@ public class GameHandler {
         {
             if (tiles.get(player.getCurrentPosition()).getTilePower() > 0)
             {
-                System.out.println("You landed on an enhanced tile and go forward " + tiles.get(player.getCurrentPosition()).getTilePower());
+                System.out.println("You landed on an enhanced tile and made " + tiles.get(player.getCurrentPosition()).getTilePower()+ " forward.");
             } else if (tiles.get(player.getCurrentPosition()).getTilePower() < 0)
             {
-                System.out.println("You landed on an enhanced tile and go backwards " + (-1 * tiles.get(player.getCurrentPosition()).getTilePower()));
+                System.out.println("You landed on an enhanced tile and made " + (-1 * tiles.get(player.getCurrentPosition()).getTilePower())+" backwards.");
             }
 
             player.setCurrentPosition(totalTiles.get(player.getCurrentPosition()).getTilePower());
@@ -227,7 +227,7 @@ public class GameHandler {
     private boolean winnerScreen ( int playerNumber, String playerName)
     {
         System.out.println("-----------------------------------------------------------------------\n" +
-                "Player " + (playerNumber + 1) + ": " + playerName + " won the game!\n\n\n");
+        "Player " + (playerNumber + 1) + ": " + playerName + " won the game!\n\n\n");
 
         return true;
     }
@@ -256,6 +256,7 @@ public class GameHandler {
         System.out.println("You made " + playerRoll + " moves forward.");
 
     }
+
 
     /* //FOR DEBUGGING
     public void showPlayer()
