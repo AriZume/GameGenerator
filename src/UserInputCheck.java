@@ -2,7 +2,7 @@ package MainPackage;
 
 import java.util.Scanner;
 
-public class InputCheck {
+public class UserInputCheck {
 
     //  METHODS
     public static int checkIfInteger()
@@ -33,7 +33,7 @@ public class InputCheck {
         int userInput;
         do
         {
-            userInput = InputCheck.checkIfInteger();
+            userInput = UserInputCheck.checkIfInteger();
 
             if (userInput < 2)
             {
@@ -49,7 +49,7 @@ public class InputCheck {
         int userInput;
         do
         {
-            userInput = InputCheck.checkIfInteger();
+            userInput = UserInputCheck.checkIfInteger();
 
             if (userInput < 1)
             {
@@ -65,7 +65,7 @@ public class InputCheck {
         int userInput;
         do
         {
-            userInput = InputCheck.checkIfInteger();
+            userInput = UserInputCheck.checkIfInteger();
 
             if (userInput < 1)
             {

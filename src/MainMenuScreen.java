@@ -39,14 +39,14 @@ public class MainMenuScreen {
     {
         System.out.println("\t\t  MENU\n========================\n1. Design Game and Play\n2. Load Game\n3. Help\n4. Exit");
 
-        return InputCheck.checkIfInteger();
+        return UserInputCheck.checkIfInteger();
     }
 
     //  --------------
     public void setPlayersAmount()
     {
         System.out.print("Give player amount : ");
-        this.playersAmount = InputCheck.checkPlayersAmount();
+        this.playersAmount = UserInputCheck.checkPlayersAmount();
     }
 
     //  --------------
@@ -59,7 +59,7 @@ public class MainMenuScreen {
     public void setDiceAmount()
     {
         System.out.print("Give dice amount : ");
-        this.diceAmount = InputCheck.checkDiceAmount();
+        this.diceAmount = UserInputCheck.checkDiceAmount();
     }
 
     //  --------------
@@ -72,7 +72,7 @@ public class MainMenuScreen {
     public void setTileAmount()
     {
         System.out.print("Give tile amount : ");
-        this.tileAmount = InputCheck.checkTileAmount();
+        this.tileAmount = UserInputCheck.checkTileAmount();
     }
 
     //  --------------
@@ -87,7 +87,7 @@ public class MainMenuScreen {
         Scanner input = new Scanner(System.in);
 
         System.out.print("Would you like enhanced tiles on your board?\nType 'Y' for Yes or 'N' for No: ");
-        String userInput = InputCheck.checkIfYesNo();
+        String userInput = UserInputCheck.checkIfYesNo();
 
         if(userInput.equals("Y") || userInput.equals("y"))
         {
@@ -95,11 +95,11 @@ public class MainMenuScreen {
             int tileAmount = input.nextInt();
 
             System.out.print("Please set the maximum amount of forward enhanced tiles: ");
-            int numInput = InputCheck.checkIfInteger();
+            int numInput = UserInputCheck.checkIfInteger();
             setPositiveNumber(numInput);
 
             System.out.print("Please set the maximum amount of backward enhanced tiles: ");
-            numInput = InputCheck.checkIfInteger();
+            numInput = UserInputCheck.checkIfInteger();
             setNegativeNumber(numInput);
 
             //myBoard.randomPowerUpGenerator(tileAmount, getPositiveNumber(), getNegativeNumber());
