@@ -84,11 +84,11 @@ public class InputCheck {
         {
             userInput = input.nextLine();
 
-            if (!(userInput.equals("Y") || userInput.equals("N")))
+            if (!(userInput.equals("Y") || userInput.equals("N") || userInput.equals("y") || userInput.equals("n")))
             {
                 System.out.print("Please try again: ");
             }
-        } while (!(userInput.equals("Y") || userInput.equals("N")));
+        } while (!(userInput.equals("Y") || userInput.equals("N") || userInput.equals("y") || userInput.equals("n")));
 
         return userInput;
     }
