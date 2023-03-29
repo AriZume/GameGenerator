@@ -32,7 +32,7 @@ public class Main
                         myBoard.addTileNumber(new Tile(i));
                     }
 
-                    myMenu.tilePowerScreen(myBoard);
+                    myMenu.tilePowerScreen();
 
                     myMenu.setDiceAmount();
 
@@ -47,7 +47,7 @@ public class Main
                         myGame.addPlayer(new Player(name));
                     }
 
-                    myGame.startGame();
+                    myGame.startGame(myMenu.getPositiveNumber(), myMenu.getNegativeNumber());
                     break;
                 case 2:
                     myMenu.loadScreen();

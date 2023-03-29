@@ -18,8 +18,10 @@ public class GameHandler {
     }
 
     // METHODS
-    public void startGame()
+    public void startGame(int positiveNumber, int negativeNumber)
     {
+        setRandomEnhancedTilerPower(totalTiles.size(), positiveNumber, negativeNumber);
+
         setPlayerPriority();
 
         System.out.println("\n\nAll players are placed on tile " + totalTiles.get(0).getTileNumber());
@@ -83,6 +85,12 @@ public class GameHandler {
         }
     }
 
+    // --------------
+    public void addPlayer(Player newPlayer)
+    {
+        totalPlayers.add(newPlayer);
+    }
+
     // WINNING CONDITION
     private boolean weHaveAWinner(Player player)
     {
@@ -132,9 +140,24 @@ public class GameHandler {
     }
 
     // --------------
-    public void addPlayer(Player newPlayer)
+    public void setRandomEnhancedTilerPower(int tileAmount, int posNumber, int negNumber)
     {
-        totalPlayers.add(newPlayer);
+        ArrayList<Integer> tempList= new ArrayList<>();
+
+        for (int i = 0; i < totalTiles.size(); i++)
+        {
+            tempList.add(i);
+            Collections.shuffle(tempList);
+        }
+
+        for (int i = 1; i < tileAmount; i++)
+        {
+            for (Tile tile : totalTiles) {
+                if (tile.getTileNumber() == tempList.get(i)) {
+                    totalTiles.get(tempList.get(i) - 1).setTilePower(posNumber, negNumber);
+                }
+            }
+        }
     }
 
     // --------------

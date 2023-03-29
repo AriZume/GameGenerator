@@ -82,7 +82,7 @@ public class MainMenuScreen {
     }
 
     //  --------------
-    public void  tilePowerScreen(Board myBoard)
+    public void  tilePowerScreen()
     {
         Scanner input = new Scanner(System.in);
 
@@ -102,7 +102,7 @@ public class MainMenuScreen {
             numInput = InputCheck.checkIfInteger();
             setNegativeNumber(numInput);
 
-            myBoard.randomPowerUpGenerator(tileAmount, getPositiveNumber(), getNegativeNumber());
+            //myBoard.randomPowerUpGenerator(tileAmount, getPositiveNumber(), getNegativeNumber());
         }
     }
 

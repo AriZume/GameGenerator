@@ -25,6 +25,7 @@ public class Board {
     }
 
     //  --------------
+    /*
     public void randomPowerUpGenerator(int tileAmount, int posNumber, int negNumber)
     {
         ArrayList<Integer> tempList= new ArrayList<>();
@@ -35,7 +36,7 @@ public class Board {
             Collections.shuffle(tempList);
         }
 
-        for (int i = 1; i <= tileAmount; i++)
+        for (int i = 1; i < tileAmount; i++)
         {
             for (Tile tile : tiles) {
                 if (tile.getTileNumber() == tempList.get(i)) {
@@ -44,4 +45,6 @@ public class Board {
             }
         }
     }
+
+     */
 }
