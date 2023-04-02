@@ -23,13 +23,11 @@ public class DoNothingTile implements BasicTile
         return tileNumber;
     }
 
-    //  --------------
     public int getTilePower()
     {
         return tilePower;
     }
 
-    //  --------------
     public void setTilePower(int positiveNumber, int negativeNumber)
     {
         Random random = new Random();

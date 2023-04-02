@@ -3,7 +3,8 @@ package MainPackage;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class InGameScreen {
+public class InGameScreen
+{
 
     public void priorityActionScreen(String playerName)
     {
@@ -24,7 +25,7 @@ public class InGameScreen {
     }
 
     //  --------------
-    public void priorityResults(ArrayList< Player > players)
+    public void priorityResults(ArrayList<Player> players)
     {
         System.out.print("\nPlayer 1 (" + players.get(0).getName() + ") is starting first");
         for (int i = 1; i < players.size(); i++)
@@ -109,10 +110,5 @@ public class InGameScreen {
     public void optionNotAvailable()
     {
         System.out.println("Option not available.");
-    }
-
-    public void rolledScreen()
-    {
-        System.out.print("You rolled: ");
     }
 }

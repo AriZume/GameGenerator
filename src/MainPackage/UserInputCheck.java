@@ -2,7 +2,8 @@ package MainPackage;
 
 import java.util.Scanner;
 
-public class UserInputCheck {
+public class UserInputCheck
+{
 
     //  METHODS
     public static int checkIfInteger()

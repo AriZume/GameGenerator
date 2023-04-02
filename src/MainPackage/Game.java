@@ -1,6 +1,7 @@
 package MainPackage;
 
 import TilesPackage.EnhancedTile;
+
 import java.util.*;
 
 public class Game {
@@ -11,15 +12,16 @@ public class Game {
     private final ArrayList<EnhancedTile> totalTiles;
     private final int dice;
 
-    public Game(ArrayList<Player> totalPlayers, ArrayList<EnhancedTile> totalTiles, int dice) {
+    public Game(ArrayList<Player> totalPlayers, ArrayList<EnhancedTile> totalTiles, int dice)
+    {
         this.totalPlayers = totalPlayers;
         this.totalTiles = totalTiles;
         this.dice = dice;
     }
 
-    public void setRandomEnhancedTilerPower(int enhancedTileAmount, int posNumber, int negNumber) {
+    public void setRandomEnhancedTilerPower(int enhancedTileAmount, int posNumber, int negNumber)
+    {
         ArrayList<Integer> tempList = new ArrayList<>();
-
         for (int i = 0; i < totalTiles.size(); i++)
         {
             tempList.add(i);
@@ -41,10 +43,11 @@ public class Game {
 
     public boolean isWinner(Player player)
     {
-        return player.getCurrentPosition() >= totalTiles.size();
+        return player.getCurrentPosition() >= getBoardSize();
     }
 
-    public void setWinner(Player player) {
+    public void setWinner(Player player)
+    {
         winner = player;
     }
 
@@ -53,11 +56,13 @@ public class Game {
         return winner;
     }
 
-    public boolean isGameOver() {
+    public boolean isGameOver()
+    {
         return gameOver;
     }
 
-    public void setGameOver(boolean value) {
+    public void setGameOver(boolean value)
+    {
         gameOver = value;
     }
     public ArrayList<Player> getTotalPlayers()
@@ -112,13 +117,14 @@ public class Game {
         return message;
 
     }
+
     private int getDiceRoll(int diceAmount)
     {
         int totalRoll = 0;
         int diceRoll;
         Random roll = new Random();
 
-        inGameScr.rolledScreen();
+        System.out.print("You rolled: ");
 
         for(int i = 0; i < diceAmount; i++)
         {
@@ -158,7 +164,8 @@ public class Game {
     {
         inGameScr.whosFirstScreen();
 
-        for (Player player : getTotalPlayers()) {
+        for (Player player : getTotalPlayers())
+        {
             inGameScr.priorityActionScreen(player.getName());
             setPriorityRoll(player);
         }
