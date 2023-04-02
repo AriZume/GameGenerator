@@ -4,14 +4,14 @@ import MainPackage.Player;
 
 import java.util.Random;
 
-public class Tile implements BasicTile
+public class EnhancedTile implements BasicTile
 {
 
     private final int tileNumber;
     private int tilePower;
 
     // CONSTRUCTOR
-    public Tile(int number)
+    public EnhancedTile(int number)
     {
         tileNumber = number;
         tilePower = 0;

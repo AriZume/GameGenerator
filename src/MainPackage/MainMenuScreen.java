@@ -9,6 +9,7 @@ public class MainMenuScreen {
     private int playersAmount;
     private int positiveNumber;
     private int negativeNumber;
+    private int enhancedTileAmount;
 
     //  METHODS
     public void setPositiveNumber(int posNumber)
@@ -35,6 +36,15 @@ public class MainMenuScreen {
     }
 
     //  --------------
+    private void setEnhancedTileAmount(int amount)
+    {
+        enhancedTileAmount = amount;
+    }
+
+    public int getEnhancedTileAmount()
+    {
+        return enhancedTileAmount;
+    }
     public int getOptionMainMenu()
     {
         System.out.println("\t\t  MENU\n========================\n1. Design Game and Play\n2. Load Game\n3. Help\n4. Exit");
@@ -82,7 +92,7 @@ public class MainMenuScreen {
     }
 
     //  --------------
-    public void  tilePowerScreen()
+    public String tilePowerScreen()
     {
         Scanner input = new Scanner(System.in);
 
@@ -93,6 +103,7 @@ public class MainMenuScreen {
         {
             System.out.print("How many enhanced tiles would you like: ");
             int tileAmount = input.nextInt();
+            setEnhancedTileAmount(tileAmount);
 
             System.out.print("Please set the maximum amount of forward enhanced tiles: ");
             int numInput = UserInputCheck.checkIfInteger();
@@ -101,9 +112,9 @@ public class MainMenuScreen {
             System.out.print("Please set the maximum amount of backward enhanced tiles: ");
             numInput = UserInputCheck.checkIfInteger();
             setNegativeNumber(numInput);
-
             //myBoard.randomPowerUpGenerator(tileAmount, getPositiveNumber(), getNegativeNumber());
         }
+        return userInput;
     }
 
     //  --------------

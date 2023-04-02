@@ -1,6 +1,6 @@
 package MainPackage;
 
-import TilesPackage.Tile;
+import TilesPackage.EnhancedTile;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -9,57 +9,68 @@ import java.util.Random;
 
 public class Game {
     private final ArrayList<Player> totalPlayers;
-    private final ArrayList<Tile> totalTiles;
+    private final ArrayList<EnhancedTile> totalTiles;
     private final int dice;
 
-    public Game(ArrayList<Player> totalPlayers, ArrayList<Tile> totalTiles, int dice) {
+    public Game(ArrayList<Player> totalPlayers, ArrayList<EnhancedTile> totalTiles, int dice) {
         this.totalPlayers = totalPlayers;
         this.totalTiles = totalTiles;
         this.dice = dice;
     }
 
-    public void setRandomEnhancedTilerPower(int posNumber, int negNumber) {
+    public void setRandomEnhancedTilerPower(int enhancedTileAmount, int posNumber, int negNumber) {
         ArrayList<Integer> tempList = new ArrayList<>();
 
-        for (int i = 0; i < totalTiles.size(); i++) {
+        for (int i = 0; i < totalTiles.size(); i++)
+        {
             tempList.add(i);
             Collections.shuffle(tempList);
         }
 
-        for (int i = 1; i < totalTiles.size(); i++) {
-            for (Tile tile : totalTiles) {
-                if (tile.getTileNumber() == tempList.get(i)) {
+        for (int i = 1; i < enhancedTileAmount; i++)
+        {
+            for (EnhancedTile tile : totalTiles)
+            {
+                if (tile.getTileNumber() == tempList.get(i))
+                {
                     totalTiles.get(tempList.get(i) - 1).setTilePower(posNumber, negNumber);
                 }
             }
         }
     }
 
-    public ArrayList<Player> getTotalPlayers() {
+    public ArrayList<Player> getTotalPlayers()
+    {
         return totalPlayers;
     }
 
-    public ArrayList<Tile> getTotalTiles() {
+    public ArrayList<EnhancedTile> getTotalTiles()
+    {
         return totalTiles;
     }
 
-    public int getBoardSize() {
+    public int getBoardSize()
+    {
         return totalTiles.size();
     }
 
-    public Player getPlayerAt(int i) {
+    public Player getPlayerAt(int i)
+    {
         return totalPlayers.get(i);
     }
 
-    public int indexOf(Player player) {
+    public int indexOf(Player player)
+    {
         return totalPlayers.indexOf(player);
     }
 
-    public int movePlayer(Player player) {
+    public int movePlayer(Player player)
+    {
         int playerRoll = getDiceRoll(dice);
         player.setCurrentPosition(playerRoll);
 
-        if (player.getCurrentPosition() >= totalTiles.size()) {
+        if (player.getCurrentPosition() >= totalTiles.size())
+        {
             player.setCurrentPosition(totalTiles.size() - player.getCurrentPosition());
         }
         return playerRoll;
@@ -67,7 +78,8 @@ public class Game {
 
         //showRollScreen(playerRoll);
 
-    public String  checkPosition(Player player) {
+    public String  checkPosition(Player player)
+    {
         String message = checkIfEnhancedTile(player);
 
         if (player.getCurrentPosition() >=  totalTiles.size())
@@ -106,19 +118,20 @@ public class Game {
     }
     private String checkIfEnhancedTile(Player player)
     {
-        Tile currentTile = totalTiles.get(player.getTileIndex());
+        EnhancedTile currentTile = totalTiles.get(player.getTileIndex());
         return currentTile.updateStatus(player);
 
     }
 
-    public void setPriorityRoll(Player player) {
+    public void setPriorityRoll(Player player)
+    {
         int roll = getDiceRoll(dice);
 
         player.setPriorityRoll(roll);
     }
 
-    public void sortPlayers() {
+    public void sortPlayers()
+    {
         totalPlayers.sort(Comparator.comparing(Player::getPriorityRoll).reversed());
-
     }
 }

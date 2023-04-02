@@ -9,16 +9,20 @@ public class GameHandler {
 
     // CONSTRUCTOR
     Game game;
-    InGameScreen inGame=new InGameScreen();
+    InGameScreen inGame;
     public GameHandler(int diceAmount, Board tileList)
     {
         game = new Game(new ArrayList<>(),tileList.getTileList(),diceAmount);
+        inGame = new InGameScreen();
     }
 
     // METHODS
-    public void startGame(int positiveNumber, int negativeNumber)
+    public void startGame(String powerOption , MainMenuScreen myMenu)
     {
-        game.setRandomEnhancedTilerPower(positiveNumber, negativeNumber);
+        if(powerOption.matches("[Yy]"))
+        {
+        game.setRandomEnhancedTilerPower(myMenu.getEnhancedTileAmount(), myMenu.getPositiveNumber(), myMenu.getNegativeNumber());
+        }
 
         setPlayerPriority();
 
@@ -32,8 +36,7 @@ public class GameHandler {
             // PLAYER TURNS
             for (Player player : game.getTotalPlayers())
             {
-                int option =
-                        inGame.getOption(player.getName(), player.getCurrentPosition(), game.getBoardSize(), game.indexOf(player));
+                int option = inGame.getOption(player.getName(), player.getCurrentPosition(), game.getBoardSize(), game.indexOf(player));
 
                 //IN-GAME MENU
                 switch (option)

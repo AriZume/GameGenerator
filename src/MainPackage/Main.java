@@ -1,11 +1,9 @@
 package MainPackage;
 
-import TilesPackage.Tile;
+import TilesPackage.EnhancedTile;
 
 import java.util.Scanner;
 
-// IMPORTANT
-// TODO: ASK ABOUT JSON FILES FOR SAVING AND LOADING
 
 public class Main
 {
@@ -25,16 +23,16 @@ public class Main
             {
                 case 1:
                     System.out.println("\t  GAME DESIGN\n========================");
-                    myMenu.setPlayersAmount();
 
+                    myMenu.setPlayersAmount();
 
                     myMenu.setTileAmount();
                     for (int i = 1; i <= myMenu.getTileAmount(); i++)
                     {
-                        myBoard.addTileNumber(new Tile(i));
+                        myBoard.addTileNumber(new EnhancedTile(i));
                     }
 
-                    myMenu.tilePowerScreen();
+                    String powerOption = myMenu.tilePowerScreen();
 
                     myMenu.setDiceAmount();
 
@@ -49,7 +47,7 @@ public class Main
                         myGame.addPlayer(new Player(name));
                     }
 
-                    myGame.startGame(myMenu.getPositiveNumber(), myMenu.getNegativeNumber());
+                    myGame.startGame(powerOption, myMenu);
                     break;
                 case 2:
                     myMenu.loadScreen();

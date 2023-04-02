@@ -1,11 +1,11 @@
 package MainPackage;
 
-import TilesPackage.Tile;
+import TilesPackage.EnhancedTile;
 
 import java.util.ArrayList;
 
 public class Board {
-    private final ArrayList<Tile> tiles;
+    private final ArrayList<EnhancedTile> tiles;
 
     //  CONSTRUCTOR
     public Board()
@@ -14,13 +14,13 @@ public class Board {
     }
 
     // METHODS
-    public ArrayList<Tile> getTileList()
+    public ArrayList<EnhancedTile> getTileList()
     {
         return tiles;
     }
 
     //  --------------
-    public void addTileNumber(Tile newTile)
+    public void addTileNumber(EnhancedTile newTile)
     {
         tiles.add(newTile);
     }
