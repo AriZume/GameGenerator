@@ -22,10 +22,8 @@ public class Main
             switch (userOption)
             {
                 case 1:
-                    System.out.println("\t  GAME DESIGN\n========================");
-
+                    myMenu.gameDesignScreen();
                     myMenu.setPlayersAmount();
-
                     myMenu.setTileAmount();
                     for (int i = 1; i <= myMenu.getTileAmount(); i++)
                     {
@@ -38,10 +36,10 @@ public class Main
 
                     GameHandler myGame = new GameHandler(myMenu.getDiceAmount(), myBoard);
 
-                    System.out.println("---Enter names---");
+                    myMenu.enterNamesScreen();
                     for (int i = 0; i < myMenu.getPlayersAmount(); i++)
                     {
-                        System.out.print("Player : ");
+                        myMenu.CurrentPlayerScreen();
                         String name = input.nextLine();
 
                         myGame.addPlayer(new Player(name));

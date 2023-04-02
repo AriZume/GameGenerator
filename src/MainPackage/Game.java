@@ -8,6 +8,7 @@ import java.util.Comparator;
 import java.util.Random;
 
 public class Game {
+    InGameScreen inGame= new InGameScreen();
     private final ArrayList<Player> totalPlayers;
     private final ArrayList<EnhancedTile> totalTiles;
     private final int dice;
@@ -99,7 +100,7 @@ public class Game {
         int diceRoll;
         Random roll = new Random();
 
-        System.out.print("You rolled: ");
+        inGame.rolledScreen();
 
         for(int i = 0; i < diceAmount; i++)
         {

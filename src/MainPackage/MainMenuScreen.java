@@ -132,4 +132,19 @@ public class MainMenuScreen {
     public void defaultScreen() {
         System.out.println("Option not valid!");
     }
+
+    public void gameDesignScreen()
+    {
+        System.out.println("\t  GAME DESIGN\n========================");
+    }
+
+    public void enterNamesScreen()
+    {
+        System.out.println("---Enter names---");
+    }
+
+    public void CurrentPlayerScreen()
+    {
+        System.out.print("Player : ");
+    }
 }

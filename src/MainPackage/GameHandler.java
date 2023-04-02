@@ -26,7 +26,7 @@ public class GameHandler {
 
         setPlayerPriority();
 
-        System.out.println("\n\nAll players are placed on tile " + 1);
+        inGame.PlayerStartScreen();
 
         int playerRoll;
         boolean endGame = false;
@@ -44,7 +44,7 @@ public class GameHandler {
                     case 1:
                          playerRoll = game.movePlayer(player);
 
-                        showRollScreen(playerRoll);
+                        inGame.showRollScreen(playerRoll);
 
                         String message = game.checkPosition(player);
                         System.out.println(message);
@@ -57,7 +57,7 @@ public class GameHandler {
                         break;
 
                     default:
-                        System.out.println("Option not available.");
+                        inGame.optionNotAvailable();
                         break;
                 }
                         //EXIT GAME OR WIN CHECK
@@ -89,7 +89,7 @@ public class GameHandler {
 
     private void setPlayerPriority()
     {
-        System.out.print("\nTime to see who's playing first.");
+        inGame.whosFirstScreen();
 
         for (Player player : game.getTotalPlayers()) {
             inGame.priorityActionScreen(player.getName());
@@ -105,16 +105,8 @@ public class GameHandler {
     // --------------
     private boolean exitGame ()
     {
-        System.out.println("Exiting game.");
+        inGame.ExitGameScreen();
         return true;
     }
-
-    // --------------
-    private void showRollScreen ( int playerRoll)
-    {
-        System.out.println("You made " + playerRoll + " moves forward.");
-
-    }
-
 
 }

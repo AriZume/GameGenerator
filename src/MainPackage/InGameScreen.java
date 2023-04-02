@@ -89,5 +89,33 @@ public class InGameScreen {
             System.out.println(player.getName() + " is on tile " + player.getCurrentPosition());
         }
     }
+    public void PlayerStartScreen()
+    {
+        System.out.println("\n\nAll players are placed on tile " + 1);
+    }
+    public void ExitGameScreen()
+    {
+        System.out.println("Exiting game.");
+    }
 
+    public void showRollScreen ( int playerRoll)
+    {
+        System.out.println("You made " + playerRoll + " moves forward.");
+
+    }
+
+    public void whosFirstScreen()
+    {
+        System.out.print("\nTime to see who's playing first.");
+    }
+
+    public void optionNotAvailable()
+    {
+        System.out.println("Option not available.");
+    }
+
+    public void rolledScreen()
+    {
+        System.out.print("You rolled: ");
+    }
 }
