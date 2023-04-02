@@ -1,8 +1,5 @@
 package MainPackage;
-
 import java.util.*;
-
-
 
 public class GameHandler {
 
@@ -24,14 +21,13 @@ public class GameHandler {
         game.setRandomEnhancedTilerPower(myMenu.getEnhancedTileAmount(), myMenu.getPositiveNumber(), myMenu.getNegativeNumber());
         }
 
-        setPlayerPriority();
+        game.setPlayerPriority();
 
         inGame.PlayerStartScreen();
 
         int playerRoll;
-        boolean endGame = false;
 
-        while (!endGame)
+        while (!game.isGameOver())
         {
             // PLAYER TURNS
             for (Player player : game.getTotalPlayers())
@@ -43,32 +39,33 @@ public class GameHandler {
                 {
                     case 1:
                          playerRoll = game.movePlayer(player);
-
                         inGame.showRollScreen(playerRoll);
-
                         String message = game.checkPosition(player);
                         System.out.println(message);
-
                         inGame.showPlayerPositionEndTurn(game.getTotalPlayers());
                         break;
 
                     case 3:
-                        endGame = exitGame();
+                        inGame.ExitGameScreen();
+                        game.setGameOver(true);
                         break;
 
                     default:
                         inGame.optionNotAvailable();
                         break;
                 }
-                        //EXIT GAME OR WIN CHECK
-                        if (endGame)
-                        {
-                            break;
-                        } else if (weHaveAWinner(player))
-                        {
-                            endGame = inGame.winnerScreen(game.indexOf(player), player.getName());
-                            break;
-                        }
+                if (game.isGameOver())
+                {
+                    break;
+                }
+                 if (game.isWinner(player))
+                {
+                    game.setWinner(player);
+                    inGame.winnerScreen(game.indexOf(player), game.getWinner().getName());
+                    game.setGameOver(true);
+                    break;
+                }
+
             }
         }
     }
@@ -77,36 +74,6 @@ public class GameHandler {
     public void addPlayer(Player newPlayer)
     {
         game.getTotalPlayers().add(newPlayer);
-    }
-
-    // WINNING CONDITION
-    private boolean weHaveAWinner(Player player)
-    {
-        return player.getCurrentPosition() >= game.getBoardSize();
-    }
-
-    // --------------
-
-    private void setPlayerPriority()
-    {
-        inGame.whosFirstScreen();
-
-        for (Player player : game.getTotalPlayers()) {
-            inGame.priorityActionScreen(player.getName());
-            game.setPriorityRoll(player);
-        }
-
-        game.sortPlayers();
-
-        inGame.priorityResults(game.getTotalPlayers());
-    }
-
-
-    // --------------
-    private boolean exitGame ()
-    {
-        inGame.ExitGameScreen();
-        return true;
     }
 
 }

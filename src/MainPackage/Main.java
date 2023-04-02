@@ -1,7 +1,6 @@
 package MainPackage;
 
 import TilesPackage.EnhancedTile;
-
 import java.util.Scanner;
 
 
@@ -10,54 +9,53 @@ public class Main
     public static void main(String[] args)
     {
         Board myBoard = new Board();
-        MainMenuScreen myMenu = new MainMenuScreen();
-
+        MainMenuScreen myMenuScreen = new MainMenuScreen();
         Scanner input = new Scanner(System.in);
 
         int EXIT = 4;
-        int userOption = myMenu.getOptionMainMenu();
+        int userOption = myMenuScreen.getOptionMainMenu();
 
         while(userOption != EXIT)
         {
             switch (userOption)
             {
                 case 1:
-                    myMenu.gameDesignScreen();
-                    myMenu.setPlayersAmount();
-                    myMenu.setTileAmount();
-                    for (int i = 1; i <= myMenu.getTileAmount(); i++)
+                    myMenuScreen.gameDesignScreen();
+                    myMenuScreen.setPlayersAmount();
+                    myMenuScreen.setTileAmount();
+                    for (int i = 1; i <= myMenuScreen.getTileAmount(); i++)
                     {
                         myBoard.addTileNumber(new EnhancedTile(i));
                     }
 
-                    String powerOption = myMenu.tilePowerScreen();
+                    String powerOption = myMenuScreen.tilePowerScreen();
 
-                    myMenu.setDiceAmount();
+                    myMenuScreen.setDiceAmount();
 
-                    GameHandler myGame = new GameHandler(myMenu.getDiceAmount(), myBoard);
+                    GameHandler myGame = new GameHandler(myMenuScreen.getDiceAmount(), myBoard);
 
-                    myMenu.enterNamesScreen();
-                    for (int i = 0; i < myMenu.getPlayersAmount(); i++)
+                    myMenuScreen.enterNamesScreen();
+                    for (int i = 0; i < myMenuScreen.getPlayersAmount(); i++)
                     {
-                        myMenu.CurrentPlayerScreen();
+                        myMenuScreen.CurrentPlayerScreen();
                         String name = input.nextLine();
 
                         myGame.addPlayer(new Player(name));
                     }
 
-                    myGame.startGame(powerOption, myMenu);
+                    myGame.startGame(powerOption, myMenuScreen);
                     break;
                 case 2:
-                    myMenu.loadScreen();
+                    myMenuScreen.loadScreen();
                     break;
                 case 3:
-                    myMenu.helpScreen();
+                    myMenuScreen.helpScreen();
                     break;
                 default:
-                    myMenu.defaultScreen();
+                    myMenuScreen.defaultScreen();
                     break;
             }
-            userOption = myMenu.getOptionMainMenu();
+            userOption = myMenuScreen.getOptionMainMenu();
         }
     }
 }

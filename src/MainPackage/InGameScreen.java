@@ -71,19 +71,16 @@ public class InGameScreen {
     }
 
     // --------------
-    public boolean winnerScreen ( int playerNumber, String playerName)
+    public void winnerScreen ( int winnerNumber, String winnerName)
     {
         System.out.println("-----------------------------------------------------------------------\n" +
-                "Player " + (playerNumber + 1) + ": " + playerName + " won the game!\n\n\n");
-
-        return true;
+        "Player " + (winnerNumber + 1) + ": " + winnerName + " won the game!\n\n\n");
     }
 
     // --------------
     public void showPlayerPositionEndTurn (ArrayList < Player > players)
     {
         System.out.println("End of turn.\n");
-
         for (Player player : players)
         {
             System.out.println(player.getName() + " is on tile " + player.getCurrentPosition());

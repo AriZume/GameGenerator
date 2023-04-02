@@ -1,14 +1,12 @@
 package MainPackage;
 
 import TilesPackage.EnhancedTile;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Random;
+import java.util.*;
 
 public class Game {
-    InGameScreen inGame= new InGameScreen();
+    InGameScreen inGameScr = new InGameScreen();
+    private boolean gameOver = false;
+    private Player winner;
     private final ArrayList<Player> totalPlayers;
     private final ArrayList<EnhancedTile> totalTiles;
     private final int dice;
@@ -40,6 +38,28 @@ public class Game {
         }
     }
 
+
+    public boolean isWinner(Player player)
+    {
+        return player.getCurrentPosition() >= totalTiles.size();
+    }
+
+    public void setWinner(Player player) {
+        winner = player;
+    }
+
+    public Player getWinner()
+    {
+        return winner;
+    }
+
+    public boolean isGameOver() {
+        return gameOver;
+    }
+
+    public void setGameOver(boolean value) {
+        gameOver = value;
+    }
     public ArrayList<Player> getTotalPlayers()
     {
         return totalPlayers;
@@ -77,8 +97,6 @@ public class Game {
         return playerRoll;
     }
 
-        //showRollScreen(playerRoll);
-
     public String  checkPosition(Player player)
     {
         String message = checkIfEnhancedTile(player);
@@ -100,7 +118,7 @@ public class Game {
         int diceRoll;
         Random roll = new Random();
 
-        inGame.rolledScreen();
+        inGameScr.rolledScreen();
 
         for(int i = 0; i < diceAmount; i++)
         {
@@ -134,5 +152,19 @@ public class Game {
     public void sortPlayers()
     {
         totalPlayers.sort(Comparator.comparing(Player::getPriorityRoll).reversed());
+    }
+
+    public void setPlayerPriority()
+    {
+        inGameScr.whosFirstScreen();
+
+        for (Player player : getTotalPlayers()) {
+            inGameScr.priorityActionScreen(player.getName());
+            setPriorityRoll(player);
+        }
+
+        sortPlayers();
+
+        inGameScr.priorityResults(getTotalPlayers());
     }
 }

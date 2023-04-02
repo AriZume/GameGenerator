@@ -48,6 +48,6 @@ public class DoNothingTile implements BasicTile
     @Override
     public String updateStatus(Player p)
     {
-        return "";
+        return "Dont update tile";
     }
 }
