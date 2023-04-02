@@ -1,4 +1,6 @@
-package MainPackage;
+package TilesPackage;
+
+import MainPackage.Player;
 
 import java.util.Random;
 

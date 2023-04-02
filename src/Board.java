@@ -1,5 +1,7 @@
 package MainPackage;
 
+import TilesPackage.Tile;
+
 import java.util.ArrayList;
 
 public class Board {
