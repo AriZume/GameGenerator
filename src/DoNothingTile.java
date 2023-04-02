@@ -2,14 +2,14 @@ package MainPackage;
 
 import java.util.Random;
 
-public class Tile implements BasicTile
+public class DoNothingTile implements BasicTile
 {
 
     private final int tileNumber;
     private int tilePower;
 
     // CONSTRUCTOR
-    public Tile(int number)
+    public DoNothingTile(int number)
     {
         tileNumber = number;
         tilePower = 0;
@@ -45,19 +45,6 @@ public class Tile implements BasicTile
 
     @Override
     public String updateStatus(Player p) {
-        String message = "";
-        if (getTilePower()!=0)
-        {
-            if (getTilePower() > 0)
-            {
-                message = "You landed on an enhanced tile and made " + getTilePower()+ " moves forward.";
-            } else if (getTilePower()< 0)
-            {
-                message = "You landed on an enhanced tile and made " + (-1 * getTilePower())+ " moves backwards.";
-            }
-
-            p.setCurrentPosition(getTilePower());
-        }
-        return message;
+        return "";
     }
 }

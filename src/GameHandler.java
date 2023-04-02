@@ -5,26 +5,23 @@ import java.util.*;
 
 
 public class GameHandler {
-    private final ArrayList<Player> totalPlayers;
-    private final ArrayList<Tile> totalTiles;
-    private final int dice;
+
 
     // CONSTRUCTOR
+    Game game;
     public GameHandler(int diceAmount, Board tileList)
     {
-        totalPlayers = new ArrayList<>();
-        totalTiles = tileList.getTileList();
-        dice = diceAmount;
+        game = new Game(new ArrayList<>(),tileList.getTileList(),diceAmount);
     }
 
     // METHODS
     public void startGame(int positiveNumber, int negativeNumber)
     {
-        setRandomEnhancedTilerPower(totalTiles.size(), positiveNumber, negativeNumber);
+        game.setRandomEnhancedTilerPower(positiveNumber, negativeNumber);
 
         setPlayerPriority();
 
-        System.out.println("\n\nAll players are placed on tile " + totalTiles.get(0).getTileNumber());
+        System.out.println("\n\nAll players are placed on tile " + 1);
 
         int playerRoll;
         boolean endGame = false;
@@ -32,36 +29,23 @@ public class GameHandler {
         while (!endGame)
         {
             // PLAYER TURNS
-            for (Player player : totalPlayers)
+            for (Player player : game.getTotalPlayers())
             {
-                int option = getOption(player.getName(), player.getCurrentPosition(), totalTiles.size(), totalPlayers.indexOf(player));
+                int option =
+                        getOption(player.getName(), player.getCurrentPosition(), game.getBoardSize(), game.indexOf(player));
 
                 //IN-GAME MENU
                 switch (option)
                 {
                     case 1:
-                        playerRoll = getDiceRoll(dice);
-                        player.setCurrentPosition(playerRoll);
-
-                        if (player.getCurrentPosition() >=  totalTiles.size())
-                        {
-                            player.setCurrentPosition(totalTiles.size() - player.getCurrentPosition());
-                        }
+                         playerRoll = game.movePlayer(player);
 
                         showRollScreen(playerRoll);
 
-                        checkEnhancedTile(player, totalTiles);
+                        String message = game.checkPosition(player);
+                        System.out.println(message);
 
-                        if (player.getCurrentPosition() >=  totalTiles.size())
-                        {
-                            player.setCurrentPosition(totalTiles.size() - player.getCurrentPosition());
-                        }
-                        else if(player.getCurrentPosition() < 0)
-                        {
-                            player.resetPosition();
-                        }
-
-                        showPlayerPositionEndTurn(totalPlayers);
+                        showPlayerPositionEndTurn(game.getTotalPlayers());
                         break;
 
                     case 3:
@@ -78,7 +62,7 @@ public class GameHandler {
                             break;
                         } else if (weHaveAWinner(player))
                         {
-                            endGame = winnerScreen(totalPlayers.indexOf(player), player.getName());
+                            endGame = winnerScreen(game.indexOf(player), player.getName());
                             break;
                         }
             }
@@ -88,95 +72,39 @@ public class GameHandler {
     // --------------
     public void addPlayer(Player newPlayer)
     {
-        totalPlayers.add(newPlayer);
+        game.getTotalPlayers().add(newPlayer);
     }
 
     // WINNING CONDITION
     private boolean weHaveAWinner(Player player)
     {
-        return player.getCurrentPosition() >= totalTiles.size();
+        return player.getCurrentPosition() >= game.getBoardSize();
     }
 
     // --------------
-    private int getDiceRoll(int diceAmount)
-    {
-        int totalRoll = 0;
-        int diceRoll;
-        Random roll = new Random();
 
-        System.out.print("You rolled: ");
-
-        for(int i = 0; i < diceAmount; i++)
-        {
-            diceRoll = roll.nextInt(6)+1;
-            System.out.print(diceRoll);
-
-            if(!((i+1) >= diceAmount))
-            {
-                System.out.print(" and ");
-            }
-            totalRoll += diceRoll;
-        }
-
-        System.out.print("\n");
-        return totalRoll;
-    }
 
     // --------------
-    private void checkEnhancedTile(Player player, ArrayList < Tile > tiles)
-    {
-        if (totalTiles.get(player.getTileIndex()).getTilePower() != 0)
-        {
-            if (tiles.get(player.getCurrentPosition()).getTilePower() > 0)
-            {
-                System.out.println("You landed on an enhanced tile and made " + tiles.get(player.getCurrentPosition()).getTilePower()+ " forward.");
-            } else if (tiles.get(player.getCurrentPosition()).getTilePower() < 0)
-            {
-                System.out.println("You landed on an enhanced tile and made " + (-1 * tiles.get(player.getCurrentPosition()).getTilePower())+" backwards.");
-            }
 
-            player.setCurrentPosition(totalTiles.get(player.getCurrentPosition()).getTilePower());
-        }
-    }
 
     // --------------
-    public void setRandomEnhancedTilerPower(int tileAmount, int posNumber, int negNumber)
-    {
-        ArrayList<Integer> tempList= new ArrayList<>();
-
-        for (int i = 0; i < totalTiles.size(); i++)
-        {
-            tempList.add(i);
-            Collections.shuffle(tempList);
-        }
-
-        for (int i = 1; i < tileAmount; i++)
-        {
-            for (Tile tile : totalTiles) {
-                if (tile.getTileNumber() == tempList.get(i)) {
-                    totalTiles.get(tempList.get(i) - 1).setTilePower(posNumber, negNumber);
-                }
-            }
-        }
-    }
 
     // --------------
     private void setPlayerPriority()
     {
         System.out.print("\nTime to see who's playing first.");
 
-        for (Player player : totalPlayers) {
+        for (Player player : game.getTotalPlayers()) {
             priorityActionScreen(player.getName());
-
-            int roll = getDiceRoll(dice);
-
-            player.setPriorityRoll(roll);
+            game.setPriorityRoll(player);
         }
 
-        totalPlayers.sort(Comparator.comparing(Player::getPriorityRoll).reversed());
+        game.sortPlayers();
 
-        priorityResults(totalPlayers);
+        priorityResults(game.getTotalPlayers());
     }
+
+
 
     // -------------- GAME-HANDLER SCREEN --------------
 
