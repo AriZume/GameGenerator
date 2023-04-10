@@ -17,6 +17,13 @@ public class Game
         createPlayers(playerAm);
     }
 
+    public Game(int playerAm, int tileAm, int diceAm, int enhancedTiles)
+    {
+        this.diceAmount = diceAm;
+        this.board = new Board(tileAm, enhancedTiles);
+        this.players = new ArrayList<>();
+        createPlayers(playerAm);
+    }
     public void createPlayers(int playerAmount)
     {
         Scanner scanner = new Scanner(System.in);
@@ -140,5 +147,12 @@ public class Game
         }
     }
 
+    public void printTilesPower()
+    {
+        for(Tile t : board.getTiles())
+        {
+            System.out.println(t.getPower());
+        }
+    }
 
 }

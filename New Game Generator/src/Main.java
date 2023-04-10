@@ -10,13 +10,12 @@ public class Main
         final int optHelp = 3;
         final int optExit = 4;
 
-        int playerAmount;
-        int tileAmount;
-        int diceAmount;
+        int playerAmount, tileAmount, diceAmount;
+        int enhancedTiles;
+        String enhanced;
 
         Screen screen = new Screen();
         Game game;
-
         Scanner input = new Scanner(System.in);
         int userInput;
 
@@ -36,16 +35,32 @@ public class Main
                     case optDesignPlay:
                         screen.printDesignGameTitle();
 
-                        System.out.print("Number of player: ");
-                        playerAmount = input.nextInt();
+                        playerAmount = screen.getInputIntegerValidation(input, "Number of player: ",
+                                "Player amount should be more than 2.\nPlease try again: ", 2, 100);
 
-                        System.out.print("Number of tiles: ");
-                        tileAmount = input.nextInt();
+                        tileAmount = screen.getInputIntegerValidation(input, "Number of tiles: ",
+                                "Tile amount should be at least 3.\nPlease try again: ", 3, 150);
 
-                        System.out.print("Number of dice: ");
-                        diceAmount = input.nextInt();
+                        diceAmount = screen.getInputIntegerValidation(input, "Number of dice: ",
+                                "Dice amount should be 1 or 2.\nPlease try again: ", 1, 2);
 
-                        game = new Game(playerAmount, tileAmount, diceAmount);
+                        enhanced = screen.getInputStringValidation(input, "Would you like enhanced tiles? (Y/N)\n(Note: Enhanced tile amount should be at least 2 less than the total tile amount): ",
+                                "Invalid input. Please try again.", "[yYnN]");
+
+                        if(enhanced.matches("[nN]"))
+                        {
+                            // Create game without enhanced tiles.
+                            game = new Game(playerAmount, tileAmount, diceAmount);
+                        }else
+                        {
+                            // Create game with enhanced tiles.
+                            enhancedTiles = screen.getInputIntegerValidation(input, "Enter the amount of enhanced tiles you would like the board to have: ",
+                                                        "Enhanced tile amount must be at least 2 less than the total tile amount.\nPlease try again: ", 1, tileAmount-2 );
+
+                            game = new Game(playerAmount, tileAmount, diceAmount, enhancedTiles);
+                            System.out.println();
+                            game.printTilesPower();
+                        }
                         game.startGame();
                         break;
                     case optLoad:
@@ -60,7 +75,7 @@ public class Main
                 }
             }catch(InputMismatchException e)
             {
-                System.out.println("Invalid Option. Please try again.");
+                System.out.print("Invalid Option. Please try again: ");
                 input.nextLine();
             }
 

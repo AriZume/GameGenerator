@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.InputMismatchException;
+import java.util.Scanner;
 
 public class Screen
 {
@@ -46,5 +48,41 @@ public class Screen
         System.out.println("\n-----------------------------------------------------------------------");
         System.out.println("Player " + (playerIndex + 1) + " (" + name + ") wins! Congratulations!" );
         return true;
+    }
+
+    public int getInputIntegerValidation(Scanner input, String promptMessage, String errorMessage, int min, int max)
+    {
+        int number;
+        System.out.print(promptMessage);
+        while (true) {
+            try {
+                number = input.nextInt();
+                if (number < min || number > max) {
+                    System.out.print(errorMessage);
+                } else {
+                    break; // Exit loop when condition is met
+                }
+            } catch (InputMismatchException e) {
+                System.out.print("Invalid input. Please try again: ");
+                input.nextLine();
+            }
+        }
+        return number;
+    }
+
+    public String getInputStringValidation(Scanner input, String promptMessage, String errorMessage, String regexCondition)
+    {
+        input.nextLine();
+        String userInput="";
+        System.out.print(promptMessage);
+        do
+        {
+            userInput = input.nextLine();
+            if(!userInput.matches(regexCondition))
+            {
+                System.out.print(errorMessage);
+            }
+        }while(!userInput.matches(regexCondition));
+        return userInput;
     }
 }

@@ -1,24 +1,14 @@
 public class Tile
 {
-    private int power;
+    private final int power;
 
     public Tile()
     {
-        power = 0;
-    }
-
-    public Tile(int p)
-    {
-        power = p;
-    }
-
-    public void setPower(int pow)
-    {
-        this.power = pow;
+        this.power = 0;
     }
 
     public int getPower()
     {
-        return power;
+        return this.power;
     }
 }
