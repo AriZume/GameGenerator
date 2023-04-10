@@ -3,7 +3,8 @@ public class Player
     private final String name;
     private int currentPosition;
     private int personalRoll;
-    private  int queuePosition;
+    private int queuePosition;
+    private int points;
 
     public Player(String n)
     {

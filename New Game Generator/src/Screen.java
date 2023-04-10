@@ -73,8 +73,8 @@ public class Screen
 
     public String getInputStringValidation(Scanner input, String promptMessage, String errorMessage, String regexCondition)
     {
-        input.nextLine();
         String userInput="";
+        input.nextLine();
         System.out.print(promptMessage);
         do
         {

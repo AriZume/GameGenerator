@@ -12,7 +12,7 @@ public class Main
 
         int playerAmount, tileAmount, diceAmount;
         int enhancedTiles;
-        String enhanced;
+        String enhanced,cards;
 
         Screen screen = new Screen();
         Game game;
@@ -45,21 +45,31 @@ public class Main
                         
                         enhanced = screen.getInputStringValidation(input, "Would you like enhanced tiles? (Y/N)\n(Note: Enhanced tile amount should be at least 2 less than the total tile amount): ",
                                 "Invalid input. Please try again.", "[yYnN]");
-
-                        if(enhanced.matches("[nN]"))
+                        cards = screen.getInputStringValidation(input, "Would you like to have cards in your game? (Y/N)",
+                                "Invalid input. Please try again.", "[yYnN]");
+                        if(enhanced.matches("[nN]") && cards.matches("[Nn]"))
                         {
                             // Create game without enhanced tiles.
                             game = new Game(playerAmount, tileAmount, diceAmount);
-                        }else
+                        }else if (cards.matches("[Nn]") && enhanced.matches("[Yy]"))
                         {
                             // Create game with enhanced tiles.
                             enhancedTiles = screen.getInputIntegerValidation(input, "Enter the amount of enhanced tiles you would like the board to have: ",
                                                         "Enhanced tile amount must be at least 2 less than the total tile amount.\nPlease try again: ", 1, tileAmount-2 );
+                            game = new Game(playerAmount, tileAmount, diceAmount, enhancedTiles, cards);
 
-                            game = new Game(playerAmount, tileAmount, diceAmount, enhancedTiles);
-                            System.out.println();
-                            game.printTilesPower();
                         }
+                        else if (cards.matches("[Yy]") && enhanced.matches("[Nn]")) {
+                            game = new Game(playerAmount, tileAmount, diceAmount, cards);
+                        }
+                        else
+                        {
+                            enhancedTiles = screen.getInputIntegerValidation(input, "Enter the amount of enhanced tiles you would like the board to have: ",
+                                    "Enhanced tile amount must be at least 2 less than the total tile amount.\nPlease try again: ", 1, tileAmount-2 );
+                            game = new Game(playerAmount, tileAmount, diceAmount, enhancedTiles, cards);
+                        }
+                        System.out.println();
+                        game.printTilesPower();
                         game.startGame();
                         break;
 

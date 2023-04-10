@@ -15,10 +15,19 @@ public class Game
         createPlayers(playerAm);
     }
 
-    public Game(int playerAm, int tileAm, int diceAm, int enhancedTiles)
+    public Game(int playerAm, int tileAm, int diceAm, String cards)
     {
         this.diceAmount = diceAm;
-        this.board = new Board(tileAm, enhancedTiles);
+        this.board = new Board(tileAm, cards);
+        this.players = new ArrayList<>();
+        createPlayers(playerAm);
+    }
+
+
+    public Game(int playerAm, int tileAm, int diceAm,int enhancedTiles,String cards)
+    {
+        this.diceAmount = diceAm;
+        this.board = new Board(tileAm,enhancedTiles, cards);
         this.players = new ArrayList<>();
         createPlayers(playerAm);
     }

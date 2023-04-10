@@ -23,8 +23,38 @@ public class Board
         {
             tiles.add(new Tile());
         }
+        setupEnhancedTiles(enhancedTiles);
+    }
+
+    public Board(int tileAmount, String cardTiles)
+    {
+        tiles = new ArrayList<>();
+
+        for (int i = 0; i < tileAmount; i++)
+        {
+            tiles.add(new Tile());
+        }
+        if (cardTiles.matches("[Yy]"))
+        {
+            setupCardTiles();
+        }
+
+    }
+    public Board(int tileAmount, int enhancedTiles, String cardTiles)
+    {
+        tiles = new ArrayList<>();
+
+        for (int i = 0; i < tileAmount; i++)
+        {
+            tiles.add(new Tile());
+        }
 
         setupEnhancedTiles(enhancedTiles);
+        if (cardTiles.matches("[Yy]"))
+        {
+            setupCardTiles();
+        }
+
     }
 
     public ArrayList<Tile> getTiles()
@@ -70,6 +100,15 @@ public class Board
                 }
             }
         }
+    }
+
+    private void setupCardTiles()
+    {
+        int cardTilePosition= (tiles.size()/4);
+        for (int i=cardTilePosition;i< tiles.size();i+=cardTilePosition) {
+            tiles.set(i, new CardTile());
+        }
+
     }
 
 }
