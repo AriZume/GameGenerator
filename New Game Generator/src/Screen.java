@@ -59,7 +59,8 @@ public class Screen
                 number = input.nextInt();
                 if (number < min || number > max) {
                     System.out.print(errorMessage);
-                } else {
+                } else
+                {
                     break; // Exit loop when condition is met
                 }
             } catch (InputMismatchException e) {
@@ -82,7 +83,7 @@ public class Screen
             {
                 System.out.print(errorMessage);
             }
-        }while(!userInput.matches(regexCondition));
+        }while(!userInput.matches(regexCondition) && !userInput.isEmpty());
         return userInput;
     }
 }

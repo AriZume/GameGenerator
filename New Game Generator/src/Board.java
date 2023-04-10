@@ -26,6 +26,7 @@ public class Board
 
         setupEnhancedTiles(enhancedTiles);
     }
+
     public ArrayList<Tile> getTiles()
     {
         return tiles;
@@ -34,8 +35,9 @@ public class Board
     // Initializes the position of the enhanced tiles.
     // Creates a temporary list containing the index(integer) of each tile except the first(0)
     // and the last(tiles.size()-1) index.
-    // Shuffles the temp list to create a random selection.The first half of the enTiles indexes from the temp list are
-    // selected to be the forward enhanced tiles, the rest are going to be the backward enhanced tiles.
+    // Shuffles the temp list to create a random selection.The first third of the enTiles indexes from the temp list are
+    // selected to be the turn loss enhanced tiles, the next third are going to be the backward enhanced tiles
+    // and the rest will be the forward enhanced tiles.
     // Replaces the corresponding index's with the enhanced one's
     private void setupEnhancedTiles(int enTiles)
     {
@@ -48,18 +50,23 @@ public class Board
         Collections.shuffle(tempList);
         System.out.println(tempList);
 
+        int loseTurnTiles = enTiles/3;
+        int backwardTiles = (enTiles - loseTurnTiles) / 2;
+
         for (int i = 0; i < enTiles; i++)
         {
             for (int j = 0; j < tiles.size(); j++)
             {
-                if (j == tempList.get(i) && i < (enTiles/2))
+                if (j == tempList.get(i) && i < loseTurnTiles)
                 {
-                    tiles.remove(j);
-                    tiles.add(j, new ForwardTile());
-                }else if(j == tempList.get(i))
+                    tiles.set(j, new LoseTurnTile());
+                }else if(j == tempList.get(i) && i < (backwardTiles+loseTurnTiles))
                 {
-                    tiles.remove(j);
-                    tiles.add(j, new BackwardTile());
+                    tiles.set(j, new BackwardTile());
+                }
+                else if(j == tempList.get(i))
+                {
+                    tiles.set(j, new ForwardTile());
                 }
             }
         }

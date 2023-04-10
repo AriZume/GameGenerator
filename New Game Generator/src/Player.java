@@ -1,23 +1,15 @@
 public class Player
 {
-    private String name;
+    private final String name;
     private int currentPosition;
-
-    public Player()
-    {
-        this.name = "";
-        this.currentPosition = 1;
-    }
+    private int personalRoll;
+    private  int queuePosition;
 
     public Player(String n)
     {
         this.name = n;
         this.currentPosition = 1;
-    }
-
-    public void setName(String n)
-    {
-        this.name = n;
+        this.queuePosition = 0;
     }
 
     public String getName()
@@ -35,8 +27,27 @@ public class Player
         return currentPosition;
     }
 
-    public void setPositionAfterRoll(int roll)
+    public void setNewPosition(int number)
     {
-        this.currentPosition += roll;
+        this.currentPosition += number;
+    }
+
+    public void setPersonalRoll(int roll)
+    {
+        this.personalRoll = roll;
+    }
+    public int getPersonalRoll()
+    {
+        return this.personalRoll;
+    }
+
+    public int getQueuePosition()
+    {
+        return this.queuePosition;
+    }
+
+    public void setQueuePosition(int roll)
+    {
+        this.queuePosition = roll;
     }
 }

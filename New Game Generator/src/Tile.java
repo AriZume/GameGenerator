@@ -7,8 +7,8 @@ public class Tile
         this.power = 0;
     }
 
-    public int getPower()
+    public void updatePlayerStatus(Player p)
     {
-        return this.power;
+        System.out.println("This tile has no effect.");
     }
 }

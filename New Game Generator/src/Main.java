@@ -34,7 +34,6 @@ public class Main
                 switch (userInput) {
                     case optDesignPlay:
                         screen.printDesignGameTitle();
-
                         playerAmount = screen.getInputIntegerValidation(input, "Number of player: ",
                                 "Player amount should be more than 2.\nPlease try again: ", 2, 100);
 
@@ -43,7 +42,7 @@ public class Main
 
                         diceAmount = screen.getInputIntegerValidation(input, "Number of dice: ",
                                 "Dice amount should be 1 or 2.\nPlease try again: ", 1, 2);
-
+                        
                         enhanced = screen.getInputStringValidation(input, "Would you like enhanced tiles? (Y/N)\n(Note: Enhanced tile amount should be at least 2 less than the total tile amount): ",
                                 "Invalid input. Please try again.", "[yYnN]");
 
@@ -63,12 +62,15 @@ public class Main
                         }
                         game.startGame();
                         break;
+
                     case optLoad:
 
                         break;
+
                     case optHelp:
 
                         break;
+
                     default:
                         System.out.print("Invalid option. Please try again.");
                         break;

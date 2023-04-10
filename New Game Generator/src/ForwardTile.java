@@ -11,8 +11,10 @@ public class ForwardTile extends Tile
     }
 
     @Override
-    public int getPower()
+    public void updatePlayerStatus(Player player)
     {
-        return this.power;
+        System.out.println("You landed on an enhanced tile and made " + this.power + " moves forward.");
+        player.setNewPosition(this.power);
+
     }
 }

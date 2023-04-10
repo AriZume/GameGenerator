@@ -1,13 +1,11 @@
-import java.util.ArrayList;
-import java.util.InputMismatchException;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 public class Game
 {
     private final int diceAmount;
     private final ArrayList<Player> players;
     private final Board board;
+    private final Screen screen = new Screen();
 
     public Game(int playerAm, int tileAm, int diceAm)
     {
@@ -24,6 +22,7 @@ public class Game
         this.players = new ArrayList<>();
         createPlayers(playerAm);
     }
+
     public void createPlayers(int playerAmount)
     {
         Scanner scanner = new Scanner(System.in);
@@ -31,7 +30,16 @@ public class Game
         for(int i = 0; i < playerAmount; i++)
         {
             System.out.print("Player : ");
-            String name = scanner.nextLine();
+            String name = "";
+            do
+            {
+                name = scanner.nextLine();
+                if(name.isBlank())
+                {
+                    System.out.print("Invalid name. Please try again: ");
+                }
+            }while(name.isBlank());
+
             players.add(new Player(name));
         }
     }
@@ -41,11 +49,27 @@ public class Game
         return players.indexOf(player);
     }
 
-    // Rolls the dice and updates the players position
+    // Moves player according to the roll and enhanced tile-if there are any.
     public void movePlayer(Player player)
     {
-        int roll = getDiceRoll();
-        player.setPositionAfterRoll(roll);
+        player.setPersonalRoll(getDiceRoll());
+
+        player.setNewPosition(player.getPersonalRoll());
+        checkPlayerPosition(player);
+
+        board.getTiles().get(player.getCurrentPosition()-1).updatePlayerStatus(player);
+        checkPlayerPosition(player);
+    }
+
+    public void rollQueueOfPlayers()
+    {
+        for (Player player : players)
+        {
+            System.out.print(player.getName()+ " ");
+            int roll = getDiceRoll();
+            player.setQueuePosition(roll);
+        }
+        players.sort(Comparator.comparing(Player::getQueuePosition).reversed());
     }
 
     private int getDiceRoll()
@@ -77,11 +101,18 @@ public class Game
         return player.getCurrentPosition() == board.getTiles().size();
     }
 
+    // Keeps track of the current position not exceeding the maximum amount of tiles
+    // and not being less than 1.
     public void checkPlayerPosition(Player player)
     {
         if(player.getCurrentPosition() >= board.getTiles().size())
         {
             player.setCurrentPosition(board.getTiles().size());
+        }
+
+        if(player.getCurrentPosition() <= 0)
+        {
+            player.setCurrentPosition(1);
         }
     }
 
@@ -94,6 +125,8 @@ public class Game
         Screen screen = new Screen();
         Scanner input = new Scanner(System.in);
 
+        rollQueueOfPlayers();
+
         boolean endGame = false;
         while (!endGame)
         {
@@ -103,15 +136,15 @@ public class Game
                 screen.printDescriptiveMap(player.getCurrentPosition(), board.getTiles().size());
                 screen.printInGameMenu();
                 int option = 0;
-                do {
-
-                    try {
+                do
+                {
+                    try
+                    {
                         option = input.nextInt();
                         switch (option)
                         {
                             case optRoll:
                                 movePlayer(player);
-                                checkPlayerPosition(player);
 
                                 screen.printEndTurn(players);
                                 break;
@@ -147,11 +180,12 @@ public class Game
         }
     }
 
+    // Debug only
     public void printTilesPower()
     {
         for(Tile t : board.getTiles())
         {
-            System.out.println(t.getPower());
+            System.out.println(t);
         }
     }
 
