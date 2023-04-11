@@ -15,17 +15,6 @@ public class Board
         }
     }
 
-    public Board(int tileAmount, int enhancedTiles)
-    {
-        tiles = new ArrayList<>();
-
-        for (int i = 0; i < tileAmount; i++)
-        {
-            tiles.add(new Tile());
-        }
-        setupEnhancedTiles(enhancedTiles);
-    }
-
     public Board(int tileAmount, String cardTiles)
     {
         tiles = new ArrayList<>();
@@ -40,6 +29,8 @@ public class Board
         }
 
     }
+
+    // Creates a board with or without card tiles.
     public Board(int tileAmount, int enhancedTiles, String cardTiles)
     {
         tiles = new ArrayList<>();
@@ -54,7 +45,6 @@ public class Board
         {
             setupCardTiles();
         }
-
     }
 
     public ArrayList<Tile> getTiles()
@@ -104,11 +94,14 @@ public class Board
 
     private void setupCardTiles()
     {
-        int cardTilePosition= (tiles.size()/4);
-        for (int i=cardTilePosition;i< tiles.size();i+=cardTilePosition) {
-            tiles.set(i, new CardTile());
-        }
-
+        int cardTilePosition1 = (tiles.size() / 4);
+        int cardTilePosition2 = (cardTilePosition1 + ((tiles.size() - cardTilePosition1) / 3));
+        int cardTilePosition3 = (cardTilePosition2 + ((tiles.size() - cardTilePosition2) / 2));
+        int cardTilePosition4 = (cardTilePosition3 + (tiles.size() - cardTilePosition3));
+        tiles.set((cardTilePosition1 / 2), new CardTile());
+        tiles.set(((cardTilePosition2 + cardTilePosition1) / 2), new CardTile());
+        tiles.set(((cardTilePosition3 + cardTilePosition2)/ 2), new CardTile());
+        tiles.set(((cardTilePosition4 + cardTilePosition3)/ 2), new CardTile());
     }
 
 }
