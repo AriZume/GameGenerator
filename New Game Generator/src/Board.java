@@ -5,6 +5,7 @@ public class Board
 {
     private final ArrayList<Tile> tiles;
 
+    // Creates a simple board with no effects.
     public Board(int tileAmount)
     {
         tiles = new ArrayList<>();
@@ -15,7 +16,8 @@ public class Board
         }
     }
 
-    public Board(int tileAmount, String cardTiles)
+    // Creates a board with enhanced tiles only.
+    public Board(int tileAmount, int enTiles)
     {
         tiles = new ArrayList<>();
 
@@ -23,15 +25,11 @@ public class Board
         {
             tiles.add(new Tile());
         }
-        if (cardTiles.matches("[Yy]"))
-        {
-            setupCardTiles();
-        }
-
+        setupEnhancedTiles(enTiles);
     }
 
-    // Creates a board with or without card tiles.
-    public Board(int tileAmount, int enhancedTiles, String cardTiles)
+    // Creates a board with cards.
+    public Board(int tileAmount, String maxPoints)
     {
         tiles = new ArrayList<>();
 
@@ -40,11 +38,21 @@ public class Board
             tiles.add(new Tile());
         }
 
-        setupEnhancedTiles(enhancedTiles);
-        if (cardTiles.matches("[Yy]"))
+        setupCardTiles(Integer.parseInt(maxPoints));
+    }
+
+    // Creates a board with both cards and enhanced tiles.
+    public Board(int tileAmount, int enTiles, String maxPoints)
+    {
+        tiles = new ArrayList<>();
+
+        for (int i = 0; i < tileAmount; i++)
         {
-            setupCardTiles();
+            tiles.add(new Tile());
         }
+
+        setupEnhancedTiles(enTiles);
+        setupCardTiles(Integer.parseInt(maxPoints));
     }
 
     public ArrayList<Tile> getTiles()
@@ -58,7 +66,7 @@ public class Board
     // Shuffles the temp list to create a random selection.The first third of the enTiles indexes from the temp list are
     // selected to be the turn loss enhanced tiles, the next third are going to be the backward enhanced tiles
     // and the rest will be the forward enhanced tiles.
-    // Replaces the corresponding index's with the enhanced one's
+    // Replaces the corresponding index's with the enhanced one's.
     private void setupEnhancedTiles(int enTiles)
     {
         ArrayList<Integer> tempList = new ArrayList<>();
@@ -68,7 +76,6 @@ public class Board
         }
         tempList.remove(tempList.size()-1);
         Collections.shuffle(tempList);
-        System.out.println(tempList);
 
         int loseTurnTiles = enTiles/3;
         int backwardTiles = (enTiles - loseTurnTiles) / 2;
@@ -92,16 +99,17 @@ public class Board
         }
     }
 
-    private void setupCardTiles()
+    // Sets the card-type tiles in the middle of each side of the board.
+    private void setupCardTiles(int maxPoints)
     {
         int cardTilePosition1 = (tiles.size() / 4);
         int cardTilePosition2 = (cardTilePosition1 + ((tiles.size() - cardTilePosition1) / 3));
         int cardTilePosition3 = (cardTilePosition2 + ((tiles.size() - cardTilePosition2) / 2));
         int cardTilePosition4 = (cardTilePosition3 + (tiles.size() - cardTilePosition3));
-        tiles.set((cardTilePosition1 / 2), new CardTile());
-        tiles.set(((cardTilePosition2 + cardTilePosition1) / 2), new CardTile());
-        tiles.set(((cardTilePosition3 + cardTilePosition2)/ 2), new CardTile());
-        tiles.set(((cardTilePosition4 + cardTilePosition3)/ 2), new CardTile());
+        tiles.set((cardTilePosition1 / 2), new CardTile(maxPoints));
+        tiles.set(((cardTilePosition2 + cardTilePosition1) / 2), new CardTile(maxPoints));
+        tiles.set(((cardTilePosition3 + cardTilePosition2)/ 2), new CardTile(maxPoints));
+        tiles.set(((cardTilePosition4 + cardTilePosition3)/ 2), new CardTile(maxPoints));
     }
 
 }

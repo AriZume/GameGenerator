@@ -1,8 +1,13 @@
 import java.util.*;
 public class CardTile extends Tile{
     private final Card card =new Card();
-
     private final Random random = new Random();
+    private final int maxPoints;
+    public CardTile(int maxPoints)
+    {
+        this.maxPoints = maxPoints;
+    }
+
 
 
     @Override
@@ -16,11 +21,11 @@ public class CardTile extends Tile{
         }
         else if (cardType==2)
         {
-            card.gainPointsCard(player);
+            card.gainPointsCard(player, maxPoints, random);
         }
         else
         {
-            card.losePointsCard(player);
+            card.losePointsCard(player, maxPoints, random);
         }
     }
 }

@@ -10,8 +10,7 @@ public class Main
         final int optHelp = 3;
         final int optExit = 4;
 
-        int playerAmount, tileAmount, diceAmount;
-        int enhancedTiles;
+        int playerAmount, tileAmount, diceAmount, enhancedTiles, maxPoints;
         String enhanced,cards;
 
         Screen screen = new Screen();
@@ -38,11 +37,12 @@ public class Main
                                 "Player amount should be more than 2.\nPlease try again: ", 2, 100);
 
                         tileAmount = screen.getInputIntegerValidation(input, "Number of tiles: ",
-                                "Tile amount should be at least 3.\nPlease try again: ", 3, 150);
+                                "Tile amount should be at least 10.(Max 150)\nPlease try again: ", 10, 150);
 
                         diceAmount = screen.getInputIntegerValidation(input, "Number of dice: ",
                                 "Dice amount should be 1 or 2.\nPlease try again: ", 1, 2);
-                        
+
+                        input.nextLine();
                         enhanced = screen.getInputStringValidation(input, "Would you like enhanced tiles? (Y/N)\n(Note: Enhanced tile amount should be at least 2 less than the total tile amount): ",
                                 "Invalid input. Please try again.", "[yYnN]");
 
@@ -53,22 +53,30 @@ public class Main
                         {
                             // Create game without enhanced tiles.
                             game = new Game(playerAmount, tileAmount, diceAmount);
-                        }else if (cards.matches("[Nn]") && enhanced.matches("[Yy]"))
+                        }
+                        else if (enhanced.matches("[Yy]") && cards.matches("[Nn]"))
                         {
                             // Create game with enhanced tiles.
                             enhancedTiles = screen.getInputIntegerValidation(input, "Enter the amount of enhanced tiles you would like the board to have: ",
                                                         "Enhanced tile amount must be at least 2 less than the total tile amount.\nPlease try again: ", 1, tileAmount-2 );
-                            game = new Game(playerAmount, tileAmount, diceAmount, enhancedTiles, cards);
-
+                            game = new Game(playerAmount, tileAmount, diceAmount, enhancedTiles);
                         }
-                        else if (cards.matches("[Yy]") && enhanced.matches("[Nn]")) {
-                            game = new Game(playerAmount, tileAmount, diceAmount, cards);
+                        else if (enhanced.matches("[Nn]") && cards.matches("[Yy]"))
+                        {
+                            maxPoints =   screen.getInputIntegerValidation(input, "Number of points required to win the game: ",
+                                    "Dice amount should be at least 1000. (Max 10000)\nPlease try again: ", 1000, 10000);
+
+                            game = new Game(playerAmount, tileAmount, diceAmount, Integer.toString(maxPoints));
                         }
                         else
                         {
                             enhancedTiles = screen.getInputIntegerValidation(input, "Enter the amount of enhanced tiles you would like the board to have: ",
                                     "Enhanced tile amount must be at least 2 less than the total tile amount.\nPlease try again: ", 1, tileAmount-2 );
-                            game = new Game(playerAmount, tileAmount, diceAmount, enhancedTiles, cards);
+
+                            maxPoints =   screen.getInputIntegerValidation(input, "Number of points required to win the game: ",
+                                    "Dice amount should be at least 1000. (Max 10000)\nPlease try again: ", 1000, 10000);
+
+                            game = new Game(playerAmount, tileAmount, diceAmount, enhancedTiles, Integer.toString(maxPoints));
                         }
 
                         System.out.println();
@@ -96,6 +104,6 @@ public class Main
             }
 
             screen.printMainMenu(optDesignPlay, optLoad, optHelp, optExit);
-        }
+        }// End while
     }
 }

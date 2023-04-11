@@ -7,6 +7,7 @@ public class Game
     private final Board board;
     private final Screen screen = new Screen();
 
+    // Simple constructor.
     public Game(int playerAm, int tileAm, int diceAm)
     {
         this.diceAmount = diceAm;
@@ -15,19 +16,29 @@ public class Game
         createPlayers(playerAm);
     }
 
-    public Game(int playerAm, int tileAm, int diceAm, String cards)
+    // Constructor for game with enhanced tiles only.
+    public Game(int playerAm, int tileAm, int diceAm, int enTiles)
     {
         this.diceAmount = diceAm;
-        this.board = new Board(tileAm, cards);
+        this.board = new Board(tileAm, enTiles);
         this.players = new ArrayList<>();
         createPlayers(playerAm);
     }
 
-
-    public Game(int playerAm, int tileAm, int diceAm,int enhancedTiles,String cards)
+    // Constructor for game with cards only.
+    public Game(int playerAm, int tileAm, int diceAm, String maxPoints)
     {
         this.diceAmount = diceAm;
-        this.board = new Board(tileAm,enhancedTiles, cards);
+        this.board = new Board(tileAm, maxPoints);
+        this.players = new ArrayList<>();
+        createPlayers(playerAm);
+    }
+
+    // Constructor with both cards and enhanced tiles.
+    public Game(int playerAm, int tileAm, int diceAm, int enTiles, String maxPoints)
+    {
+        this.diceAmount = diceAm;
+        this.board = new Board(tileAm,enTiles , maxPoints);
         this.players = new ArrayList<>();
         createPlayers(playerAm);
     }
@@ -39,7 +50,7 @@ public class Game
         for(int i = 0; i < playerAmount; i++)
         {
             System.out.print("Player : ");
-            String name = "";
+            String name;
             do
             {
                 name = scanner.nextLine();
@@ -58,23 +69,12 @@ public class Game
         return players.indexOf(player);
     }
 
-    // Moves player according to the roll and enhanced tile-if there are any.
-    public void movePlayer(Player player)
+    public void decidePlayerTurn()
     {
-        player.setPersonalRoll(getDiceRoll());
-
-        player.setNewPosition(player.getPersonalRoll());
-        checkPlayerPosition(player);
-
-        board.getTiles().get(player.getCurrentPosition()-1).updatePlayerStatus(player);
-        checkPlayerPosition(player);
-    }
-
-    public void rollQueueOfPlayers()
-    {
+        System.out.println("Let's who's starting first!");
         for (Player player : players)
         {
-            System.out.print(player.getName()+ " ");
+            System.out.print(player.getName() + ": ");
             int roll = getDiceRoll();
             player.setQueuePosition(roll);
         }
@@ -110,6 +110,18 @@ public class Game
         return player.getCurrentPosition() == board.getTiles().size();
     }
 
+    // Moves player according to the roll and enhanced tile-if there are any.
+    public void movePlayer(Player player)
+    {
+        player.setPersonalRoll(getDiceRoll());
+
+        player.setNewPosition(player.getPersonalRoll());
+        checkPlayerPosition(player);
+
+        board.getTiles().get(player.getCurrentPosition()-1).updatePlayerStatus(player);
+        checkPlayerPosition(player);
+    }
+
     // Keeps track of the current position not exceeding the maximum amount of tiles
     // and not being less than 1.
     public void checkPlayerPosition(Player player)
@@ -131,29 +143,38 @@ public class Game
         final int optSave = 2;
         final int optExit = 3;
 
-        Screen screen = new Screen();
+        int previousPlayer = 0;
+
         Scanner input = new Scanner(System.in);
 
-        rollQueueOfPlayers();
+        decidePlayerTurn();
 
         boolean endGame = false;
         while (!endGame)
         {
-            for (Player player : players)
+            for(int i = 0; i < players.size(); i++)
             {
-                screen.printPlayerTurn(player.getName(), getPlayerIndex(player));
-                screen.printDescriptiveMap(player.getCurrentPosition(), board.getTiles().size());
+                if(players.get(previousPlayer).getHasPlayAgainCard())
+                {
+                    players.get(previousPlayer).setHasPlayAgainCard(false);
+                    i = previousPlayer;
+                }
+
+                screen.printPlayerTurn(players.get(i).getName(), getPlayerIndex(players.get(i)));
+                screen.printDescriptiveMap(players.get(i).getCurrentPosition(), board.getTiles().size());
                 screen.printInGameMenu();
+
                 int option = 0;
                 do
                 {
                     try
                     {
                         option = input.nextInt();
+
                         switch (option)
                         {
                             case optRoll:
-                                movePlayer(player);
+                                movePlayer(players.get(i));
 
                                 screen.printEndTurn(players);
                                 break;
@@ -180,14 +201,18 @@ public class Game
                 if (endGame)
                 {
                     break;
-                } else if(weHaveAWinner(player))
+                }
+                else if(weHaveAWinner(players.get(i)))
                 {
-                    endGame = screen.printWinner(getPlayerIndex(player), player.getName());
+                    endGame = screen.printWinner(getPlayerIndex(players.get(i)), players.get(i).getName());
                     break;
                 }
-            }
-        }
+                previousPlayer = i;
+            } // End for
+        } // End while
     }
+
+
 
     // Debug only
     public void printTilesPower()

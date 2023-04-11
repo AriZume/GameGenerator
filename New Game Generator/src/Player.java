@@ -5,12 +5,13 @@ public class Player
     private int personalRoll;
     private int queuePosition;
     private int points;
+    private boolean hasPlayAgainCard;
 
     public Player(String n)
     {
         this.name = n;
         this.currentPosition = 1;
-        this.queuePosition = 0;
+        this.hasPlayAgainCard = false;
     }
 
     public String getName()
@@ -51,4 +52,19 @@ public class Player
     {
         this.queuePosition = roll;
     }
+    public void setHasPlayAgainCard(boolean canPlayAgain)
+    {
+        this.hasPlayAgainCard = canPlayAgain;
+    }
+
+    public boolean getHasPlayAgainCard()
+    {
+        return this.hasPlayAgainCard;
+    }
+
+    public void setNewPoints(int newPoints) {this.points += newPoints;}
+
+    public int getPoints() {return this.points;}
+
+    public void setPoints(int points) {this.points = points;}
 }
