@@ -8,8 +8,6 @@ public class CardTile extends Tile{
         this.maxPoints = maxPoints;
     }
 
-
-
     @Override
     public void updatePlayerStatus(Player player)
     {

@@ -2,6 +2,7 @@ import java.util.*;
 
 public class Game
 {
+    private String boardType;
     private final int diceAmount;
     private final ArrayList<Player> players;
     private final Board board;
@@ -43,6 +44,10 @@ public class Game
         createPlayers(playerAm);
     }
 
+    public void setBoardType(String boardType)
+    {
+        this.boardType = boardType;
+    }
     public void createPlayers(int playerAmount)
     {
         Scanner scanner = new Scanner(System.in);
@@ -71,7 +76,7 @@ public class Game
 
     public void decidePlayerTurn()
     {
-        System.out.println("Let's who's starting first!");
+        System.out.println("Let's see who's starting first!");
         for (Player player : players)
         {
             System.out.print(player.getName() + ": ");

@@ -10,8 +10,15 @@ public class Main
         final int optHelp = 3;
         final int optExit = 4;
 
+        final int optSquareBoard = 1;
+        final int optRoundBoard = 2;
+
         int playerAmount, tileAmount, diceAmount, enhancedTiles, maxPoints;
-        String enhanced,cards;
+        int boardType;
+
+
+        String enhanced;
+        String cards = "N";
 
         Screen screen = new Screen();
         Game game;
@@ -30,11 +37,17 @@ public class Main
                     break;
                 }
 
-                switch (userInput) {
+                switch (userInput)
+                {
                     case optDesignPlay:
+
                         screen.printDesignGameTitle();
+
+                        boardType = screen.getInputIntegerValidation(input, "Select board type:\n1. Square Board\n2. Circular Board\n(Type 1 or 2): ",
+                                "Invalid input. Please try again.", 1 ,2);
+
                         playerAmount = screen.getInputIntegerValidation(input, "Number of player: ",
-                                "Player amount should be more than 2.\nPlease try again: ", 2, 100);
+                                "Player amount should be more than 2.(Max 100)\nPlease try again: ", 2, 100);
 
                         tileAmount = screen.getInputIntegerValidation(input, "Number of tiles: ",
                                 "Tile amount should be at least 10.(Max 150)\nPlease try again: ", 10, 150);
@@ -43,11 +56,15 @@ public class Main
                                 "Dice amount should be 1 or 2.\nPlease try again: ", 1, 2);
 
                         input.nextLine();
+
                         enhanced = screen.getInputStringValidation(input, "Would you like enhanced tiles? (Y/N)\n(Note: Enhanced tile amount should be at least 2 less than the total tile amount): ",
                                 "Invalid input. Please try again.", "[yYnN]");
 
-                        cards = screen.getInputStringValidation(input, "Would you like to have cards in your game? (Y/N)",
-                                "Invalid input. Please try again.", "[yYnN]");
+                        if(boardType == optRoundBoard)
+                        {
+                            cards = screen.getInputStringValidation(input, "Would you like to have cards in your game? (Y/N)",
+                                    "Invalid input. Please try again.", "[yYnN]");
+                        }
 
                         if(enhanced.matches("[nN]") && cards.matches("[Nn]"))
                         {
@@ -80,9 +97,17 @@ public class Main
                         }
 
                         System.out.println();
-
                         game.printTilesPower();
-                        game.startGame();
+                        if(boardType == optSquareBoard)
+                        {
+                            game.setBoardType("Square");
+                            game.startGame();
+                        }
+                        else if(boardType == optRoundBoard)
+                        {
+                            game.setBoardType("Circle");
+                            game.startGame();
+                        }
                         break;
 
                     case optLoad:

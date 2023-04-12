@@ -5,13 +5,12 @@ public class Player
     private int personalRoll;
     private int queuePosition;
     private int points;
-    private boolean hasPlayAgainCard;
+    private boolean hasPlayAgainCard = false;
 
     public Player(String n)
     {
         this.name = n;
         this.currentPosition = 1;
-        this.hasPlayAgainCard = false;
     }
 
     public String getName()
