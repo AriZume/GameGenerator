@@ -112,19 +112,6 @@ public class Board
     // Sets the card-type tiles in the middle of each side of the board.
     private void setupCardTiles(int maxPoints)
     {
-        /*
-        int cardTilePosition1 = (tiles.size() / 4);
-        int cardTilePosition2 = (cardTilePosition1 + ((tiles.size() - cardTilePosition1) / 3));
-        int cardTilePosition3 = (cardTilePosition2 + ((tiles.size() - cardTilePosition2) / 2));
-        int cardTilePosition4 = (cardTilePosition3 + (tiles.size() - cardTilePosition3));
-
-        tiles.set((cardTilePosition1 / 2), new CardTile(maxPoints));
-        tiles.set(((cardTilePosition2 + cardTilePosition1) / 2), new CardTile(maxPoints));
-        tiles.set(((cardTilePosition3 + cardTilePosition2)/ 2), new CardTile(maxPoints));
-        tiles.set(((cardTilePosition4 + cardTilePosition3)/ 2), new CardTile(maxPoints));
-
-         */
-
         int maxAmountOfCardTiles = (tiles.size() / 5);
         int cardTilePositionCurrent = 0;
         int cardTilePositionPrevious = cardTilePositionCurrent;

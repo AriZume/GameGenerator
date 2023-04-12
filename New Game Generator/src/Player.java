@@ -8,15 +8,6 @@ public class Player
     private int lap = 0;
     private boolean isFromEnhanced = false;
     private boolean hasPlayAgainCard = false;
-    public boolean isFromEnhanced()
-    {
-        return isFromEnhanced;
-    }
-    public void setIsFromEnhanced(boolean fromEnhanced)
-    {
-        isFromEnhanced = fromEnhanced;
-    }
-
 
     public Player(String n)
     {
@@ -84,5 +75,14 @@ public class Player
     public int getLap()
     {
         return this.lap;
+    }
+
+    public boolean isFromEnhanced()
+    {
+        return isFromEnhanced;
+    }
+    public void setIsFromEnhanced(boolean fromEnhanced)
+    {
+        isFromEnhanced = fromEnhanced;
     }
 }

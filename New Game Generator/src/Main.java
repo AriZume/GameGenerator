@@ -13,18 +13,17 @@ public class Main
         final int optSquareBoard = 1;
         final int optCircularBoard = 2;
 
-        int playerAmount, tileAmount, diceAmount, enhancedTiles, maxPoints;
-        int boardType, lapsToWins = 0;
+        int playerAmount, tileAmount, diceAmount, enhancedTiles, boardType;
+        int maxPoints; // Cards winning condition.
+        int lapsToWins = 0; // Default winning condition for circular board.
 
-
-        String enhanced;
-        String cards = "N";
+        String enhanced, cards = "N";
 
         Screen screen = new Screen();
         Game game;
         Scanner input = new Scanner(System.in);
-        int userInput;
 
+        int userInput;
         screen.printMainMenu(optDesignPlay, optLoad, optHelp, optExit);
 
         while(true)
@@ -55,6 +54,9 @@ public class Main
                         diceAmount = screen.getInputIntegerValidation(input, "Number of dice: ",
                                 "Dice amount should be 1 or 2.\nPlease try again: ", 1, 2);
 
+                        // Get trash hehe.
+                        // heh
+                        // hehe
                         input.nextLine();
 
                         enhanced = screen.getInputStringValidation(input, "Would you like enhanced tiles? (Y/N)\n(Note: Enhanced tile amount should be at least 2 less than the total tile amount): ",
@@ -64,6 +66,8 @@ public class Main
                         {
                             cards = screen.getInputStringValidation(input, "Would you like to have cards in your game? (Y/N)",
                                     "Invalid input. Please try again.", "[yYnN]");
+
+                            // When the cards option is not active set default winning condition.
                             if(cards.matches("[Nn]"))
                             {
                                 lapsToWins = screen.getInputIntegerValidation(input, "In how many laps would you like the game to end: ",
@@ -78,7 +82,7 @@ public class Main
                         }
                         else if (enhanced.matches("[Yy]") && cards.matches("[Nn]"))
                         {
-                            // Create game with enhanced tiles.
+                            // Create game with only enhanced tiles.
                             enhancedTiles = screen.getInputIntegerValidation(input, "Enter the amount of enhanced tiles you would like the board to have: ",
                                                         "Enhanced tile amount must be at least 2 less than the total tile amount.\nPlease try again: ", 1, tileAmount-2 );
                             game = new Game(playerAmount, tileAmount, diceAmount, enhancedTiles);
@@ -86,8 +90,9 @@ public class Main
                         else if (enhanced.matches("[Nn]") && cards.matches("[Yy]"))
                         {
                             maxPoints =   screen.getInputIntegerValidation(input, "Number of points required to win the game: ",
-                                    "Point amount should be at least 1000. (Max 10000)\nPlease try again: ", 1000, 10000);
+                                    "Point amount should be at least 1000. (Min 500)(Max 10000)\nPlease try again: ", 500, 10000);
 
+                            // Creates game with only cards.
                             game = new Game(playerAmount, tileAmount, diceAmount, Integer.toString(maxPoints));
                         }
                         else
@@ -96,13 +101,16 @@ public class Main
                                     "Enhanced tile amount must be at least 2 less than the total tile amount.\nPlease try again: ", 1, tileAmount-2 );
 
                             maxPoints =   screen.getInputIntegerValidation(input, "Number of points required to win the game: ",
-                                    "Point amount should be at least 1000. (Max 10000)\nPlease try again: ", 1000, 10000);
+                                    "Point amount should be at least 1000. (Min 500)(Max 10000)\nPlease try again: ", 500, 10000);
 
+                            // Creates game with both enhanced tiles and cards.
                             game = new Game(playerAmount, tileAmount, diceAmount, enhancedTiles, Integer.toString(maxPoints));
                         }
 
+                        // Debugging
                         System.out.println();
                         game.printTilesPower();
+                        // ---
 
                         if(boardType == optSquareBoard)
                         {

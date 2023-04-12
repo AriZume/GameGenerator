@@ -6,6 +6,7 @@ public class Game
     public final int OPT_SAVE = 2;
     public final int OPT_EXIT = 3;
 
+
     private String boardType;
     private int lapsToWin;
     private final int diceAmount;
@@ -83,6 +84,7 @@ public class Game
         return players.indexOf(player);
     }
 
+    // TODO: MAKE MORE BEAUTIFUL ;)
     public void decidePlayerTurn()
     {
         System.out.println("Let's see who's starting first!");
@@ -149,12 +151,16 @@ public class Game
         board.getTiles().get(player.getCurrentPosition()-1).updatePlayerStatus(player);
         checkPlayerPosition(player);
 
+        // If the player is changed by an enhanced tile and lands on a card tile, execute card's updatePlayerStatus.
+        // After the action reset players isFromEnhanced to false.
         if( player.isFromEnhanced() && board.getTiles().get(player.getCurrentPosition()-1).getClass().getName().equals("CardTile"))
         {
             board.getTiles().get(player.getCurrentPosition()-1).updatePlayerStatus(player);
         }
-        checkPlayerPosition(player);
         player.setIsFromEnhanced(false);
+
+        // Might be needed if future cards move the player.
+        // checkPlayerPosition(player);
     }
 
     // Keeps track of the current position not exceeding the maximum amount of tiles
