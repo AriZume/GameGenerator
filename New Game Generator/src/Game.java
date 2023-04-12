@@ -2,7 +2,12 @@ import java.util.*;
 
 public class Game
 {
+    public final int OPT_ROLL = 1;
+    public final int OPT_SAVE = 2;
+    public final int OPT_EXIT = 3;
+
     private String boardType;
+    private int lapsToWin;
     private final int diceAmount;
     private final ArrayList<Player> players;
     private final Board board;
@@ -44,6 +49,10 @@ public class Game
         createPlayers(playerAm);
     }
 
+    public void setLapsToWin(int lapsToWin)
+    {
+        this.lapsToWin = lapsToWin;
+    }
     public void setBoardType(String boardType)
     {
         this.boardType = boardType;
@@ -112,7 +121,21 @@ public class Game
 
     public boolean weHaveAWinner(Player player)
     {
-        return player.getCurrentPosition() == board.getTiles().size();
+        if(boardType.equals("Square"))
+        {
+            return player.getCurrentPosition() == board.getTiles().size();
+        }
+        else
+        {
+            if(lapsToWin != 0)
+            {
+                return player.getLap() == lapsToWin;
+            }
+            else
+            {
+                return player.getPoints() >= board.getMaxPoints();
+            }
+        }
     }
 
     // Moves player according to the roll and enhanced tile-if there are any.
@@ -125,31 +148,44 @@ public class Game
 
         board.getTiles().get(player.getCurrentPosition()-1).updatePlayerStatus(player);
         checkPlayerPosition(player);
+
+        if( player.isFromEnhanced() && board.getTiles().get(player.getCurrentPosition()-1).getClass().getName().equals("CardTile"))
+        {
+            board.getTiles().get(player.getCurrentPosition()-1).updatePlayerStatus(player);
+        }
+        checkPlayerPosition(player);
+        player.setIsFromEnhanced(false);
     }
 
     // Keeps track of the current position not exceeding the maximum amount of tiles
     // and not being less than 1.
     public void checkPlayerPosition(Player player)
     {
-        if(player.getCurrentPosition() >= board.getTiles().size())
+        if(boardType.equals("Square"))
         {
-            player.setCurrentPosition(board.getTiles().size());
-        }
+            if (player.getCurrentPosition() >= board.getTiles().size()) {
+                player.setCurrentPosition(board.getTiles().size());
+            }
 
-        if(player.getCurrentPosition() <= 0)
+            if (player.getCurrentPosition() <= 0) {
+                player.setCurrentPosition(1);
+            }
+        }
+        else
         {
-            player.setCurrentPosition(1);
+            if(player.getCurrentPosition() > board.getTiles().size())
+            {
+                if(lapsToWin != 0)
+                {
+                    player.setLap(1);
+                }
+                player.setCurrentPosition(player.getCurrentPosition() - board.getTiles().size());
+            }
         }
     }
 
-    public void startGame()
+    public void startGameSquare()
     {
-        final int optRoll = 1;
-        final int optSave = 2;
-        final int optExit = 3;
-
-        int previousPlayer = 0;
-
         Scanner input = new Scanner(System.in);
 
         decidePlayerTurn();
@@ -159,11 +195,6 @@ public class Game
         {
             for(int i = 0; i < players.size(); i++)
             {
-                if(players.get(previousPlayer).getHasPlayAgainCard())
-                {
-                    players.get(previousPlayer).setHasPlayAgainCard(false);
-                    i = previousPlayer;
-                }
 
                 screen.printPlayerTurn(players.get(i).getName(), getPlayerIndex(players.get(i)));
                 screen.printDescriptiveMap(players.get(i).getCurrentPosition(), board.getTiles().size());
@@ -178,17 +209,17 @@ public class Game
 
                         switch (option)
                         {
-                            case optRoll:
+                            case OPT_ROLL:
                                 movePlayer(players.get(i));
 
                                 screen.printEndTurn(players);
                                 break;
 
-                            case optSave:
+                            case OPT_SAVE:
 
                                 break;
 
-                            case optExit:
+                            case OPT_EXIT:
                                 endGame = true;
                                 break;
 
@@ -212,11 +243,95 @@ public class Game
                     endGame = screen.printWinner(getPlayerIndex(players.get(i)), players.get(i).getName());
                     break;
                 }
-                previousPlayer = i;
             } // End for
         } // End while
     }
 
+    public void startGameCircle()
+    {
+        int previousPlayer = 0;
+
+        Scanner input = new Scanner(System.in);
+
+        decidePlayerTurn();
+
+        boolean endGame = false;
+        while (!endGame)
+        {
+            for(int i = 0; i < players.size(); i++)
+            {
+
+                if(players.get(previousPlayer).getHasPlayAgainCard())
+                {
+                    players.get(previousPlayer).setHasPlayAgainCard(false);
+                    i = previousPlayer;
+                }
+
+                if(lapsToWin != 0)
+                {
+                    screen.printPlayerTurnLap(players.get(i).getName(), getPlayerIndex(players.get(i)), players.get(i).getLap());
+                }
+                else
+                {
+                    screen.printPlayerTurn(players.get(i).getName(), getPlayerIndex(players.get(i)));
+                }
+                screen.printDescriptiveMap(players.get(i).getCurrentPosition(), board.getTiles().size());
+                screen.printInGameMenu();
+
+                int option = 0;
+                do
+                {
+                    try
+                    {
+                        option = input.nextInt();
+
+                        switch (option)
+                        {
+                            case OPT_ROLL:
+                                movePlayer(players.get(i));
+
+                                screen.printEndTurn(players);
+                                break;
+
+                            case OPT_SAVE:
+
+                                break;
+
+                            case OPT_EXIT:
+                                endGame = true;
+                                break;
+
+                            default:
+                                System.out.println("Invalid option. Please try again.");
+                                break;
+                        }
+                    } catch (InputMismatchException e)
+                    {
+                        System.out.println("Invalid option. Please try again");
+                        input.nextLine();
+                    }
+                }while(option <= 0 || option > 3);
+
+                if (endGame)
+                {
+                    break;
+                }
+                else if(weHaveAWinner(players.get(i)))
+                {
+                    if(lapsToWin != 0)
+                    {
+                        endGame = screen.printWinner(getPlayerIndex(players.get(i)), players.get(i).getName());
+                    }
+                    else
+                    {
+                        endGame = screen.printWinner(getPlayerIndex(players.get(i)), players.get(i).getName(), players.get(i).getPoints());
+                    }
+                    break;
+                }
+                previousPlayer = i;
+            } // End for
+        } // End while
+    }
 
 
     // Debug only

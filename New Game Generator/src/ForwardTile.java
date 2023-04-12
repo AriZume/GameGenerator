@@ -14,6 +14,7 @@ public class ForwardTile extends Tile
     public void updatePlayerStatus(Player player)
     {
         System.out.println("You landed on an enhanced tile and made " + this.power + " moves forward.");
+        player.setIsFromEnhanced(true);
         player.setNewPosition(this.power);
 
     }

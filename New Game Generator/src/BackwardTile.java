@@ -14,6 +14,7 @@ public class BackwardTile extends Tile
     public void updatePlayerStatus(Player player)
     {
         System.out.println("You landed on an enhanced tile and made " + (-1 * this.power) + " moves backward.");
+        player.setIsFromEnhanced(true);
         player.setNewPosition(this.power);
     }
 }

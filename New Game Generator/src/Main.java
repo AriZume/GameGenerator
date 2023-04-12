@@ -11,10 +11,10 @@ public class Main
         final int optExit = 4;
 
         final int optSquareBoard = 1;
-        final int optRoundBoard = 2;
+        final int optCircularBoard = 2;
 
         int playerAmount, tileAmount, diceAmount, enhancedTiles, maxPoints;
-        int boardType;
+        int boardType, lapsToWins = 0;
 
 
         String enhanced;
@@ -60,10 +60,15 @@ public class Main
                         enhanced = screen.getInputStringValidation(input, "Would you like enhanced tiles? (Y/N)\n(Note: Enhanced tile amount should be at least 2 less than the total tile amount): ",
                                 "Invalid input. Please try again.", "[yYnN]");
 
-                        if(boardType == optRoundBoard)
+                        if(boardType == optCircularBoard)
                         {
                             cards = screen.getInputStringValidation(input, "Would you like to have cards in your game? (Y/N)",
                                     "Invalid input. Please try again.", "[yYnN]");
+                            if(cards.matches("[Nn]"))
+                            {
+                                lapsToWins = screen.getInputIntegerValidation(input, "In how many laps would you like the game to end: ",
+                                        "Laps should be more than 2.(Max 20)\nPlease try again: ", 2, 20);
+                            }
                         }
 
                         if(enhanced.matches("[nN]") && cards.matches("[Nn]"))
@@ -81,7 +86,7 @@ public class Main
                         else if (enhanced.matches("[Nn]") && cards.matches("[Yy]"))
                         {
                             maxPoints =   screen.getInputIntegerValidation(input, "Number of points required to win the game: ",
-                                    "Dice amount should be at least 1000. (Max 10000)\nPlease try again: ", 1000, 10000);
+                                    "Point amount should be at least 1000. (Max 10000)\nPlease try again: ", 1000, 10000);
 
                             game = new Game(playerAmount, tileAmount, diceAmount, Integer.toString(maxPoints));
                         }
@@ -91,23 +96,26 @@ public class Main
                                     "Enhanced tile amount must be at least 2 less than the total tile amount.\nPlease try again: ", 1, tileAmount-2 );
 
                             maxPoints =   screen.getInputIntegerValidation(input, "Number of points required to win the game: ",
-                                    "Dice amount should be at least 1000. (Max 10000)\nPlease try again: ", 1000, 10000);
+                                    "Point amount should be at least 1000. (Max 10000)\nPlease try again: ", 1000, 10000);
 
                             game = new Game(playerAmount, tileAmount, diceAmount, enhancedTiles, Integer.toString(maxPoints));
                         }
 
                         System.out.println();
                         game.printTilesPower();
+
                         if(boardType == optSquareBoard)
                         {
                             game.setBoardType("Square");
-                            game.startGame();
+                            game.startGameSquare();
                         }
-                        else if(boardType == optRoundBoard)
+                        else if(boardType == optCircularBoard)
                         {
                             game.setBoardType("Circle");
-                            game.startGame();
+                            game.setLapsToWin(lapsToWins);
+                            game.startGameCircle();
                         }
+
                         break;
 
                     case optLoad:

@@ -30,6 +30,12 @@ public class Screen
         System.out.println("It's " + playerName + "'s turn\n(Player " + (playerIndex + 1) + ")");
     }
 
+    public void printPlayerTurnLap(String playerName, int playerIndex, int lap)
+    {
+        System.out.println("-----------------------------------------------------------------------");
+        System.out.println("It's " + playerName + "'s turn\n(Player " + (playerIndex + 1) + ") - Lap " + lap);
+    }
+
     public void printInGameMenu()
     {
         System.out.println("\n1. Roll Dice\n2. Save (Unavailable)\n3. Exit");
@@ -47,6 +53,13 @@ public class Screen
     {
         System.out.println("\n-----------------------------------------------------------------------");
         System.out.println("Player " + (playerIndex + 1) + " (" + name + ") wins! Congratulations!" );
+        return true;
+    }
+
+    public boolean printWinner(int playerIndex, String name, int playerPoints)
+    {
+        System.out.println("\n-----------------------------------------------------------------------");
+        System.out.println("Player " + (playerIndex + 1) + " (" + name + ") wins with a total of "+ playerPoints+ " points! Congratulations!" );
         return true;
     }
 

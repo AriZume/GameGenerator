@@ -5,7 +5,18 @@ public class Player
     private int personalRoll;
     private int queuePosition;
     private int points;
+    private int lap = 0;
+    private boolean isFromEnhanced = false;
     private boolean hasPlayAgainCard = false;
+    public boolean isFromEnhanced()
+    {
+        return isFromEnhanced;
+    }
+    public void setIsFromEnhanced(boolean fromEnhanced)
+    {
+        isFromEnhanced = fromEnhanced;
+    }
+
 
     public Player(String n)
     {
@@ -66,4 +77,12 @@ public class Player
     public int getPoints() {return this.points;}
 
     public void setPoints(int points) {this.points = points;}
+    public void setLap(int lap)
+    {
+        this.lap += lap;
+    }
+    public int getLap()
+    {
+        return this.lap;
+    }
 }
