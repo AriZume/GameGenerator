@@ -5,8 +5,6 @@ public class Game
     public final int OPT_ROLL = 1;
     public final int OPT_SAVE = 2;
     public final int OPT_EXIT = 3;
-
-
     private String boardType;
     private int lapsToWin;
     private final int diceAmount;
@@ -217,12 +215,11 @@ public class Game
                         {
                             case OPT_ROLL:
                                 movePlayer(players.get(i));
-
                                 screen.printEndTurn(players);
                                 break;
 
                             case OPT_SAVE:
-
+                                option=0;
                                 break;
 
                             case OPT_EXIT:
@@ -237,6 +234,10 @@ public class Game
                     {
                         System.out.println("Invalid option. Please try again");
                         input.nextLine();
+                    }
+                    if(option == 0)
+                    {
+                        screen.printInGameMenu();
                     }
                 }while(option <= 0 || option > 3);
 
@@ -279,7 +280,7 @@ public class Game
                 }
                 else
                 {
-                    screen.printPlayerTurn(players.get(i).getName(), getPlayerIndex(players.get(i)));
+                    screen.printPlayerTurnPoints(players.get(i).getPoints(),players.get(i).getName());
                 }
                 screen.printDescriptiveMap(players.get(i).getCurrentPosition(), board.getTiles().size());
                 screen.printInGameMenu();
@@ -295,12 +296,11 @@ public class Game
                         {
                             case OPT_ROLL:
                                 movePlayer(players.get(i));
-
                                 screen.printEndTurn(players);
                                 break;
 
                             case OPT_SAVE:
-
+                                option=0;
                                 break;
 
                             case OPT_EXIT:
@@ -315,6 +315,10 @@ public class Game
                     {
                         System.out.println("Invalid option. Please try again");
                         input.nextLine();
+                    }
+                    if(option == 0)
+                    {
+                        screen.printInGameMenu();
                     }
                 }while(option <= 0 || option > 3);
 
@@ -339,14 +343,13 @@ public class Game
         } // End while
     }
 
-
     // Debug only
-    public void printTilesPower()
+    /* public void printTilesPower()
     {
         for(Tile t : board.getTiles())
         {
             System.out.println(t);
         }
-    }
+    } */
 
 }

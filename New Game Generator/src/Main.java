@@ -1,5 +1,4 @@
-import java.util.InputMismatchException;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main
 {
@@ -99,7 +98,6 @@ public class Main
                         {
                             enhancedTiles = screen.getInputIntegerValidation(input, "Enter the amount of enhanced tiles you would like the board to have: ",
                                     "Enhanced tile amount must be at least 2 less than the total tile amount.\nPlease try again: ", 1, tileAmount-2 );
-
                             maxPoints =   screen.getInputIntegerValidation(input, "Number of points required to win the game: ",
                                     "Point amount should be at least 1000. (Min 500)(Max 10000)\nPlease try again: ", 500, 10000);
 
@@ -108,8 +106,8 @@ public class Main
                         }
 
                         // Debugging
-                        System.out.println();
-                        game.printTilesPower();
+                        //System.out.println();
+                        //game.printTilesPower();
                         // ---
 
                         if(boardType == optSquareBoard)
@@ -133,6 +131,7 @@ public class Main
                     case optHelp:
 
                         break;
+                        //Json files...
 
                     default:
                         System.out.print("Invalid option. Please try again.");

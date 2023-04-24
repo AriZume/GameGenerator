@@ -11,7 +11,11 @@ public class CardTile extends Tile{
     @Override
     public void updatePlayerStatus(Player player)
     {
+        // Change the console text color to blue
+        System.out.print("\033[34m");
         System.out.println("You landed on a tile that provides you a Card");
+        // Reset the console color
+        System.out.print("\033[0m");
         int cardType = random.nextInt(3)+1;
         if (cardType==1)
         {

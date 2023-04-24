@@ -1,22 +1,32 @@
-import java.util.ArrayList;
-import java.util.InputMismatchException;
-import java.util.Scanner;
+import java.util.*;
 
 public class Screen
 {
     public void printMainMenu(int optDesignPlay, int optLoad, int optHelp, int optExit)
     {
+        // Change the color to rose gold
+        System.out.print("\033[38;2;255;192;203m");
+
         System.out.println("========================");
         System.out.println("\t\t  MENU");
         System.out.println("========================");
+
+        // Reset the console color
+        System.out.print("\033[0m");
         System.out.println(optDesignPlay + ". Design Game and Play\n" + optLoad + ". Load Game\n" + optHelp + ". Help\n" + optExit + ". Exit");
     }
 
     public void printDesignGameTitle()
     {
+        // Change the color to rose gold
+        System.out.print("\033[38;2;255;192;203m");
+
         System.out.println("========================");
         System.out.println("\t  GAME DESIGN");
         System.out.println("========================");
+
+        // Reset the console color
+        System.out.print("\033[0m");
     }
 
     public void printDescriptiveMap(int playerPos, int boardSize)
@@ -36,6 +46,12 @@ public class Screen
         System.out.println("It's " + playerName + "'s turn\n(Player " + (playerIndex + 1) + ") - Lap " + lap);
     }
 
+    public void printPlayerTurnPoints(int pointsOfPlayer,String nameOfPlayer)
+    {
+        System.out.println("-----------------------------------------------------------------------");
+        System.out.println("Player: "+ nameOfPlayer +" have "+ pointsOfPlayer +" points!");
+    }
+
     public void printInGameMenu()
     {
         System.out.println("\n1. Roll Dice\n2. Save (Unavailable)\n3. Exit");
@@ -52,14 +68,22 @@ public class Screen
     public boolean printWinner(int playerIndex, String name)
     {
         System.out.println("\n-----------------------------------------------------------------------");
+        // Change the console text color to purple/magenta
+        System.out.print("\033[35m");
         System.out.println("Player " + (playerIndex + 1) + " (" + name + ") wins! Congratulations!" );
+        // Reset the console color
+        System.out.print("\033[0m");
         return true;
     }
 
     public boolean printWinner(int playerIndex, String name, int playerPoints)
     {
         System.out.println("\n-----------------------------------------------------------------------");
+        // Change the console text color to purple/magenta
+        System.out.print("\033[35m");
         System.out.println("Player " + (playerIndex + 1) + " (" + name + ") wins with a total of "+ playerPoints+ " points! Congratulations!" );
+        // Reset the console color
+        System.out.print("\033[0m");
         return true;
     }
 
