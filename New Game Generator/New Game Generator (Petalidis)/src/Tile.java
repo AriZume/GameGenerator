@@ -4,6 +4,7 @@ public class Tile
 
     public Response updatePlayerStatus(Player p)
     {
-        System.out.println("This tile has no effect.");
+        return new Response("This tile has no effect.");
+
     }
 }

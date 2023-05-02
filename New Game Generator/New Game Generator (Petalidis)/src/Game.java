@@ -192,6 +192,7 @@ public class Game
 
     public void startGameSquare()
     {
+        Response response;
         Scanner input = new Scanner(System.in);
 
         decidePlayerTurn();
@@ -216,7 +217,10 @@ public class Game
                         switch (option)
                         {
                             case OPT_ROLL:
-                                movePlayer(players.get(i));
+
+                                response = movePlayer(players.get(i));
+                                System.out.println(response.message);
+
                                 screen.printEndTurn(players);
                                 break;
 

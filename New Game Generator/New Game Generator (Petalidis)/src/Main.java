@@ -55,8 +55,8 @@ public class Main
 
                         // Get trash hehe.
                         // heh
-                        // hehe
                         input.nextLine();
+                        // hehe
 
                         enhanced = screen.getInputStringValidation(input, "Would you like enhanced tiles? (Y/N)\n(Note: Enhanced tile amount should be at least 2 less than the total tile amount): ",
                                 "Invalid input. Please try again.", "[yYnN]");
