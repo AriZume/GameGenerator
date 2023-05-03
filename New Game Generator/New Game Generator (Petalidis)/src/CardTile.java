@@ -1,34 +1,19 @@
 import java.util.*;
 public class CardTile extends Tile{
-    private final Card card =new Card();
     private final Random random = new Random();
     private final int maxPoints;
+    private final Card[] cards = new Card[]{new GainPointsCard(), new LosePointsCard(), new PlayAgainCard()};
+
     public CardTile(int maxPoints)
     {
         this.maxPoints = maxPoints;
     }
 
     @Override
-    public Response updatePlayerStatus(Player player)
-    {
-//        // Change the console text color to blue
-//        System.out.print("\033[34m");
-//        System.out.println("You landed on a tile that provides you a Card");
-//        // Reset the console color
-//        System.out.print("\033[0m");
-        int cardType = random.nextInt(3)+1;
-        if (cardType==1)
-        {
-            card.playAgainCard(player);
-        }
-        else if (cardType==2)
-        {
-            card.gainPointsCard(player, maxPoints, random);
-        }
-        else
-        {
-            card.losePointsCard(player, maxPoints, random);
-        }
+    public Response updatePlayerStatus(Player player) {
+        int cardIndex = random.nextInt(cards.length);
+        Card card = cards[cardIndex];
+        Response response = card.changeStatusCard(player, maxPoints);
 
         return new Response("\033[34m" +
                 "You landed on a tile that provides you a Card\n"+
