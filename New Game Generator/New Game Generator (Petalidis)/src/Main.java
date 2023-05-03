@@ -89,7 +89,7 @@ public class Main
                         else if (enhanced.matches("[Nn]") && cards.matches("[Yy]"))
                         {
                             maxPoints =   screen.getInputIntegerValidation(input, "Number of points required to win the game: ",
-                                    "Point amount should be at least 1000. (Min 500)(Max 10000)\nPlease try again: ", 500, 10000);
+                                    "Point amount should be at least 500. (Min 500)(Max 10000)\nPlease try again: ", 500, 10000);
 
                             // Creates game with only cards.
                             game = new Game(playerAmount, tileAmount, diceAmount, Integer.toString(maxPoints));
@@ -99,7 +99,7 @@ public class Main
                             enhancedTiles = screen.getInputIntegerValidation(input, "Enter the amount of enhanced tiles you would like the board to have: ",
                                     "Enhanced tile amount must be at least 2 less than the total tile amount.\nPlease try again: ", 1, tileAmount-2 );
                             maxPoints =   screen.getInputIntegerValidation(input, "Number of points required to win the game: ",
-                                    "Point amount should be at least 1000. (Min 500)(Max 10000)\nPlease try again: ", 500, 10000);
+                                    "Point amount should be at least 500. (Min 500)(Max 10000)\nPlease try again: ", 500, 10000);
 
                             // Creates game with both enhanced tiles and cards.
                             game = new Game(playerAmount, tileAmount, diceAmount, enhancedTiles, Integer.toString(maxPoints));
@@ -113,15 +113,14 @@ public class Main
                         if(boardType == optSquareBoard)
                         {
                             game.setBoardType("Square");
-                            game.startGameSquare();
                         }
                         else if(boardType == optCircularBoard)
                         {
                             game.setBoardType("Circle");
                             game.setLapsToWin(lapsToWins);
-                            game.startGameCircle();
                         }
 
+                        game.startGame();
                         break;
 
                     case optLoad:
@@ -134,7 +133,7 @@ public class Main
                         //Json files...
 
                     default:
-                        System.out.print("Invalid option. Please try again.");
+                    System.out.print("Invalid option. Please try again.");
                         break;
                 }
             }catch(InputMismatchException e)
@@ -144,6 +143,6 @@ public class Main
             }
 
             screen.printMainMenu(optDesignPlay, optLoad, optHelp, optExit);
-        }// End while
+        }
     }
 }

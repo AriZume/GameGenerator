@@ -7,7 +7,7 @@ public class GainPointsCard extends Card
         Random random = new Random();
         int addPoints= (random.nextInt(maxPoints/3));
         player.setNewPoints(addPoints);
-        return new Response("\033[32m"+"This card will give you "+ addPoints+" points. You have a total of "+ player.getPoints() + " points!"+"\033[0m");
+        return new Response("\n" + "\033[32m"+"This card will give you "+ addPoints+" points. You have a total of "+ player.getPoints() + " points!"+"\033[0m" + "\n");
     }
 
 

@@ -6,6 +6,7 @@ public class Game
     public final int OPT_SAVE = 2;
     public final int OPT_EXIT = 3;
     private String boardType;
+    private String winnerMessage;
     private int lapsToWin;
     private final int diceAmount;
     private final ArrayList<Player> players;
@@ -123,16 +124,19 @@ public class Game
     {
         if(boardType.equals("Square"))
         {
+            winnerMessage = screen.printWinner(getPlayerIndex(player), player.getName());
             return player.getCurrentPosition() == board.getTiles().size();
         }
         else
         {
             if(lapsToWin != 0)
             {
+                winnerMessage = screen.printWinner(getPlayerIndex(player), player.getName());
                 return player.getLap() == lapsToWin;
             }
             else
             {
+                winnerMessage = screen.printWinner(getPlayerIndex(player), player.getName(), player.getPoints());
                 return player.getPoints() >= board.getMaxPoints();
             }
         }
@@ -142,38 +146,47 @@ public class Game
     public Response movePlayer(Player player)
     {
         player.setPersonalRoll(getDiceRoll());
-
         player.setNewPosition(player.getPersonalRoll());
-        checkPlayerPosition(player);
 
-        Response response = board.getTiles().get(player.getCurrentPosition()-1).updatePlayerStatus(player);
+        Response responseCheckPlayerPos = checkPlayerPosition(player);
+        System.out.print(responseCheckPlayerPos.getMessage());
 
-        checkPlayerPosition(player);
+        Response responsePlayerStatus = board.getTiles().get(player.getCurrentPosition()-1).updatePlayerStatus(player);
+
+        responseCheckPlayerPos = checkPlayerPosition(player);
+        System.out.print(responseCheckPlayerPos.getMessage());
 
         // If the player is changed by an enhanced tile and lands on a card tile, execute card's updatePlayerStatus.
         // After the action reset players isFromEnhanced to false.
-        if( player.isFromEnhanced() && board.getTiles().get(player.getCurrentPosition()-1).getClass().getName().equals("CardTile"))
+        if (board.getTiles().get(player.getCurrentPosition() - 1).getClass().getName().equals("CardTile"))
         {
-            board.getTiles().get(player.getCurrentPosition()-1).updatePlayerStatus(player);
+            if (player.isFromEnhanced())
+            {
+                board.getTiles().get(player.getCurrentPosition() - 1).updatePlayerStatus(player);
+            }
         }
         player.setIsFromEnhanced(false);
 
         // Might be needed if future cards move the player.
         // checkPlayerPosition(player);
-        return response;
+        return responsePlayerStatus;
     }
 
     // Keeps track of the current position not exceeding the maximum amount of tiles
     // and not being less than 1.
-    public void checkPlayerPosition(Player player)
+    public Response checkPlayerPosition(Player player)
     {
+        Response lapAward = new Response("\n" + "\033[32m" + "You completed a lap and are awarded " + board.getMaxPoints() / 10 + " points!" + "\033[0m" + "\n");
+
         if(boardType.equals("Square"))
         {
-            if (player.getCurrentPosition() >= board.getTiles().size()) {
+            if (player.getCurrentPosition() >= board.getTiles().size())
+            {
                 player.setCurrentPosition(board.getTiles().size());
             }
 
-            if (player.getCurrentPosition() <= 0) {
+            if (player.getCurrentPosition() <= 0)
+            {
                 player.setCurrentPosition(1);
             }
         }
@@ -184,15 +197,26 @@ public class Game
                 if(lapsToWin != 0)
                 {
                     player.setLap(1);
+                    lapAward = new Response("");
+
                 }
+
                 player.setCurrentPosition(player.getCurrentPosition() - board.getTiles().size());
+                player.setNewPoints(board.getMaxPoints() / 10);
+                return new Response(lapAward.getMessage());
+            }
+            if (player.getCurrentPosition() <= 0)
+            {
+                player.setCurrentPosition(1);
             }
         }
+        return new Response("");
     }
 
-    public void startGameSquare()
+    public void startGame()
     {
-        Response response;
+        int previousPlayer = 0;
+
         Scanner input = new Scanner(System.in);
 
         decidePlayerTurn();
@@ -202,8 +226,27 @@ public class Game
         {
             for(int i = 0; i < players.size(); i++)
             {
+                if (players.get(previousPlayer).getHasPlayAgainCard())
+                {
+                    players.get(previousPlayer).setHasPlayAgainCard(false);
+                    i = previousPlayer;
+                }
 
-                screen.printPlayerTurn(players.get(i).getName(), getPlayerIndex(players.get(i)));
+                if(boardType.equals("Square"))
+                {
+                    screen.printPlayerTurn(players.get(i).getName(), getPlayerIndex(players.get(i)));
+                }
+                else
+                {
+                    if(lapsToWin != 0)
+                    {
+                        screen.printPlayerTurnLap(players.get(i).getName(), getPlayerIndex(players.get(i)), players.get(i).getLap());
+                    }
+                    else
+                    {
+                        screen.printPlayerTurnPoints(players.get(i).getPoints(), players.get(i).getName());
+                    }
+                }
                 screen.printDescriptiveMap(players.get(i).getCurrentPosition(), board.getTiles().size());
                 screen.printInGameMenu();
 
@@ -218,8 +261,8 @@ public class Game
                         {
                             case OPT_ROLL:
 
-                                response = movePlayer(players.get(i));
-                                System.out.println(response.message);
+                                Response response = movePlayer(players.get(i));
+                                System.out.println(response.getMessage());
 
                                 screen.printEndTurn(players);
                                 break;
@@ -253,13 +296,16 @@ public class Game
                 }
                 else if(weHaveAWinner(players.get(i)))
                 {
-                    endGame = screen.printWinner(getPlayerIndex(players.get(i)), players.get(i).getName());
+                    endGame = true;
+                    System.out.print(winnerMessage);
                     break;
                 }
-            } // End for
-        } // End while
+                previousPlayer = i;
+            }
+        }
     }
 
+    /*
     public void startGameCircle()
     {
         int previousPlayer = 0;
@@ -349,6 +395,8 @@ public class Game
             } // End for
         } // End while
     }
+
+     */
 
     // Debug only
     /* public void printTilesPower()

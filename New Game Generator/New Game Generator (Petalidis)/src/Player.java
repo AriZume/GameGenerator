@@ -68,10 +68,12 @@ public class Player
     public int getPoints() {return this.points;}
 
     public void setPoints(int points) {this.points = points;}
+
     public void setLap(int lap)
     {
         this.lap += lap;
     }
+
     public int getLap()
     {
         return this.lap;
@@ -81,6 +83,7 @@ public class Player
     {
         return isFromEnhanced;
     }
+
     public void setIsFromEnhanced(boolean fromEnhanced)
     {
         isFromEnhanced = fromEnhanced;

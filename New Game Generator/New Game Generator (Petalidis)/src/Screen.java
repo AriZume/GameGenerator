@@ -2,6 +2,7 @@ import java.util.*;
 
 public class Screen
 {
+    private String message;
     public void printMainMenu(int optDesignPlay, int optLoad, int optHelp, int optExit)
     {
         // Change the color to rose gold
@@ -60,31 +61,32 @@ public class Screen
     public void printEndTurn(ArrayList<Player> players)
     {
         System.out.println("End of turn.\n");
-        for (Player p : players) {
+        for (Player p : players)
+        {
             System.out.println(p.getName() + " is on tile " + p.getCurrentPosition());
         }
     }
 
-    public boolean printWinner(int playerIndex, String name)
+    public String printWinner(int playerIndex, String name)
     {
-        System.out.println("\n-----------------------------------------------------------------------");
+        message = ("\n-----------------------------------------------------------------------"
         // Change the console text color to purple/magenta
-        System.out.print("\033[35m");
-        System.out.println("Player " + (playerIndex + 1) + " (" + name + ") wins! Congratulations!" );
+                + "\033[35m"
+                + "Player " + (playerIndex + 1) + " (" + name + ") wins! Congratulations!"
         // Reset the console color
-        System.out.print("\033[0m");
-        return true;
+                + "\033[0m" + "\n");
+        return message;
     }
 
-    public boolean printWinner(int playerIndex, String name, int playerPoints)
+    public String printWinner(int playerIndex, String name, int playerPoints)
     {
-        System.out.println("\n-----------------------------------------------------------------------");
+       message = ("\n-----------------------------------------------------------------------"
         // Change the console text color to purple/magenta
-        System.out.print("\033[35m");
-        System.out.println("Player " + (playerIndex + 1) + " (" + name + ") wins with a total of "+ playerPoints+ " points! Congratulations!" );
+                +"\033[35m"
+                + "Player " + (playerIndex + 1) + " (" + name + ") wins with a total of "+ playerPoints+ " points! Congratulations!"
         // Reset the console color
-        System.out.print("\033[0m");
-        return true;
+                + "\033[0m" + "\n");
+        return message;
     }
 
     public int getInputIntegerValidation(Scanner input, String promptMessage, String errorMessage, int min, int max)
