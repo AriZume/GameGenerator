@@ -8,11 +8,16 @@ public class Game
     private String boardType;
     private String winnerMessage;
     private int lapsToWin;
-    private final int diceAmount;
-    private final ArrayList<Player> players;
-    private final Board board;
+    private int diceAmount;
+    private ArrayList<Player> players;
+    private Board board;
     private final Screen screen = new Screen();
 
+    public Game()
+    {
+        players = new ArrayList<>();
+        this.board = new Board();
+    }
     // Simple constructor.
     public Game(int playerAm, int tileAm, int diceAm)
     {
@@ -44,11 +49,19 @@ public class Game
     public Game(int playerAm, int tileAm, int diceAm, int enTiles, String maxPoints)
     {
         this.diceAmount = diceAm;
-        this.board = new Board(tileAm,enTiles , maxPoints);
+        this.board = new Board(tileAm, enTiles , maxPoints);
         this.players = new ArrayList<>();
         createPlayers(playerAm);
     }
 
+    public void setDiceAmount(int loadedDice)
+    {
+        this.diceAmount = loadedDice;
+    }
+    public Board getBoard()
+    {
+        return board;
+    }
     public void setLapsToWin(int lapsToWin)
     {
         this.lapsToWin = lapsToWin;
@@ -56,6 +69,13 @@ public class Game
     public void setBoardType(String boardType)
     {
         this.boardType = boardType;
+    }
+    public void createPlayers(ArrayList<String> loadPlayers)
+    {
+        for(int i = 0; i < loadPlayers.size(); i++)
+        {
+            players.add(new Player(loadPlayers.get(i)));
+        }
     }
     public void createPlayers(int playerAmount)
     {
@@ -184,11 +204,6 @@ public class Game
             {
                 player.setCurrentPosition(board.getTiles().size());
             }
-
-            if (player.getCurrentPosition() <= 0)
-            {
-                player.setCurrentPosition(1);
-            }
         }
         else
         {
@@ -205,16 +220,18 @@ public class Game
                 player.setNewPoints(board.getMaxPoints() / 10);
                 return new Response(lapAward.getMessage());
             }
-            if (player.getCurrentPosition() <= 0)
-            {
-                player.setCurrentPosition(1);
-            }
+        }
+
+        if (player.getCurrentPosition() <= 0)
+        {
+            player.setCurrentPosition(1);
         }
         return new Response("");
     }
 
     public void startGame()
     {
+        SaveGame saveGame = new SaveGame();
         int previousPlayer = 0;
 
         Scanner input = new Scanner(System.in);
@@ -244,7 +261,7 @@ public class Game
                     }
                     else
                     {
-                        screen.printPlayerTurnPoints(players.get(i).getPoints(), players.get(i).getName());
+                        screen.printPlayerTurnPoints(players.get(i).getName(), players.get(i).getPoints(), getPlayerIndex(players.get(i)));
                     }
                 }
                 screen.printDescriptiveMap(players.get(i).getCurrentPosition(), board.getTiles().size());
@@ -269,6 +286,8 @@ public class Game
 
                             case OPT_SAVE:
                                 option=0;
+                                saveGame.saveProgress(players, boardType, board.getTiles().size(), board.getMaxPoints(), lapsToWin, diceAmount, board.getEnhancedTiles());
+
                                 break;
 
                             case OPT_EXIT:
@@ -305,106 +324,14 @@ public class Game
         }
     }
 
-    /*
-    public void startGameCircle()
-    {
-        int previousPlayer = 0;
-
-        Scanner input = new Scanner(System.in);
-
-        decidePlayerTurn();
-
-        boolean endGame = false;
-        while (!endGame)
-        {
-            for(int i = 0; i < players.size(); i++)
-            {
-
-                if(players.get(previousPlayer).getHasPlayAgainCard())
-                {
-                    players.get(previousPlayer).setHasPlayAgainCard(false);
-                    i = previousPlayer;
-                }
-
-                if(lapsToWin != 0)
-                {
-                    screen.printPlayerTurnLap(players.get(i).getName(), getPlayerIndex(players.get(i)), players.get(i).getLap());
-                }
-                else
-                {
-                    screen.printPlayerTurnPoints(players.get(i).getPoints(),players.get(i).getName());
-                }
-                screen.printDescriptiveMap(players.get(i).getCurrentPosition(), board.getTiles().size());
-                screen.printInGameMenu();
-
-                int option = 0;
-                do
-                {
-                    try
-                    {
-                        option = input.nextInt();
-
-                        switch (option)
-                        {
-                            case OPT_ROLL:
-                                Response response = movePlayer(players.get(i));
-                                screen.printEndTurn(players);
-                                System.out.println(response.getMessage());
-                                break;
-
-                            case OPT_SAVE:
-                                option=0;
-                                break;
-
-                            case OPT_EXIT:
-                                endGame = true;
-                                break;
-
-                            default:
-                                System.out.println("Invalid option. Please try again.");
-                                break;
-                        }
-                    } catch (InputMismatchException e)
-                    {
-                        System.out.println("Invalid option. Please try again");
-                        input.nextLine();
-                    }
-                    if(option == 0)
-                    {
-                        screen.printInGameMenu();
-                    }
-                }while(option <= 0 || option > 3);
-
-                if (endGame)
-                {
-                    break;
-                }
-                else if(weHaveAWinner(players.get(i)))
-                {
-                    if(lapsToWin != 0)
-                    {
-                        endGame = screen.printWinner(getPlayerIndex(players.get(i)), players.get(i).getName());
-                    }
-                    else
-                    {
-                        endGame = screen.printWinner(getPlayerIndex(players.get(i)), players.get(i).getName(), players.get(i).getPoints());
-                    }
-                    break;
-                }
-                previousPlayer = i;
-            } // End for
-        } // End while
-    }
-
-     */
-
     // Debug only
-    /* public void printTilesPower()
+    /*
+    public void printTilesPower()
     {
         for(Tile t : board.getTiles())
         {
             System.out.println(t);
         }
-    } */
-
+    }
+    */
 }

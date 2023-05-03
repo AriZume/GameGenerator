@@ -5,7 +5,12 @@ public class Board
 {
     private final ArrayList<Tile> tiles;
     private int maxPoints;
+    private int enhancedTiles = 0;
 
+    public Board()
+    {
+        tiles = new ArrayList<>();
+    }
     // Creates a simple board with no effects.
     public Board(int tileAmount)
     {
@@ -64,10 +69,23 @@ public class Board
     {
         return maxPoints;
     }
-
+    public void setMaxPoints(int loadedMaxPoints)
+    {
+        this.maxPoints = loadedMaxPoints;
+    }
     public ArrayList<Tile> getTiles()
     {
         return tiles;
+    }
+
+    public void createTilesAndCards(int loadedTiles, int loadedEnhancedTiles, int loadedMaxPoints)
+    {
+        for (int i = 0; i < loadedTiles; i++)
+        {
+            tiles.add(new Tile());
+        }
+        setupEnhancedTiles(loadedEnhancedTiles);
+        setupCardTiles(loadedMaxPoints);
     }
 
     // Initializes the position of the enhanced tiles.
@@ -79,6 +97,8 @@ public class Board
     // Replaces the corresponding index's with the enhanced one's.
     private void setupEnhancedTiles(int enTiles)
     {
+        enhancedTiles = enTiles;
+
         ArrayList<Integer> tempList = new ArrayList<>();
         for (int i = 1; i < tiles.size(); i++)
         {
@@ -115,12 +135,19 @@ public class Board
         int maxAmountOfCardTiles = (tiles.size() / 5);
         int cardTilePositionCurrent = 0;
         int cardTilePositionPrevious = cardTilePositionCurrent;
-        for(int cardTile = 0; cardTile < maxAmountOfCardTiles; cardTile++)
+        if(maxPoints != 0)
         {
-            cardTilePositionCurrent = (cardTilePositionPrevious + ((tiles.size() - cardTilePositionPrevious) / (maxAmountOfCardTiles - cardTile)));
-            tiles.set(((cardTilePositionCurrent + cardTilePositionPrevious) / 2), new CardTile(maxPoints));
-            cardTilePositionPrevious = cardTilePositionCurrent;
+            for (int cardTile = 0; cardTile < maxAmountOfCardTiles; cardTile++)
+            {
+                cardTilePositionCurrent = (cardTilePositionPrevious + ((tiles.size() - cardTilePositionPrevious) / (maxAmountOfCardTiles - cardTile)));
+                tiles.set(((cardTilePositionCurrent + cardTilePositionPrevious) / 2), new CardTile(maxPoints));
+                cardTilePositionPrevious = cardTilePositionCurrent;
+            }
         }
     }
 
+    public int getEnhancedTiles()
+    {
+        return enhancedTiles;
+    }
 }
