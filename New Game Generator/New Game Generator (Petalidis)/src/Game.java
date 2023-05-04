@@ -196,6 +196,7 @@ public class Game
     // and not being less than 1.
     public Response checkPlayerPosition(Player player)
     {
+        // Default message for lap completion when the game has points.
         Response lapAward = new Response("\n" + "\033[32m" + "You completed a lap and are awarded " + board.getMaxPoints() / 10 + " points!" + "\033[0m" + "\n");
 
         if(boardType.equals("Square"))
@@ -212,6 +213,7 @@ public class Game
                 if(lapsToWin != 0)
                 {
                     player.setLap(1);
+                    // Overwrites message if game has laps as winning condition.
                     lapAward = new Response("");
 
                 }
@@ -233,7 +235,6 @@ public class Game
     {
         SaveGame saveGame = new SaveGame();
         int previousPlayer = 0;
-        Response winner = new Response("");
 
         Scanner input = new Scanner(System.in);
 
@@ -250,11 +251,10 @@ public class Game
                     i = previousPlayer;
                 }
 
-                 Response playerTurn;
+                Response playerTurn;
                 if(boardType.equals("Square"))
                 {
-                     playerTurn = screen.printPlayerTurn(players.get(i).getName(), getPlayerIndex(players.get(i)));
-
+                    playerTurn = screen.printPlayerTurn(players.get(i).getName(), getPlayerIndex(players.get(i)));
                 }
                 else
                 {

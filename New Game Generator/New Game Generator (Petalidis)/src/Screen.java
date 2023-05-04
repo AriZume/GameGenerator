@@ -87,6 +87,15 @@ public class Screen
         return message;
     }
 
+    public Response printHelp()
+    {
+        return new Response ("Hello and welcome to the latest version of our Game Generator.\n" +
+                "To start a new game please select the fist option below.\n" +
+                "If you have the progress of your last game saved please select the second option below to continue.\n" +
+                "If you want to exit the game please select the fourth option below.\n" +
+                "HAVE FUN! ^_^");
+    }
+
     public int getInputIntegerValidation(Scanner input, String promptMessage, String errorMessage, int min, int max)
     {
         int number;

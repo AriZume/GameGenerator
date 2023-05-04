@@ -131,8 +131,8 @@ public class Main
                         break;
 
                     case optHelp:
-
-                        System.out.println("Can't give you help :(\nPlease donate $19.99 to unlock GameGenerator Premium.");
+                        Response help = screen.printHelp();
+                        System.out.println(help.getMessage());
                         break;
 
                     default:

@@ -1,6 +1,6 @@
 public class Response
 {
-    String message;
+    private String message;
 
     public Response(String message)
     {
@@ -11,14 +11,11 @@ public class Response
     {
         return message;
     }
-    public void setMessage(String msg)
-    {
-        this.message = msg;
-    }
 
-    /* public void printMessage()
+    /*
+    public void printMessage()
     {
         System.out.print(message);
     }
-     */
+    */
 }
