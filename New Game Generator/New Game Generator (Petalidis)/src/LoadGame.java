@@ -13,7 +13,7 @@ public class LoadGame
     }
     public void loadProgress()
     {
-        File saveFile = new File("C:\\Users\\etzer\\Documents\\Intellij Saves\\New Game Generator (Petalidis)\\gameProgress.txt");
+        File saveFile = new File("N:\\pragmata sxolhs\\Java Projects\\New Game Generator\\gameProgress.txt");
 
         int tiles = 0, enhancedTiles = 0, maxPoints = 0, laps = 0, dice = 0;
         ArrayList<String> players = new ArrayList<>();

@@ -16,88 +16,73 @@ public class Screen
             "\u001b[38;2;245;245;220m", // Beige
             "\u001b[38;2;139;69;19m" // Brown
             };
+
     private String message;
-    public void printMainMenu(int optDesignPlay, int optLoad, int optHelp, int optExit)
+    public Response printMainMenu(int optDesignPlay, int optLoad, int optHelp, int optExit) {
+        // Change the color to rose gold
+        return new Response("\033[38;2;255;192;203m" + "\n========================\n" + "\t\t  MENU" + "\n========================" +
+        resetColor + "\n"+ optDesignPlay + ". Design Game and Play\n" + optLoad + ". Load Game\n" + optHelp + ". Help\n" + optExit + ". Exit");
+    }
+
+    public Response printDesignGameTitle()
     {
         // Change the color to rose gold
-        System.out.print("\033[38;2;255;192;203m");
-
-        System.out.println("========================");
-        System.out.println("\t\t  MENU");
-        System.out.println("========================");
-
-        // Reset the console color
-        System.out.print(resetColor);
-        System.out.println(optDesignPlay + ". Design Game and Play\n" + optLoad + ". Load Game\n" + optHelp + ". Help\n" + optExit + ". Exit");
+        return new Response("\033[38;2;255;192;203m\n"+"========================\n"+"\t  GAME DESIGN\n"+"========================"+ resetColor+"\n");
     }
 
-    public void printDesignGameTitle()
+    public Response printDescriptiveMap(int playerPos, int boardSize)
     {
-        // Change the color to rose gold
-        System.out.print("\033[38;2;255;192;203m");
-        System.out.println("========================");
-        System.out.println("\t  GAME DESIGN");
-        System.out.println("========================");
-
-        // Reset the console color
-        System.out.print(resetColor);
+        return new Response("\nYou are placed on tile " + playerPos + " of " + boardSize+"\n");
     }
 
-    public void printDescriptiveMap(int playerPos, int boardSize)
+    public Response printPlayerTurn(String playerName, int playerIndex)
     {
-        System.out.println("\nYou are placed on tile " + playerPos + " of " + boardSize);
+        return new Response("-----------------------------------------------------------------------\n"+ "It's " +
+        colors[playerIndex] + playerName + resetColor + "'s turn.\n(Player " + (playerIndex + 1) + ")\n");
     }
 
-    public void printPlayerTurn(String playerName, int playerIndex)
+    public Response printPlayerTurnLap(String playerName, int playerIndex, int lap)
     {
-        System.out.println("-----------------------------------------------------------------------");
-        System.out.println("It's " + colors[playerIndex] + playerName + resetColor + "'s turn.\n(Player " + (playerIndex + 1) + ")");
+        return new Response("-----------------------------------------------------------------------\n"+"It's " +
+        colors[playerIndex] + playerName + resetColor + "'s turn.\n(Player " + (playerIndex + 1) + ") - Lap " + lap + "\n");
     }
 
-    public void printPlayerTurnLap(String playerName, int playerIndex, int lap)
+    public Response printPlayerTurnPoints(String playerName, int playerPoints, int playerIndex)
     {
-        System.out.println("-----------------------------------------------------------------------");
-        System.out.println("It's " + colors[playerIndex] + playerName + resetColor + "'s turn.\n(Player " + (playerIndex + 1) + ") - Lap " + lap);
+        return new Response("-----------------------------------------------------------------------\n"+"It's " + colors[playerIndex]
+        + playerName + resetColor + "'s turn.\n(Player " + (playerIndex + 1) + "), you have " + playerPoints + " points.\n");
     }
 
-    public void printPlayerTurnPoints(String playerName, int playerPoints, int playerIndex)
+    public Response printInGameMenu()
     {
-        System.out.println("-----------------------------------------------------------------------");
-        System.out.println("It's " + colors[playerIndex] + playerName + resetColor + "'s turn.\n(Player " + (playerIndex + 1) + "), you have " + playerPoints + " points.");
+        return new Response("\n1. Roll Dice\n2. Save (Unavailable)\n3. Exit\n");
     }
 
-    public void printInGameMenu()
+    public Response printEndTurn(ArrayList<Player> players)
     {
-        System.out.println("\n1. Roll Dice\n2. Save (Unavailable)\n3. Exit");
-    }
-
-    public void printEndTurn(ArrayList<Player> players)
-    {
-        System.out.println("End of turn.\n");
+        StringBuilder  endOfTurn= new StringBuilder("\nEnd of turn.\n") ;
         for (Player p : players)
         {
-            System.out.println(p.getName() + " is on tile " + p.getCurrentPosition());
+            endOfTurn.append(p.getName() + " is on tile " + p.getCurrentPosition()+"\n");
+
         }
+        return new Response(endOfTurn.toString());
     }
 
     public String printWinner(int playerIndex, String playerName)
     {
         message = ("\n-----------------------------------------------------------------------\n"
-        // Change the console text color to purple
-                + "\033[35m"
                 + "Player " + (playerIndex + 1) + " (" + colors[playerIndex] + playerName + resetColor + ") wins! Congratulations!"
-        // Reset the console color
+                // Reset the console color
                 + resetColor + "\n");
         return message;
     }
 
     public String printWinner(int playerIndex, String playerName, int playerPoints)
     {
-       message = ("\n-----------------------------------------------------------------------"
-        // Change the console text color to purple/magenta
-                +"\033[35m"
+        message = ("\n-----------------------------------------------------------------------"
                 + "Player " + (playerIndex + 1) + " (" + colors[playerIndex] + playerName + resetColor + ") wins with a total of "+ playerPoints+ " points! Congratulations!"
-        // Reset the console color
+                // Reset the console color
                 + resetColor + "\n");
         return message;
     }
@@ -116,7 +101,7 @@ public class Screen
                     break; // Exit loop when condition is met
                 }
             } catch (InputMismatchException e) {
-                System.out.print("Invalid input. Please try again: ");
+                System.out.print(printInvalidOption().getMessage());
                 input.nextLine();
             }
         }
@@ -136,5 +121,9 @@ public class Screen
             }
         }while(!userInput.matches(regexCondition) && !userInput.isEmpty());
         return userInput;
+    }
+    public Response printInvalidOption()
+    {
+        return new Response("\"Invalid input. Please try again: \"");
     }
 }

@@ -105,7 +105,6 @@ public class Game
         return players.indexOf(player);
     }
 
-    // TODO: MAKE MORE BEAUTIFUL ;)
     public void decidePlayerTurn()
     {
         System.out.println("Let's see who's starting first!");
@@ -163,7 +162,6 @@ public class Game
             }
         }
     }
-
     // Moves player according to the roll and enhanced tile-if there are any.
     public Response movePlayer(Player player)
     {
@@ -235,6 +233,7 @@ public class Game
     {
         SaveGame saveGame = new SaveGame();
         int previousPlayer = 0;
+        Response winner = new Response("");
 
         Scanner input = new Scanner(System.in);
 
@@ -251,23 +250,27 @@ public class Game
                     i = previousPlayer;
                 }
 
+                 Response playerTurn;
                 if(boardType.equals("Square"))
                 {
-                    screen.printPlayerTurn(players.get(i).getName(), getPlayerIndex(players.get(i)));
+                     playerTurn = screen.printPlayerTurn(players.get(i).getName(), getPlayerIndex(players.get(i)));
+
                 }
                 else
                 {
                     if(lapsToWin != 0)
                     {
-                        screen.printPlayerTurnLap(players.get(i).getName(), getPlayerIndex(players.get(i)), players.get(i).getLap());
+                         playerTurn = screen.printPlayerTurnLap(players.get(i).getName(), getPlayerIndex(players.get(i)), players.get(i).getLap());
                     }
                     else
                     {
-                        screen.printPlayerTurnPoints(players.get(i).getName(), players.get(i).getPoints(), getPlayerIndex(players.get(i)));
+                        playerTurn = screen.printPlayerTurnPoints(players.get(i).getName(), players.get(i).getPoints(), getPlayerIndex(players.get(i)));
                     }
                 }
-                screen.printDescriptiveMap(players.get(i).getCurrentPosition(), board.getTiles().size());
-                screen.printInGameMenu();
+                System.out.print(playerTurn.getMessage());
+                Response descriptiveMap = screen.printDescriptiveMap(players.get(i).getCurrentPosition(), board.getTiles().size());
+                Response inGameMenu = screen.printInGameMenu();
+                System.out.print(descriptiveMap.getMessage() + inGameMenu.getMessage());
 
                 int option = 0;
                 do
@@ -280,10 +283,11 @@ public class Game
                         {
                             case OPT_ROLL:
 
-                                Response response = movePlayer(players.get(i));
-                                System.out.println(response.getMessage());
+                                Response movePlayer = movePlayer(players.get(i));
+                                System.out.println(movePlayer.getMessage());
 
-                                screen.printEndTurn(players);
+                                Response endTurn = screen.printEndTurn(players);
+                                System.out.print(endTurn.getMessage());
                                 break;
 
                             case OPT_SAVE:
@@ -297,12 +301,12 @@ public class Game
                                 break;
 
                             default:
-                                System.out.println("Invalid option. Please try again.");
+                                System.out.print(screen.printInvalidOption().getMessage());
                                 break;
                         }
                     } catch (InputMismatchException e)
                     {
-                        System.out.println("Invalid option. Please try again");
+                        System.out.print(screen.printInvalidOption().getMessage());
                         input.nextLine();
                     }
                     if(option == 0)

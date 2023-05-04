@@ -24,7 +24,8 @@ public class Main
         Scanner input = new Scanner(System.in);
 
         int userInput;
-        screen.printMainMenu(optDesignPlay, optLoad, optHelp, optExit);
+        Response mainMenu = screen.printMainMenu(optDesignPlay, optLoad, optHelp, optExit);
+        System.out.println(mainMenu.getMessage());
 
         while(true)
         {
@@ -40,7 +41,8 @@ public class Main
                 {
                     case optDesignPlay:
 
-                        screen.printDesignGameTitle();
+                        Response designGameTitle = screen.printDesignGameTitle();
+                        System.out.print(designGameTitle.getMessage());
 
                         boardType = screen.getInputIntegerValidation(input, "Select board type:\n1. Square Board\n2. Circular Board\n(Type 1 or 2): ",
                                 "Invalid input. Please try again.", 1 ,2);
@@ -54,10 +56,8 @@ public class Main
                         diceAmount = screen.getInputIntegerValidation(input, "Number of dice: ",
                                 "Dice amount should be 1 or 2.\nPlease try again: ", 1, 2);
 
-                        // Get trash hehe.
-                        // heh
-                        input.nextLine();
-                        // hehe
+                        input.nextLine(); //Collects trash
+
 
                         enhanced = screen.getInputStringValidation(input, "Would you like enhanced tiles? (Y/N)\n(Note: Enhanced tile amount should be at least 2 less than the total tile amount): ",
                                 "Invalid input. Please try again.", "[yYnN]");
@@ -134,19 +134,18 @@ public class Main
 
                         System.out.println("Can't give you help :(\nPlease donate $19.99 to unlock GameGenerator Premium.");
                         break;
-                        //Json files...
 
                     default:
-                    System.out.print("Invalid option. Please try again.");
+                        System.out.print(screen.printInvalidOption().getMessage());
                         break;
                 }
             }catch(InputMismatchException e)
             {
-                System.out.print("Invalid Option. Please try again: ");
+                System.out.print(screen.printInvalidOption().getMessage());
                 input.nextLine();
             }
 
-            screen.printMainMenu(optDesignPlay, optLoad, optHelp, optExit);
+            System.out.println(mainMenu.getMessage());
         }
     }
 }

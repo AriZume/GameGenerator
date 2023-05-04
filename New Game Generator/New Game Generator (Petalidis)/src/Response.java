@@ -11,4 +11,14 @@ public class Response
     {
         return message;
     }
+    public void setMessage(String msg)
+    {
+        this.message = msg;
+    }
+
+    /* public void printMessage()
+    {
+        System.out.print(message);
+    }
+     */
 }
