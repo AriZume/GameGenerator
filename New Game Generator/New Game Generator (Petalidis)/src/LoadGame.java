@@ -15,10 +15,9 @@ public class LoadGame
     {
         File saveFile = new File("C:\\Users\\etzer\\Documents\\Intellij Saves\\New Game Generator (Petalidis)\\gameProgress.txt");
 
-        int tiles =0, enhancedTiles = 0, maxPoints = 0, laps = 0, dice = 0;
+        int tiles = 0, enhancedTiles = 0, maxPoints = 0, laps = 0, dice = 0;
         ArrayList<String> players = new ArrayList<>();
         String boardType = "";
-
 
         try(Scanner scanner = new Scanner(saveFile))
         {

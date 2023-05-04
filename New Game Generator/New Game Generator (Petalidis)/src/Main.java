@@ -19,7 +19,7 @@ public class Main
         String enhanced, cards = "N";
 
         Screen screen = new Screen();
-        Game loadedGame =new Game();
+        Game loadGame =new Game();
         Game newGame;
         Scanner input = new Scanner(System.in);
 
@@ -46,7 +46,7 @@ public class Main
                                 "Invalid input. Please try again.", 1 ,2);
 
                         playerAmount = screen.getInputIntegerValidation(input, "Number of players: ",
-                                "Player amount should be more than 2.(Max 25)\nPlease try again: ", 2, 25);
+                                "Player amount should be more than 2.(Max 10)\nPlease try again: ", 2, 10);
 
                         tileAmount = screen.getInputIntegerValidation(input, "Number of tiles: ",
                                 "Tile amount should be at least 10.(Max 150)\nPlease try again: ", 10, 150);
@@ -64,14 +64,14 @@ public class Main
 
                         if(boardType == optCircularBoard)
                         {
-                            cards = screen.getInputStringValidation(input, "Would you like to have cards in your newGame? (Y/N)",
+                            cards = screen.getInputStringValidation(input, "Would you like to have cards in your game? (Y/N)",
                                     "Invalid input. Please try again.", "[yYnN]");
 
                             // When the cards option is not active set default winning condition.
                             if(cards.matches("[Nn]"))
                             {
-                                lapsToWins = screen.getInputIntegerValidation(input, "In how many laps would you like the newGame to end: ",
-                                        "Laps should be more than 2.(Max 20)\nPlease try again: ", 2, 20);
+                                lapsToWins = screen.getInputIntegerValidation(input, "In how many laps would you like the game to end: ",
+                                        "Laps should be more than 2.(Max 15)\nPlease try again: ", 2, 15);
                             }
                         }
 
@@ -89,7 +89,7 @@ public class Main
                         }
                         else if (enhanced.matches("[Nn]") && cards.matches("[Yy]"))
                         {
-                            maxPoints =   screen.getInputIntegerValidation(input, "Number of points required to win the newGame: ",
+                            maxPoints =   screen.getInputIntegerValidation(input, "Number of points required to win the game: ",
                                     "Point amount should be at least 500. (Min 500)(Max 10000)\nPlease try again: ", 500, 10000);
 
                             // Creates newGame with only cards.
@@ -125,9 +125,9 @@ public class Main
                         break;
 
                     case optLoad:
-                        LoadGame load = new LoadGame(loadedGame);
+                        LoadGame load = new LoadGame(loadGame);
                         load.loadProgress();
-                        loadedGame.startGame();
+                        loadGame.startGame();
                         break;
 
                     case optHelp:

@@ -78,14 +78,14 @@ public class Board
         return tiles;
     }
 
-    public void createTilesAndCards(int loadedTiles, int loadedEnhancedTiles, int loadedMaxPoints)
+    public void createTilesAndCards(int loadTiles, int loadEnhancedTiles, int loadMaxPoints)
     {
-        for (int i = 0; i < loadedTiles; i++)
+        for (int i = 0; i < loadTiles; i++)
         {
             tiles.add(new Tile());
         }
-        setupEnhancedTiles(loadedEnhancedTiles);
-        setupCardTiles(loadedMaxPoints);
+        setupEnhancedTiles(loadEnhancedTiles);
+        setupCardTiles(loadMaxPoints);
     }
 
     // Initializes the position of the enhanced tiles.

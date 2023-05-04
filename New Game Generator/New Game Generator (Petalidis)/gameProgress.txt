@@ -1,7 +1,0 @@
-Names: Kostas Stelios 
-BoardType: Square
-Tiles: 20
-EnhancedTiles: 0
-MaxPoints: 0
-Laps: 0
-Dice: 1

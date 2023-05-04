@@ -9,10 +9,11 @@ public class Game
     private String winnerMessage;
     private int lapsToWin;
     private int diceAmount;
-    private ArrayList<Player> players;
-    private Board board;
+    private final ArrayList<Player> players;
+    private final Board board;
     private final Screen screen = new Screen();
 
+    // Constructor used to load game.
     public Game()
     {
         players = new ArrayList<>();
@@ -54,13 +55,13 @@ public class Game
         createPlayers(playerAm);
     }
 
-    public void setDiceAmount(int loadedDice)
+    public void setDiceAmount(int loadDice)
     {
-        this.diceAmount = loadedDice;
+        this.diceAmount = loadDice;
     }
     public Board getBoard()
     {
-        return board;
+        return this.board;
     }
     public void setLapsToWin(int lapsToWin)
     {
@@ -70,11 +71,12 @@ public class Game
     {
         this.boardType = boardType;
     }
+
     public void createPlayers(ArrayList<String> loadPlayers)
     {
-        for(int i = 0; i < loadPlayers.size(); i++)
+        for (String loadPlayer : loadPlayers)
         {
-            players.add(new Player(loadPlayers.get(i)));
+            players.add(new Player(loadPlayer));
         }
     }
     public void createPlayers(int playerAmount)
