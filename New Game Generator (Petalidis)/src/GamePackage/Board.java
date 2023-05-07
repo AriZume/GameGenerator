@@ -6,27 +6,36 @@ import TilesPackage.*;
 
 public class Board
 {
-    enum StringEnum
-    {
-        SQUARE_BOARD("Square"),
-        CIRCULAR_BOARD("Circular"),
-        CARD_TILE("CardTile");
-        public final String option;
-        StringEnum(String option)
-        {
-            this.option = option;
-        }
-        public String getOption()
-        {
-            return option;
-        }
-
-    }
     private final ArrayList<Tile> tiles;
+
     private int maxPoints;
     private int lapsToWin;
     private String boardType;
     private int enhancedTiles = 0;
+    public ArrayList<Player> players;
+
+    public Board()
+    {
+        tiles = new ArrayList<>();
+    }
+    // Creates a simple board with no effects.
+    public Board(int tileAmount)
+    {
+      this(tileAmount,0);
+    }
+
+    // Creates a board with enhanced tiles only.
+    public Board(int tileAmount, int enTiles)
+    {
+        this(tileAmount,enTiles,"0");
+    }
+
+    // Creates a board with cards.
+    public Board(int tileAmount, String maxPoints)
+    {
+        this(tileAmount,0,maxPoints);
+
+    }
 
     // Creates a board with both cards and enhanced tiles.
     public Board(int tileAmount, int enTiles, String maxPoints)
@@ -69,6 +78,12 @@ public class Board
     public ArrayList<Tile> getTiles()
     {
         return tiles;
+    }
+
+    public void createTilesAndCards(int loadEnhancedTiles, int loadMaxPoints)
+    {
+        setupEnhancedTiles(loadEnhancedTiles);
+        setupCardTiles(loadMaxPoints);
     }
 
     // Initializes the position of the enhanced tiles.
@@ -150,7 +165,7 @@ public class Board
 
         // If the player is changed by an enhanced tile and lands on a card tile, execute card's updatePlayerStatus.
         // After the action reset players isFromEnhanced to false.
-        if (getTiles().get(player.getCurrentPosition() - 1).getClass().getName().equals(StringEnum.CARD_TILE.getOption()))
+        if (getTiles().get(player.getCurrentPosition() - 1).getClass().getName().equals("CardTile"))
         {
             if (player.isFromEnhanced())
             {
@@ -169,7 +184,7 @@ public class Board
         // Default message for lap completion when the game has points.
         Response lapAward = new Response("\n" + "\033[32m" + "You completed a lap and are awarded " + getMaxPoints() / 10 + " points!" + "\033[0m" + "\n");
 
-        if(getBoardType().equals(StringEnum.SQUARE_BOARD.getOption()))
+        if(getBoardType().equals("Square"))
         {
             if (player.getCurrentPosition() >= getTiles().size())
             {

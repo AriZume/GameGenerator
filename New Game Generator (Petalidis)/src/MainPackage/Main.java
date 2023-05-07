@@ -25,19 +25,6 @@ public class Main
             return option;
         }
     }
-    enum StringEnum
-    {
-        SQUARE_BOARD("Square"),
-        CIRCULAR_BOARD("Circular");
-        public final String option;
-        StringEnum(String option)
-        {
-            this.option = option;
-        }
-        public String getOption()
-        {
-            return option;
-        }
 
     public static void main(String[] args)
     {
@@ -145,11 +132,11 @@ public class Main
 
                         if(boardType == Options.optSquareBoard.getOption())
                         {
-                            newGame.getBoard().setBoardType(StringEnum.SQUARE_BOARD.getOption());
+                            newGame.getBoard().setBoardType("Square");
                         }
                         else if(boardType == Options.optCircularBoard.getOption())
                         {
-                            newGame.getBoard().setBoardType(StringEnum.CIRCULAR_BOARD.getOption());
+                            newGame.getBoard().setBoardType("Circle");
                             newGame.getBoard().setLapsToWin(lapsToWins);
                         }
 
@@ -185,5 +172,4 @@ public class Main
             System.out.println(mainMenu.getMessage());
         }
     }
-}
 }

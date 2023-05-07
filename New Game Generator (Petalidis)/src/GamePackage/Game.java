@@ -12,26 +12,10 @@ public class Game
         OPT_SAVE(2),
         OPT_EXIT(3);
         public final int option;
-
         Options(int option)
         {
             this.option = option;
         }
-    }
-    enum StringEnum
-    {
-        SQUARE_BOARD("Square"),
-        CIRCULAR_BOARD("Circular");
-        public final String option;
-        StringEnum(String option)
-        {
-            this.option = option;
-        }
-        public String getOption()
-        {
-            return option;
-        }
-
     }
     private String winnerMessage;
     private int diceAmount;
@@ -153,9 +137,10 @@ public class Game
         System.out.print("\n");
         return totalRoll;
     }
+
     public boolean weHaveAWinner(Player player)
     {
-        if(board.getBoardType().equals(StringEnum.SQUARE_BOARD.getOption()))
+        if(board.getBoardType().equals("Square"))
         {
             winnerMessage = screen.printWinner(getPlayerIndex(player), player.getName());
             return player.getCurrentPosition() == board.getTiles().size();
@@ -202,7 +187,7 @@ public class Game
                 }
 
                 Response playerTurn;
-                if(board.getBoardType().equals(StringEnum.SQUARE_BOARD.getOption()))
+                if(board.getBoardType().equals("Square"))
                 {
                     playerTurn = screen.printPlayerTurn(players.get(i).getName(), getPlayerIndex(players.get(i)));
                 }
