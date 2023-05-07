@@ -1,7 +1,6 @@
 package MainPackage;
 
-import GamePackage.Game;
-import GamePackage.Response;
+import GamePackage.*;
 import IOPackage.GameLoader;
 
 import java.util.*;
@@ -145,8 +144,14 @@ public class Main
                         break;
 
                     case optLoad:
-                        Game loadGame =  loader.loadProgress();
-                        loadGame.startGame();
+                        try
+                        {
+                            Game loadGame = loader.loadProgress();
+                            loadGame.startGame();
+                        }catch(Exception e)
+                        {
+                            System.out.println("File not found. Please create a new game.");
+                        }
                         break;
 
                     case optHelp:

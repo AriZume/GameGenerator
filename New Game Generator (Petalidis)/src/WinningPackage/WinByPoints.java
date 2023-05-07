@@ -1,8 +1,6 @@
 package WinningPackage;
 
-import GamePackage.Board;
-import GamePackage.Game;
-import GamePackage.Player;
+import GamePackage.*;
 
 public class WinByPoints {
     public boolean winByPoints(Player player, Board board)

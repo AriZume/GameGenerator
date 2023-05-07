@@ -7,10 +7,12 @@ import TilesPackage.*;
 public class Board
 {
     private final ArrayList<Tile> tiles;
+
     private int maxPoints;
     private int lapsToWin;
     private String boardType;
     private int enhancedTiles = 0;
+    public ArrayList<Player> players;
 
     public Board()
     {
@@ -147,5 +149,67 @@ public class Board
         return enhancedTiles;
     }
 
+
+    public Response movePlayer(Player player,int diceRoll)
+    {
+        player.setPersonalRoll(diceRoll);
+        player.setNewPosition(player.getPersonalRoll());
+
+        Response responseCheckPlayerPos = checkPlayerPosition(player);
+        System.out.print(responseCheckPlayerPos.getMessage());
+
+        Response responsePlayerStatus = getTiles().get(player.getCurrentPosition()-1).updatePlayerStatus(player);
+
+        responseCheckPlayerPos = checkPlayerPosition(player);
+        System.out.print(responseCheckPlayerPos.getMessage());
+
+        // If the player is changed by an enhanced tile and lands on a card tile, execute card's updatePlayerStatus.
+        // After the action reset players isFromEnhanced to false.
+        if (getTiles().get(player.getCurrentPosition() - 1).getClass().getName().equals("CardTile"))
+        {
+            if (player.isFromEnhanced())
+            {
+                getTiles().get(player.getCurrentPosition() - 1).updatePlayerStatus(player);
+            }
+        }
+        player.setIsFromEnhanced(false);
+
+        // Might be needed if future cards move the player.
+        // checkPlayerPosition(player);
+
+        return responsePlayerStatus;
+    }
+    public Response checkPlayerPosition(Player player)
+    {
+        // Default message for lap completion when the game has points.
+        Response lapAward = new Response("\n" + "\033[32m" + "You completed a lap and are awarded " + getMaxPoints() / 10 + " points!" + "\033[0m" + "\n");
+
+        if(getBoardType().equals("Square"))
+        {
+            if (player.getCurrentPosition() >= getTiles().size())
+            {
+                player.setCurrentPosition(getTiles().size());
+            }
+        }
+        else
+        {
+            if(player.getCurrentPosition() > getTiles().size())
+            {
+                if(getLapsToWin() != 0)
+                {
+                    player.increaseBy(1);
+                    // Overwrites message if game has laps as winning condition.
+                    lapAward = new Response("");
+
+                }
+
+                player.setCurrentPosition(player.getCurrentPosition() - getTiles().size());
+                player.setNewPoints(getMaxPoints() / 10);
+                return new Response(lapAward.getMessage());
+            }
+        }
+
+        return new Response("");
+    }
 
 }

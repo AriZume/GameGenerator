@@ -1,8 +1,6 @@
 package WinningPackage;
 
-import GamePackage.Board;
-import GamePackage.Game;
-import GamePackage.Player;
+import GamePackage.*;
 
 public class WinByLaps {
     public boolean winByLaps(Player player, Board board)

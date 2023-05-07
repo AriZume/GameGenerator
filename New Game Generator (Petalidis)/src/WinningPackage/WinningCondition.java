@@ -1,8 +1,6 @@
 package WinningPackage;
 
-import GamePackage.Player;
-import GamePackage.Response;
-
+import GamePackage.*;
 public interface WinningCondition {
     Response updateWinningCondition(Player p);
 }
