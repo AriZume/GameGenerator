@@ -13,6 +13,7 @@ public class GameLoader
     {
         File saveFile = new File("C:\\Users\\etzer\\Documents\\Intellij Saves\\New Game Generator (Petalidis)\\gameProgress.txt");
 
+        boolean isLoaded = false;
         int tiles = 0, enhancedTiles = 0, maxPoints = 0, laps = 0, dice = 0;
         ArrayList<String> players = new ArrayList<>();
         String boardType = "";
@@ -58,14 +59,15 @@ public class GameLoader
                 {
                     dice = Integer.parseInt(value);
                 }
+                isLoaded = true;
             }
-            Game game = new Game(players.size(),tiles,dice,enhancedTiles,Integer.toString(maxPoints));
+            Game game = new Game(players.size(), tiles, dice, enhancedTiles, Integer.toString(maxPoints), isLoaded);
             game.createPlayers(players);
-            game.setBoardType(boardType);
-//            game.setDiceAmount(dice);
-            game.setLapsToWin(laps);
-//            game.getBoard().createTilesAndCards(tiles, enhancedTiles, maxPoints);
-//            game.getBoard().setMaxPoints(maxPoints);
+
+            game.getBoard().setBoardType(boardType);
+            game.getBoard().setLapsToWin(laps);
+            //game.getBoard().setMaxPoints(maxPoints);
+            //game.getBoard().createTilesAndCards(enhancedTiles, maxPoints);
             return game;
         }
         catch (FileNotFoundException e)

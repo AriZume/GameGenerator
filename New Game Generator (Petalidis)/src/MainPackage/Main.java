@@ -8,7 +8,7 @@ import java.util.*;
 
 public class Main
 {
-    enum options
+    enum Options
     {
         optDesignPlay(1),
         optLoad(2),
@@ -17,7 +17,7 @@ public class Main
         optSquareBoard(1),
         optCircularBoard(2);
         public final int option;
-        options(int option)
+        Options(int option)
         {
             this.option = option;
         }
@@ -32,6 +32,7 @@ public class Main
         int playerAmount, tileAmount, diceAmount, enhancedTiles, boardType;
         int maxPoints; // Cards winning condition.
         int lapsToWins = 0; // Default winning condition for circular board.
+        //boolean isGameLoaded = false;
 
         String enhanced, cards = "N";
 
@@ -42,20 +43,20 @@ public class Main
 
 
         int userInput;
-        Response mainMenu = screen.printMainMenu(options.optDesignPlay.getOption(),options.optLoad.getOption(),
-                options.optHelp.getOption(),options.optExit.getOption());
+        Response mainMenu = screen.printMainMenu(Options.optDesignPlay.getOption(), Options.optLoad.getOption(),
+                Options.optHelp.getOption(), Options.optExit.getOption());
         System.out.println(mainMenu.getMessage());
 
         while(true)
         {
             try {
                 userInput = input.nextInt();
-                if(userInput == options.optExit.getOption())
+                if(userInput == Options.optExit.getOption())
                 {
                     break;
                 }
 
-                options userOption = options.values()[userInput-1];
+                Options userOption = Options.values()[userInput-1];
                 switch(userOption)
                 {
                     case optDesignPlay:
@@ -81,7 +82,7 @@ public class Main
                         enhanced = screen.getInputStringValidation(input, "Would you like enhanced tiles? (Y/N)\n(Note: Enhanced tile amount should be at least 2 less than the total tile amount): ",
                                 "Invalid input. Please try again.", "[yYnN]");
 
-                        if(boardType == options.optCircularBoard.getOption())
+                        if(boardType == Options.optCircularBoard.getOption())
                         {
                             cards = screen.getInputStringValidation(input, "Would you like to have cards in your game? (Y/N)",
                                     "Invalid input. Please try again.", "[yYnN]");
@@ -130,14 +131,14 @@ public class Main
                         //newGame.printTilesPower();
                         // ---
 
-                        if(boardType == options.optSquareBoard.getOption())
+                        if(boardType == Options.optSquareBoard.getOption())
                         {
-                            newGame.setBoardType("Square");
+                            newGame.getBoard().setBoardType("Square");
                         }
-                        else if(boardType == options.optCircularBoard.getOption())
+                        else if(boardType == Options.optCircularBoard.getOption())
                         {
-                            newGame.setBoardType("Circle");
-                            newGame.setLapsToWin(lapsToWins);
+                            newGame.getBoard().setBoardType("Circle");
+                            newGame.getBoard().setLapsToWin(lapsToWins);
                         }
 
                         newGame.startGame();

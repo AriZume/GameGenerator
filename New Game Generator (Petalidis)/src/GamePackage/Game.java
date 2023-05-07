@@ -6,12 +6,18 @@ import MainPackage.Screen;
 import IOPackage.GameSaver;
 public class Game
 {
-    public final int OPT_ROLL = 1;
-    public final int OPT_SAVE = 2;
-    public final int OPT_EXIT = 3;
-    private String boardType;
+    enum Options
+    {
+        OPT_ROLL(1),
+        OPT_SAVE(2),
+        OPT_EXIT(3);
+        public final int option;
+        Options(int option)
+        {
+            this.option = option;
+        }
+    }
     private String winnerMessage;
-    private int lapsToWin;
     private int diceAmount;
     private final ArrayList<Player> players;
     private final Board board;
@@ -20,37 +26,38 @@ public class Game
     // Simple constructor.
     public Game(int playerAm, int tileAm, int diceAm)
     {
-        this.diceAmount = diceAm;
-        this.board = new Board(tileAm);
-        this.players = new ArrayList<>();
-        createPlayers(playerAm);
+        this(playerAm,tileAm,diceAm,0,"0", false);
+
     }
 
     // Constructor for game with enhanced tiles only.
     public Game(int playerAm, int tileAm, int diceAm, int enTiles)
     {
-        this.diceAmount = diceAm;
-        this.board = new Board(tileAm, enTiles);
-        this.players = new ArrayList<>();
-        createPlayers(playerAm);
+        this(playerAm,tileAm,diceAm,enTiles, "0", false);
     }
 
     // Constructor for game with cards only.
     public Game(int playerAm, int tileAm, int diceAm, String maxPoints)
     {
-        this.diceAmount = diceAm;
-        this.board = new Board(tileAm, maxPoints);
-        this.players = new ArrayList<>();
-        createPlayers(playerAm);
+        this(playerAm,tileAm,diceAm,0,maxPoints,false);
     }
 
     // Constructor with both cards and enhanced tiles.
     public Game(int playerAm, int tileAm, int diceAm, int enTiles, String maxPoints)
     {
+        this(playerAm,tileAm,diceAm,enTiles,maxPoints,false);
+    }
+
+    // Final constructor.
+    public Game(int playerAm, int tileAm, int diceAm, int enTiles, String maxPoints, boolean isLoaded)
+    {
         this.diceAmount = diceAm;
         this.board = new Board(tileAm, enTiles , maxPoints);
         this.players = new ArrayList<>();
-        createPlayers(playerAm);
+        if(!isLoaded)
+        {
+            createPlayers(playerAm);
+        }
     }
 
     public void setDiceAmount(int loadDice)
@@ -60,14 +67,6 @@ public class Game
     public Board getBoard()
     {
         return this.board;
-    }
-    public void setLapsToWin(int lapsToWin)
-    {
-        this.lapsToWin = lapsToWin;
-    }
-    public void setBoardType(String boardType)
-    {
-        this.boardType = boardType;
     }
 
     public void createPlayers(ArrayList<String> loadPlayers)
@@ -141,17 +140,17 @@ public class Game
 
     public boolean weHaveAWinner(Player player)
     {
-        if(boardType.equals("Square"))
+        if(board.getBoardType().equals("Square"))
         {
             winnerMessage = screen.printWinner(getPlayerIndex(player), player.getName());
             return player.getCurrentPosition() == board.getTiles().size();
         }
         else
         {
-            if(lapsToWin != 0)
+            if(board.getLapsToWin() != 0)
             {
                 winnerMessage = screen.printWinner(getPlayerIndex(player), player.getName());
-                return player.getLap() == lapsToWin;
+                return player.getLap() == board.getLapsToWin();
             }
             else
             {
@@ -198,7 +197,7 @@ public class Game
         // Default message for lap completion when the game has points.
         Response lapAward = new Response("\n" + "\033[32m" + "You completed a lap and are awarded " + board.getMaxPoints() / 10 + " points!" + "\033[0m" + "\n");
 
-        if(boardType.equals("Square"))
+        if(board.getBoardType().equals("Square"))
         {
             if (player.getCurrentPosition() >= board.getTiles().size())
             {
@@ -209,7 +208,7 @@ public class Game
         {
             if(player.getCurrentPosition() > board.getTiles().size())
             {
-                if(lapsToWin != 0)
+                if(board.getLapsToWin() != 0)
                 {
                     player.increaseBy(1);
                     // Overwrites message if game has laps as winning condition.
@@ -247,13 +246,13 @@ public class Game
                 }
 
                 Response playerTurn;
-                if(boardType.equals("Square"))
+                if(board.getBoardType().equals("Square"))
                 {
                     playerTurn = screen.printPlayerTurn(players.get(i).getName(), getPlayerIndex(players.get(i)));
                 }
                 else
                 {
-                    if(lapsToWin != 0)
+                    if(board.getLapsToWin() != 0)
                     {
                          playerTurn = screen.printPlayerTurnLap(players.get(i).getName(), getPlayerIndex(players.get(i)), players.get(i).getLap());
                     }
@@ -273,8 +272,9 @@ public class Game
                     try
                     {
                         option = input.nextInt();
+                        Options userOption = Options.values()[option-1];
 
-                        switch (option)
+                        switch (userOption)
                         {
                             case OPT_ROLL:
 
@@ -287,7 +287,7 @@ public class Game
 
                             case OPT_SAVE:
                                 option=0;
-                                saveGame.saveProgress(players, boardType, board.getTiles().size(), board.getMaxPoints(), lapsToWin, diceAmount, board.getEnhancedTiles());
+                                saveGame.saveProgress(players, board.getBoardType(), board.getTiles().size(), board.getMaxPoints(), board.getLapsToWin(), diceAmount, board.getEnhancedTiles());
                                 break;
 
                             case OPT_EXIT:

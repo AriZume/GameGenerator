@@ -8,6 +8,8 @@ public class Board
 {
     private final ArrayList<Tile> tiles;
     private int maxPoints;
+    private int lapsToWin;
+    private String boardType;
     private int enhancedTiles = 0;
 
     public Board()
@@ -49,6 +51,20 @@ public class Board
         setupCardTiles(Integer.parseInt(maxPoints));
     }
 
+    public String getBoardType() {
+        return boardType;
+    }
+    public void setBoardType(String boardType) {
+        this.boardType = boardType;
+    }
+    public void setLapsToWin(int lapsToWin)
+    {
+        this.lapsToWin = lapsToWin;
+    }
+    public int getLapsToWin()
+    {
+        return this.lapsToWin;
+    }
     public int getMaxPoints()
     {
         return maxPoints;
@@ -62,12 +78,8 @@ public class Board
         return tiles;
     }
 
-    public void createTilesAndCards(int loadTiles, int loadEnhancedTiles, int loadMaxPoints)
+    public void createTilesAndCards(int loadEnhancedTiles, int loadMaxPoints)
     {
-        for (int i = 0; i < loadTiles; i++)
-        {
-            tiles.add(new SimpleTile());
-        }
         setupEnhancedTiles(loadEnhancedTiles);
         setupCardTiles(loadMaxPoints);
     }
