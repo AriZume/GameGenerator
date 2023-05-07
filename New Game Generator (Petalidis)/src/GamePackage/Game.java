@@ -2,7 +2,7 @@ package GamePackage;
 
 import java.util.*;
 
-import MainPackage.Screen;
+import UIPackage.Screen;
 import IOPackage.GameSaver;
 public class Game
 {

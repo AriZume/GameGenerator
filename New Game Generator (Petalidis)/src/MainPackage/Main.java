@@ -3,11 +3,14 @@ package MainPackage;
 import GamePackage.Game;
 import GamePackage.Response;
 import IOPackage.GameLoader;
+import UIPackage.Screen;
 import UIPackage.UIScreen;
 import java.util.*;
 
-public class Main {
-    enum Options {
+public class Main
+{
+    enum Options
+    {
         optDesignPlay(1),
         optLoad(2),
         optHelp(3),
@@ -25,7 +28,8 @@ public class Main {
         }
     }
 
-    enum StringEnum {
+    enum StringEnum
+    {
         SQUARE_BOARD("Square"),
         CIRCULAR_BOARD("Circular");
         public final String option;
@@ -37,8 +41,9 @@ public class Main {
         public String getOption() {
             return option;
         }
-
-        public static void main(String[] args) {
+    }
+        public static void main(String[] args)
+        {
             int playerAmount, tileAmount, diceAmount, enhancedTiles, boardType;
             int maxPoints; // Cards winning condition.
             int lapsToWins = 0; // Default winning condition for circular board.
@@ -58,15 +63,19 @@ public class Main {
                     Options.optHelp.getOption(), Options.optExit.getOption());
             System.out.println(mainMenu.getMessage());
 
-            while (true) {
-                try {
+            while (true)
+            {
+                try
+                {
                     userInput = input.nextInt();
-                    if (userInput == Options.optExit.getOption()) {
+                    if (userInput == Options.optExit.getOption())
+                    {
                         break;
                     }
 
                     Options userOption = Options.values()[userInput - 1];
-                    switch (userOption) {
+                    switch (userOption)
+                    {
                         case optDesignPlay:
 
                             Response designGameTitle = screen.printDesignGameTitle();
@@ -80,11 +89,10 @@ public class Main {
 
                             diceAmount = uiScreen.declareDiceAmount(1, 2);
 
-                            input.nextLine(); //Collects trash
-
                             enhanced = uiScreen.declareEnhancedTiles("[yYnN]");
 
-                            if (boardType == Options.optCircularBoard.getOption()) {
+                            if (boardType == Options.optCircularBoard.getOption())
+                            {
                                 cards = uiScreen.declareCards("[yYnN]");
 
                                 // When the cards option is not active set default winning condition.
@@ -93,19 +101,26 @@ public class Main {
                                 }
                             }
 
-                            if (enhanced.matches("[nN]") && cards.matches("[Nn]")) {
+                            if (enhanced.matches("[nN]") && cards.matches("[Nn]"))
+                            {
                                 // Create newGame without enhanced tiles.
                                 newGame = new Game(playerAmount, tileAmount, diceAmount);
-                            } else if (enhanced.matches("[Yy]") && cards.matches("[Nn]")) {
+                            }
+                            else if (enhanced.matches("[Yy]") && cards.matches("[Nn]"))
+                            {
                                 // Create newGame with only enhanced tiles.
                                 enhancedTiles = uiScreen.declareEnhancedTileAmount(2, tileAmount - 2);
                                 newGame = new Game(playerAmount, tileAmount, diceAmount, enhancedTiles);
-                            } else if (enhanced.matches("[Nn]") && cards.matches("[Yy]")) {
+                            }
+                            else if (enhanced.matches("[Nn]") && cards.matches("[Yy]"))
+                            {
                                 maxPoints = uiScreen.declareMaxPoints(500, 10000);
 
                                 // Creates newGame with only cards.
                                 newGame = new Game(playerAmount, tileAmount, diceAmount, Integer.toString(maxPoints));
-                            } else {
+                            }
+                            else
+                            {
                                 enhancedTiles = uiScreen.declareEnhancedTileAmount(2, tileAmount - 2);
                                 maxPoints = uiScreen.declareMaxPoints(500, 10000);
 
@@ -132,7 +147,8 @@ public class Main {
                             break;
 
                         case optLoad:
-                            try {
+                            try
+                            {
                                 Game loadGame = loader.loadProgress();
                                 loadGame.startGame();
                             } catch (Exception e) {
@@ -149,13 +165,13 @@ public class Main {
                             System.out.print(screen.printInvalidOption().getMessage());
                             break;
                     }
-                } catch (InputMismatchException e) {
+                } catch (InputMismatchException e)
+                {
                     System.out.print(screen.printInvalidOption().getMessage());
                     input.nextLine();
                 }
 
                 System.out.println(mainMenu.getMessage());
             }
-        }
     }
 }

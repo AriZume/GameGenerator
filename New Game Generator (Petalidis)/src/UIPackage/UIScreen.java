@@ -1,5 +1,4 @@
 package UIPackage;
-import MainPackage.Screen;
 import java.util.Scanner;
 
 public class UIScreen
@@ -28,8 +27,11 @@ public class UIScreen
 
     public int declareDiceAmount(int min, int max)
     {
-        return screen.getInputIntegerValidation(input, "Number of dice: ",
+        int dice = screen.getInputIntegerValidation(input, "Number of dice: ",
                 "Dice amount should be " + min + " or " + max + "\nPlease try again: ", min, max);
+
+        input.nextLine(); //Collects trash
+        return dice;
     }
 
     public String declareEnhancedTiles(String regexCondition)
