@@ -1,7 +1,0 @@
-Names: Kostas Parasxos Stelios 
-BoardType: Circle
-Tiles: 16
-EnhancedTiles: 6
-MaxPoints: 600
-Laps: 0
-Dice: 1
