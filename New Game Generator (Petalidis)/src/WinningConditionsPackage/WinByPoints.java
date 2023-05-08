@@ -9,6 +9,6 @@ public class WinByPoints implements WinningCondition
     @Override
     public boolean checkWinner(Player player, Board board)
     {
-        return player.getPoints()>=board.getMaxPoints();
+        return player.getPoints()>=board.getMaxPoints() && board.getMaxPoints() != 0 && board.getBoardType().equals(Board.StringEnum.CIRCULAR_BOARD.getOption());
     }
 }

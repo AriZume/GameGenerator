@@ -3,10 +3,11 @@ package GamePackage;
 import java.util.ArrayList;
 import java.util.Collections;
 import TilesPackage.*;
+import WinningConditionsPackage.*;
 
 public class Board
 {
-    enum StringEnum
+    public enum StringEnum
     {
         SQUARE_BOARD("Square"),
         CIRCULAR_BOARD("Circular"),
@@ -22,9 +23,10 @@ public class Board
         }
 
     }
+    private final WinningCondition[] winningConditions = new WinningCondition[]{new WinByFirst(), new WinByLaps(), new WinByPoints()};
     private final ArrayList<Tile> tiles;
-    private int maxPoints;
-    private int lapsToWin;
+    private final int maxPoints;
+    private int lapsToWin = 0;
     private String boardType;
     private int enhancedTiles = 0;
 
@@ -62,13 +64,13 @@ public class Board
     {
         return maxPoints;
     }
-    public void setMaxPoints(int loadedMaxPoints)
-    {
-        this.maxPoints = loadedMaxPoints;
-    }
     public ArrayList<Tile> getTiles()
     {
         return tiles;
+    }
+    public int getEnhancedTiles()
+    {
+        return enhancedTiles;
     }
 
     // Initializes the position of the enhanced tiles.
@@ -129,21 +131,17 @@ public class Board
         }
     }
 
-    public int getEnhancedTiles()
-    {
-        return enhancedTiles;
-    }
-
-
     public Response movePlayer(Player player,int diceRoll)
     {
+        Response responsePlayerStatus;
+
         player.setPersonalRoll(diceRoll);
         player.setNewPosition(player.getPersonalRoll());
 
         Response responseCheckPlayerPos = checkPlayerPosition(player);
         System.out.print(responseCheckPlayerPos.getMessage());
 
-        Response responsePlayerStatus = getTiles().get(player.getCurrentPosition()-1).updatePlayerStatus(player);
+        responsePlayerStatus = getTiles().get(player.getCurrentPosition()-1).updatePlayerStatus(player);
 
         responseCheckPlayerPos = checkPlayerPosition(player);
         System.out.print(responseCheckPlayerPos.getMessage());
@@ -155,45 +153,57 @@ public class Board
             if (player.isFromEnhanced())
             {
                 getTiles().get(player.getCurrentPosition() - 1).updatePlayerStatus(player);
+                player.setIsFromEnhanced(false);
             }
         }
-        player.setIsFromEnhanced(false);
-
-        // Might be needed if future cards move the player.
-        // checkPlayerPosition(player);
-
         return responsePlayerStatus;
     }
+
+    // Keeps position updated according to the board type.
     public Response checkPlayerPosition(Player player)
     {
-        // Default message for lap completion when the game has points.
-        Response lapAward = new Response("\n" + "\033[32m" + "You completed a lap and are awarded " + getMaxPoints() / 10 + " points!" + "\033[0m" + "\n");
-
-        if(getBoardType().equals(StringEnum.SQUARE_BOARD.getOption()))
+        String lapAwardMessage = "";
+        if(boardType.equals(StringEnum.SQUARE_BOARD.getOption()))
         {
-            if (player.getCurrentPosition() >= getTiles().size())
+            if(player.getCurrentPosition() >= getTiles().size())
             {
                 player.setCurrentPosition(getTiles().size());
             }
         }
-        else
+        else if(boardType.equals(StringEnum.CIRCULAR_BOARD.getOption()))
         {
             if(player.getCurrentPosition() > getTiles().size())
             {
-                if(getLapsToWin() != 0)
-                {
-                    player.increaseBy(1);
-                    // Overwrites message if game has laps as winning condition.
-                    lapAward = new Response("");
-
-                }
-
+                lapAwardMessage = updateLap(player).getMessage();
                 player.setCurrentPosition(player.getCurrentPosition() - getTiles().size());
-                player.setNewPoints(getMaxPoints() / 10);
-                return new Response(lapAward.getMessage());
             }
         }
+        return new Response(lapAwardMessage);
+    }
 
-        return new Response("");
+    private Response updateLap(Player player)
+    {
+        String awardMessage = "\n" + "\033[32m" + "You completed a lap and are awarded " + getMaxPoints() / 10
+                + " points!" + "\033[0m" + "\n";
+        if(getLapsToWin() != 0)
+        {
+            player.increaseBy(1);
+            awardMessage = "";
+        }
+
+        player.setNewPoints(getMaxPoints() / 10); // Set points awarded to the player when completing a lap.
+        return new Response(awardMessage);
+    }
+
+    public boolean isWinner(Player player, Board board)
+    {
+        for(WinningCondition condition : winningConditions)
+        {
+            if(condition.checkWinner(player, board))
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }

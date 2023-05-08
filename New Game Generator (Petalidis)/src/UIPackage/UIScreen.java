@@ -64,4 +64,8 @@ public class UIScreen
                 "Point amount should be at least " + min + ". (Min 500)(Max " + max + ")\nPlease try again: ", min, max);
     }
 
+    public int checkUserInput(int min, int max)
+    {
+        return screen.getInputIntegerValidation(input, "", screen.printInvalidOption().getMessage(), min, max);
+    }
 }

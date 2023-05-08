@@ -1,9 +1,9 @@
 package GamePackage;
 
 import java.util.*;
-
-import UIPackage.Screen;
+import UIPackage.*;
 import IOPackage.GameSaver;
+
 public class Game
 {
     enum Options
@@ -33,11 +33,11 @@ public class Game
         }
 
     }
-    private String winnerMessage;
-    private int diceAmount;
+    private final int diceAmount;
     private final ArrayList<Player> players;
     private final Board board;
     private final Screen screen = new Screen();
+    private final UIScreen uiScreen = new UIScreen();
 
     // Simple constructor.
     public Game(int playerAm, int tileAm, int diceAm)
@@ -76,10 +76,6 @@ public class Game
         }
     }
 
-    public void setDiceAmount(int loadDice)
-    {
-        this.diceAmount = loadDice;
-    }
     public Board getBoard()
     {
         return this.board;
@@ -132,8 +128,7 @@ public class Game
 
     private int getDiceRoll()
     {
-        int totalRoll = 0;
-        int diceRoll;
+        int diceRoll, totalRoll = 0;
         Random roll = new Random();
 
         System.out.print("You rolled: ");
@@ -153,44 +148,15 @@ public class Game
         System.out.print("\n");
         return totalRoll;
     }
-    public boolean weHaveAWinner(Player player)
-    {
-        if(board.getBoardType().equals(StringEnum.SQUARE_BOARD.getOption()))
-        {
-            winnerMessage = screen.printWinner(getPlayerIndex(player), player.getName());
-            return player.getCurrentPosition() == board.getTiles().size();
-        }
-        else
-        {
-            if(board.getLapsToWin() != 0)
-            {
-                winnerMessage = screen.printWinner(getPlayerIndex(player), player.getName());
-                return player.getLap() == board.getLapsToWin();
-            }
-            else
-            {
-                winnerMessage = screen.printWinner(getPlayerIndex(player), player.getName(), player.getPoints());
-                return player.getPoints() >= board.getMaxPoints();
-            }
-        }
-    }
-    // Moves player according to the roll and enhanced tile-if there are any.
-
-
-    // Keeps track of the current position not exceeding the maximum amount of tiles
-    // and not being less than 1.
-
 
     public void startGame()
     {
         GameSaver saveGame = new GameSaver();
-        int previousPlayer = 0;
-
-        Scanner input = new Scanner(System.in);
+        Response descriptiveMap, inGameMenu, playerTurn, movePlayer, saveResponse;
+        boolean endGame = false;
+        int userInput, previousPlayer = 0;
 
         decidePlayerTurn();
-
-        boolean endGame = false;
         while (!endGame)
         {
             for(int i = 0; i < players.size(); i++)
@@ -201,7 +167,7 @@ public class Game
                     i = previousPlayer;
                 }
 
-                Response playerTurn;
+
                 if(board.getBoardType().equals(StringEnum.SQUARE_BOARD.getOption()))
                 {
                     playerTurn = screen.printPlayerTurn(players.get(i).getName(), getPlayerIndex(players.get(i)));
@@ -217,62 +183,50 @@ public class Game
                         playerTurn = screen.printPlayerTurnPoints(players.get(i).getName(), players.get(i).getPoints(), getPlayerIndex(players.get(i)));
                     }
                 }
-                System.out.print(playerTurn.getMessage());
-                Response descriptiveMap = screen.printDescriptiveMap(players.get(i).getCurrentPosition(), board.getTiles().size());
-                Response inGameMenu = screen.printInGameMenu();
-                System.out.print(descriptiveMap.getMessage() + inGameMenu.getMessage());
+                descriptiveMap = screen.printDescriptiveMap(players.get(i).getCurrentPosition(), board.getTiles().size());
+                inGameMenu = screen.printInGameMenu();
+                System.out.print(playerTurn.getMessage() + descriptiveMap.getMessage() + inGameMenu.getMessage());
 
-                int option = 0;
-                do
-                {
-                    try
+
+                do {
+                    userInput = uiScreen.checkUserInput(1, 3);
+                    Options userOption = Options.values()[userInput - 1];
+
+                    switch (userOption)
                     {
-                        option = input.nextInt();
-                        Options userOption = Options.values()[option-1];
+                        case OPT_ROLL:
+                            movePlayer = board.movePlayer(players.get(i), getDiceRoll());
+                            System.out.print(movePlayer.getMessage());
 
-                        switch (userOption)
-                        {
-                            case OPT_ROLL:
-
-                                Response movePlayer = board.movePlayer(players.get(i),getDiceRoll());
-                                System.out.print(movePlayer.getMessage());
-
-                                Response endTurn = screen.printEndTurn(players);
-                                System.out.print(endTurn.getMessage());
-                                break;
-
-                            case OPT_SAVE:
-                                option=0;
-                                saveGame.saveProgress(players, board.getBoardType(), board.getTiles().size(), board.getMaxPoints(), board.getLapsToWin(), diceAmount, board.getEnhancedTiles());
-                                break;
-
-                            case OPT_EXIT:
-                                endGame = true;
-                                break;
-
-                            default:
-                                System.out.print(screen.printInvalidOption().getMessage());
-                                break;
-                        }
-                    } catch (InputMismatchException e)
-                    {
-                        System.out.print(screen.printInvalidOption().getMessage());
-                        input.nextLine();
+                            Response endTurn = screen.printEndTurn(players);
+                            System.out.print(endTurn.getMessage());
+                            break;
+                        case OPT_SAVE:
+                            userInput = 0;
+                            saveResponse = saveGame.saveProgress(players, board.getBoardType(), board.getTiles().size(), board.getMaxPoints(), board.getLapsToWin(), diceAmount, board.getEnhancedTiles());
+                            System.out.print(saveResponse.getMessage());
+                            break;
+                        case OPT_EXIT:
+                            endGame = true;
+                            break;
+                        default:
+                            System.out.print(screen.printInvalidOption().getMessage());
+                            break;
                     }
-                    if(option == 0)
-                    {
+
+                    if (userInput == 0) {
                         System.out.print(inGameMenu.getMessage());
                     }
-                }while(option <= 0 || option > 3);
+                }while(userInput <=0 || userInput >3);
 
                 if (endGame)
                 {
                     break;
                 }
-                else if(weHaveAWinner(players.get(i)))
+                else if(board.isWinner(players.get(i), board))
                 {
                     endGame = true;
-                    System.out.print(winnerMessage);
+                    System.out.print(screen.printWinner(getPlayerIndex(players.get(i)),players.get(i).getName()));
                     break;
                 }
                 previousPlayer = i;

@@ -1,6 +1,7 @@
 package IOPackage;
 
 import GamePackage.Player;
+import GamePackage.Response;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -8,7 +9,8 @@ import java.util.ArrayList;
 
 public class GameSaver
 {
-    public void saveProgress(ArrayList <Player> players, String boardType, int tiles, int maxPoints, int laps, int dice, int enhancedTiles) {
+    public Response saveProgress(ArrayList <Player> players, String boardType, int tiles, int maxPoints, int laps, int dice, int enhancedTiles) {
+        String saveResponse = "";
         try{
             FileWriter writer = new FileWriter("gameProgress.txt");
             writer.write("Names: ");
@@ -19,12 +21,13 @@ public class GameSaver
 
             writer.write("\nBoardType: " + boardType + "\nTiles: " + tiles + "\nEnhancedTiles: " + enhancedTiles + "\nMaxPoints: " + maxPoints + "\nLaps: " + laps + "\nDice: " + dice + "\n");
             writer.close();
-            System.out.println("GamePackage.Game Saved!");
+            saveResponse = "\nGame Saved!";
         }
         catch (IOException e)
         {
-            System.out.println("An error occurred.");
+            saveResponse = "\nAn error occurred.";
             e.printStackTrace();
         }
+        return new Response(saveResponse);
     }
 }

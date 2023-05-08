@@ -9,6 +9,6 @@ public class WinByFirst implements WinningCondition
     @Override
     public boolean checkWinner(Player player, Board board)
     {
-        return player.getCurrentPosition() == board.getTiles().size();
+        return player.getCurrentPosition() == board.getTiles().size() && board.getBoardType().equals(Board.StringEnum.SQUARE_BOARD.getOption());
     }
 }

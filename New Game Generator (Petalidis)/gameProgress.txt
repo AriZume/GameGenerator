@@ -1,4 +1,4 @@
-Names: Stelios Kostas Parasxos 
+Names: Kostas Parasxos Stelios 
 BoardType: Circle
 Tiles: 16
 EnhancedTiles: 6
