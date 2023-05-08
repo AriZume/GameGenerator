@@ -3,6 +3,7 @@ package GamePackage;
 import java.util.*;
 import UIPackage.*;
 import IOPackage.GameSaver;
+import java.util.ArrayList;
 
 public class Game
 {
@@ -38,6 +39,8 @@ public class Game
     private final Board board;
     private final Screen screen = new Screen();
     private final UIScreen uiScreen = new UIScreen();
+
+    private  int playerIndex;
 
     // Simple constructor.
     public Game(int playerAm, int tileAm, int diceAm)
@@ -81,6 +84,11 @@ public class Game
         return this.board;
     }
 
+    public ArrayList<Player> getPlayer()
+    {
+        return this.players;
+    }
+
     public void createPlayers(ArrayList<String> loadPlayers)
     {
         for (String loadPlayer : loadPlayers)
@@ -112,6 +120,11 @@ public class Game
     public int getPlayerIndex(Player player)
     {
         return players.indexOf(player);
+    }
+
+    public void setPlayerIndex(int playerIndex)
+    {
+        this.playerIndex = playerIndex;
     }
 
     public void decidePlayerTurn()
@@ -203,7 +216,7 @@ public class Game
                             break;
                         case OPT_SAVE:
                             userInput = 0;
-                            saveResponse = saveGame.saveProgress(players, board.getBoardType(), board.getTiles().size(), board.getMaxPoints(), board.getLapsToWin(), diceAmount, board.getEnhancedTiles());
+                            saveResponse = saveGame.saveProgress(players, board.getBoardType(), board.getTiles().size(), board.getMaxPoints(), board.getLapsToWin(), diceAmount, board.getEnhancedTiles(),getPlayerIndex(players.get(i)));
                             System.out.print(saveResponse.getMessage());
                             break;
                         case OPT_EXIT:

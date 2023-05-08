@@ -76,6 +76,8 @@ public class Player
         this.lap += lap;
     }
 
+    public void setLap(int lap){this.lap = lap;}
+
     public int getLap()
     {
         return this.lap;

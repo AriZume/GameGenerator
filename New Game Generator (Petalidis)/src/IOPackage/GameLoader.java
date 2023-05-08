@@ -1,6 +1,7 @@
 package IOPackage;
 
 import GamePackage.Game;
+import GamePackage.Player;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -11,11 +12,14 @@ public class GameLoader
 {
     public Game  loadProgress()
     {
-        File saveFile = new File("C:\\Users\\etzer\\Documents\\Intellij Saves\\New Game Generator (Petalidis)\\gameProgress.txt");
+        File saveFile = new File("C:\\Users\\steli\\IdeaProjects\\NewGameGenerator\\gameProgress.txt");
 
         boolean isLoaded = false;
-        int tiles = 0, enhancedTiles = 0, maxPoints = 0, laps = 0, dice = 0;
+        int tiles = 0, enhancedTiles = 0, maxPoints = 0, totalLaps = 0, dice = 0, playerIndex = 0;
         ArrayList<String> players = new ArrayList<>();
+        ArrayList<String> playerPositions = new ArrayList<>();
+        ArrayList<String> playerPoints = new ArrayList<>();
+        ArrayList<String> playerLaps = new ArrayList<>();
         String boardType = "";
 
         try(Scanner scanner = new Scanner(saveFile))
@@ -35,6 +39,34 @@ public class GameLoader
                         players.add(name.trim());
                     }
                 }
+                else if (key.equals("Current Position"))
+                {
+                    String[] positions = value.split(" ");
+                    for (String position : positions)
+                    {
+                       playerPositions.add(position.trim());
+                    }
+                }
+                else if (key.equals("Points"))
+                {
+                    String[] points = value.split(" ");
+                    for(String point : points)
+                    {
+                        playerPoints.add(point.trim());
+                    }
+                }
+                else if (key.equals("Laps"))
+                {
+                    String[] laps = value.split(" ");
+                    for(String lap : laps)
+                    {
+                        playerLaps.add(lap.trim());
+                    }
+                }
+                else if (key.equals("Player Index"))
+                {
+                    playerIndex = Integer.parseInt(value);
+                }
                 else if (key.equals("BoardType"))
                 {
                     boardType = value;
@@ -51,9 +83,9 @@ public class GameLoader
                 {
                     maxPoints = Integer.parseInt(value);
                 }
-                else if (key.equals("Laps"))
+                else if (key.equals("TotalLaps"))
                 {
-                    laps = Integer.parseInt(value);
+                    totalLaps = Integer.parseInt(value);
                 }
                 else if (key.equals("Dice"))
                 {
@@ -65,7 +97,16 @@ public class GameLoader
             game.createPlayers(players);
 
             game.getBoard().setBoardType(boardType);
-            game.getBoard().setLapsToWin(laps);
+            game.getBoard().setLapsToWin(totalLaps);
+            game.setPlayerIndex(playerIndex);
+
+            for (int i=0; i < players.size();i++)
+            {
+                game.getPlayer().get(i).setCurrentPosition(Integer.parseInt(playerPositions.get(i)));
+                game.getPlayer().get(i).setLap(Integer.parseInt(playerLaps.get(i)));
+                game.getPlayer().get(i).setPoints(Integer.parseInt(playerPoints.get(i)));
+            }
+
             //game.getBoard().setMaxPoints(maxPoints);
             //game.getBoard().createTilesAndCards(enhancedTiles, maxPoints);
             return game;

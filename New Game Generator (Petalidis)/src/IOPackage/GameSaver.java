@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class GameSaver
 {
-    public Response saveProgress(ArrayList <Player> players, String boardType, int tiles, int maxPoints, int laps, int dice, int enhancedTiles) {
+    public Response saveProgress(ArrayList <Player> players, String boardType, int tiles, int maxPoints, int laps, int dice, int enhancedTiles, int playerIndex) {
         String saveResponse = "";
         try{
             FileWriter writer = new FileWriter("gameProgress.txt");
@@ -18,6 +18,23 @@ public class GameSaver
             {
                 writer.write(players.get(i).getName() + " " );
             }
+
+            writer.write("\nCurrent Position: ");
+            for (Player player : players) {
+                writer.write(player.getCurrentPosition() + " ");
+            }
+
+            writer.write("\nPoints: ");
+            for (Player player : players) {
+                writer.write(player.getPoints() + " ");
+            }
+
+            writer.write("\nLaps: ");
+            for (Player player : players) {
+                writer.write(player.getLap() + " ");
+            }
+
+            writer.write("\nPlayer Index: " + playerIndex);
 
             writer.write("\nBoardType: " + boardType + "\nTiles: " + tiles + "\nEnhancedTiles: " + enhancedTiles + "\nMaxPoints: " + maxPoints + "\nLaps: " + laps + "\nDice: " + dice + "\n");
             writer.close();
