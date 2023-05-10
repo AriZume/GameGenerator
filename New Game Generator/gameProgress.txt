@@ -1,11 +1,11 @@
-Names: tzegkas kotsos stelios
-Current Position: 12 13 4
-Points: 1551 3745 4532
-Laps: 0 0 0
-Player Index: 2
+Names: stelios kostas 
+Current Position: 5 13 
+Points: 120 95 
+Laps: 0 0 
+Player Index: 1
 BoardType: Circular
-Tiles: 30
-EnhancedTiles: 20
-MaxPoints: 7500
+Tiles: 15
+EnhancedTiles: 0
+MaxPoints: 600
 Laps: 0
 Dice: 1

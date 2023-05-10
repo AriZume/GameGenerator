@@ -11,7 +11,7 @@ public class GameLoader
 {
     public Game  loadProgress()
     {
-        File saveFile = new File("C:\\Users\\etzer\\Documents\\Intellij Saves\\New Game Generator (Petalidis)\\gameProgress.txt");
+        File saveFile = new File("C:\\Users\\etzer\\Documents\\Intellij Saves\\New Game Generator\\gameProgress.txt");
 
         boolean isLoaded = false;
         int tiles = 0, enhancedTiles = 0, maxPoints = 0, totalLaps = 0, dice = 0, playerIndex = 0;

@@ -9,9 +9,9 @@ public class Game
 {
     enum Options
     {
-        OPT_ROLL(1),
-        OPT_SAVE(2),
-        OPT_EXIT(3);
+        ROLL(1),
+        SAVE(2),
+        EXIT(3);
         public final int option;
 
         Options(int option)
@@ -38,7 +38,7 @@ public class Game
     private boolean isLoaded;
     private final ArrayList<Player> players;
     private final Board board;
-    private final Screen screen = new Screen();
+    private final UIResponse uiResponse = new UIResponse();
     private final UIScreen uiScreen = new UIScreen();
 
     private  int loadPlayerIndex = 0;
@@ -77,7 +77,7 @@ public class Game
         this.isLoaded = isLoaded;
         if(!isLoaded)
         {
-            createPlayers(playerAm);
+            createPlayers(playerAm, Integer.parseInt(maxPoints));
         }
     }
 
@@ -90,7 +90,14 @@ public class Game
     {
         return this.players;
     }
-
+    public void setLoadPlayerIndex(int loadPlayerIndex)
+    {
+        this.loadPlayerIndex = loadPlayerIndex;
+    }
+    public int getPlayerIndex(Player player)
+    {
+        return players.indexOf(player);
+    }
     public void createPlayers(ArrayList<String> loadPlayers)
     {
         for (String loadPlayer : loadPlayers)
@@ -98,7 +105,7 @@ public class Game
             players.add(new Player(loadPlayer));
         }
     }
-    public void createPlayers(int playerAmount)
+    public void createPlayers(int playerAmount, int maxPoints)
     {
         Scanner scanner = new Scanner(System.in);
 
@@ -116,17 +123,8 @@ public class Game
             }while(name.isBlank());
 
             players.add(new Player(name));
+            players.get(i).setPoints(maxPoints / 10);
         }
-    }
-
-    public int getPlayerIndex(Player player)
-    {
-        return players.indexOf(player);
-    }
-
-    public void setLoadPlayerIndex(int loadPlayerIndex)
-    {
-        this.loadPlayerIndex = loadPlayerIndex;
     }
 
     public void decidePlayerTurn()
@@ -185,29 +183,25 @@ public class Game
         {
             for(int i = playerIndex; i < players.size(); i++)
             {
-                if (players.get(previousPlayer).getHasPlayAgainCard())
-                {
-                    players.get(previousPlayer).setHasPlayAgainCard(false);
-                    i = previousPlayer;
-                }
+                i = getPlayerPlayAgain(previousPlayer, i);
 
                 if(board.getBoardType().equals(StringEnum.SQUARE_BOARD.getOption()))
                 {
-                    playerTurn = screen.printPlayerTurn(players.get(i).getName(), getPlayerIndex(players.get(i)));
+                    playerTurn = uiResponse.createPlayerTurnResponse(players.get(i).getName(), getPlayerIndex(players.get(i)));
                 }
                 else
                 {
                     if(board.getLapsToWin() != 0)
                     {
-                         playerTurn = screen.printPlayerTurnLap(players.get(i).getName(), getPlayerIndex(players.get(i)), players.get(i).getLap());
+                         playerTurn = uiResponse.createPlayerTurnLapResponse(players.get(i).getName(), getPlayerIndex(players.get(i)), players.get(i).getLap());
                     }
                     else
                     {
-                        playerTurn = screen.printPlayerTurnPoints(players.get(i).getName(), players.get(i).getPoints(), getPlayerIndex(players.get(i)));
+                        playerTurn = uiResponse.createPlayerTurnPointsResponse(players.get(i).getName(), players.get(i).getPoints(), getPlayerIndex(players.get(i)));
                     }
                 }
-                descriptiveMap = screen.printDescriptiveMap(players.get(i).getCurrentPosition(), board.getTiles().size());
-                inGameMenu = screen.printInGameMenu();
+                descriptiveMap = uiResponse.createDescriptiveMapResponse(players.get(i).getCurrentPosition(), board.getTiles().size());
+                inGameMenu = uiResponse.createInGameResponse();
                 System.out.print(playerTurn.getMessage() + descriptiveMap.getMessage() + inGameMenu.getMessage());
 
 
@@ -217,28 +211,24 @@ public class Game
 
                     switch (userOption)
                     {
-                        case OPT_ROLL:
+                        case ROLL:
                             movePlayer = board.movePlayer(players.get(i), getDiceRoll());
                             System.out.print(movePlayer.getMessage());
 
-                            Response endTurn = screen.printEndTurn(players);
+                            Response endTurn = uiResponse.createEndTurnResponse(players);
                             System.out.print(endTurn.getMessage());
                             break;
-                        case OPT_SAVE:
+                        case SAVE:
                             userInput = 0;
                             saveResponse = saveGame.saveProgress(players, board.getBoardType(), board.getTiles().size(), board.getMaxPoints(), board.getLapsToWin(), diceAmount, board.getEnhancedTiles(),getPlayerIndex(players.get(i)));
-                            System.out.print(saveResponse.getMessage());
+                            System.out.print(saveResponse.getMessage() + inGameMenu.getMessage());
                             break;
-                        case OPT_EXIT:
+                        case EXIT:
                             endGame = true;
                             break;
                         default:
-                            System.out.print(screen.printInvalidOption().getMessage());
+                            System.out.print(uiResponse.printInvalidOption().getMessage());
                             break;
-                    }
-
-                    if (userInput == 0) {
-                        System.out.print(inGameMenu.getMessage());
                     }
                 }while(userInput <=0 || userInput >3);
 
@@ -249,7 +239,7 @@ public class Game
                 else if(board.isWinner(players.get(i), board))
                 {
                     endGame = true;
-                    System.out.print(screen.printWinner(getPlayerIndex(players.get(i)),players.get(i).getName()));
+                    System.out.print(uiResponse.createWinnerResponse(getPlayerIndex(players.get(i)),players.get(i).getName()).getMessage());
                     break;
                 }
                 previousPlayer = i;
@@ -262,6 +252,32 @@ public class Game
             }
         }
     }
+
+    private int getPlayerPlayAgain(int previousPlayer, int i)
+    {
+        if (players.get(previousPlayer).getHasPlayAgainCard())
+        {
+            players.get(previousPlayer).setHasPlayAgainCard(false);
+            i = previousPlayer;
+        }
+        return i;
+    }
+
+//    public boolean hasGameEnded(boolean endGame, boolean isWinner, int playerIndex, String playerName)
+//    {
+//        if(endGame)
+//        {
+//            return("\nGame ending.");
+//        }
+//        else if(isWinner)
+//        {
+//            return (screen.printWinner(playerIndex, playerName));
+//        }
+//        else
+//        {
+//            return ("");
+//        }
+//    }
 
     // Debug only
     /*
