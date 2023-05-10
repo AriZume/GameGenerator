@@ -13,11 +13,4 @@ public class Response
     {
         return message;
     }
-
-    /*
-    public void printMessage()
-    {
-        System.out.print(message);
-    }
-    */
 }

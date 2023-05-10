@@ -1,11 +1,11 @@
 package IOPackage;
 
-import GamePackage.Player;
-import GamePackage.Response;
-
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+
+import GamePackage.Player;
+import GamePackage.Response;
 
 public class GameSaver
 {

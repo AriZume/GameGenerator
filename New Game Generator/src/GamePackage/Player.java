@@ -60,7 +60,7 @@ public class Player
         this.hasPlayAgainCard = canPlayAgain;
     }
 
-    public boolean getHasPlayAgainCard()
+    public boolean hasPlayAgainCard()
     {
         return this.hasPlayAgainCard;
     }

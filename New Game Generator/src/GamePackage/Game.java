@@ -1,75 +1,30 @@
 package GamePackage;
 
 import java.util.*;
+import java.util.ArrayList;
+
+import MainPackage.EnumClass;
 import UIPackage.*;
 import IOPackage.GameSaver;
-import java.util.ArrayList;
 
 public class Game
 {
-    enum Options
-    {
-        ROLL(1),
-        SAVE(2),
-        EXIT(3);
-        public final int option;
-
-        Options(int option)
-        {
-            this.option = option;
-        }
-    }
-    enum StringEnum
-    {
-        SQUARE_BOARD("Square"),
-        CIRCULAR_BOARD("Circular");
-        public final String option;
-        StringEnum(String option)
-        {
-            this.option = option;
-        }
-        public String getOption()
-        {
-            return option;
-        }
-
-    }
     private final int diceAmount;
     private boolean isLoaded;
     private final ArrayList<Player> players;
     private final Board board;
     private final UIResponse uiResponse = new UIResponse();
-    private final UIScreen uiScreen = new UIScreen();
-
+    private final UserInputScreen userInputScreen = new UserInputScreen();
     private  int loadPlayerIndex = 0;
 
-    // Simple constructor.
-    public Game(int playerAm, int tileAm, int diceAm)
-    {
-        this(playerAm,tileAm,diceAm,0,"0", false);
-
-    }
-
-    // Constructor for game with enhanced tiles only.
-    public Game(int playerAm, int tileAm, int diceAm, int enTiles)
-    {
-        this(playerAm,tileAm,diceAm,enTiles, "0", false);
-    }
-
-    // Constructor for game with cards only.
-    public Game(int playerAm, int tileAm, int diceAm, String maxPoints)
-    {
-        this(playerAm,tileAm,diceAm,0,maxPoints,false);
-    }
-
-    // Constructor with both cards and enhanced tiles.
-    public Game(int playerAm, int tileAm, int diceAm, int enTiles, String maxPoints)
+    // Constructor for new game
+    public Game(int playerAm, int tileAm, int diceAm, int enTiles, int maxPoints)
     {
         this(playerAm,tileAm,diceAm,enTiles,maxPoints,false);
     }
 
     // Final constructor.
-    public Game(int playerAm, int tileAm, int diceAm, int enTiles, String maxPoints, boolean isLoaded)
+    public Game(int playerAm, int tileAm, int diceAm, int enTiles, int maxPoints, boolean isLoaded)
     {
         this.diceAmount = diceAm;
         this.board = new Board(tileAm, enTiles , maxPoints);
@@ -77,7 +32,7 @@ public class Game
         this.isLoaded = isLoaded;
         if(!isLoaded)
         {
-            createPlayers(playerAm, Integer.parseInt(maxPoints));
+            createPlayers(playerAm, maxPoints);
         }
     }
 
@@ -90,14 +45,32 @@ public class Game
     {
         return this.players;
     }
+
     public void setLoadPlayerIndex(int loadPlayerIndex)
     {
         this.loadPlayerIndex = loadPlayerIndex;
     }
+
     public int getPlayerIndex(Player player)
     {
         return players.indexOf(player);
     }
+
+    private int getTurnIndex()
+    {
+        int turnIndex;
+        if(isLoaded)
+        {
+            turnIndex = loadPlayerIndex;
+        }
+        else
+        {
+            turnIndex  = 0;
+            decidePlayerTurn();
+        }
+        return turnIndex;
+    }
+
     public void createPlayers(ArrayList<String> loadPlayers)
     {
         for (String loadPlayer : loadPlayers)
@@ -105,6 +78,7 @@ public class Game
             players.add(new Player(loadPlayer));
         }
     }
+
     public void createPlayers(int playerAmount, int maxPoints)
     {
         Scanner scanner = new Scanner(System.in);
@@ -127,9 +101,19 @@ public class Game
         }
     }
 
+    private int getNextPlayer(int previousPlayer, int i)
+    {
+        if (players.get(previousPlayer).hasPlayAgainCard())
+        {
+            players.get(previousPlayer).setHasPlayAgainCard(false);
+            i = previousPlayer;
+        }
+        return i;
+    }
+
     public void decidePlayerTurn()
     {
-        System.out.println("Let's see who's starting first!");
+        System.out.println("\nLet's see who's starting first!");
         for (Player player : players)
         {
             System.out.print(player.getName() + ": ");
@@ -167,48 +151,26 @@ public class Game
         GameSaver saveGame = new GameSaver();
         Response descriptiveMap, inGameMenu, playerTurn, movePlayer, saveResponse;
         boolean endGame = false;
-        int userInput, previousPlayer = 0, playerIndex;
+        int userInput, previousPlayer = 0, turnIndex;
 
-        if(isLoaded)
-        {
-            playerIndex = loadPlayerIndex;
-        }
-        else
-        {
-            playerIndex  = 0;
-            decidePlayerTurn();
-        }
+        turnIndex = getTurnIndex();
 
         while (!endGame)
         {
-            for(int i = playerIndex; i < players.size(); i++)
+            for(int i = turnIndex; i < players.size(); i++)
             {
-                i = getPlayerPlayAgain(previousPlayer, i);
+                i = getNextPlayer(previousPlayer, i);
 
-                if(board.getBoardType().equals(StringEnum.SQUARE_BOARD.getOption()))
-                {
-                    playerTurn = uiResponse.createPlayerTurnResponse(players.get(i).getName(), getPlayerIndex(players.get(i)));
-                }
-                else
-                {
-                    if(board.getLapsToWin() != 0)
-                    {
-                         playerTurn = uiResponse.createPlayerTurnLapResponse(players.get(i).getName(), getPlayerIndex(players.get(i)), players.get(i).getLap());
-                    }
-                    else
-                    {
-                        playerTurn = uiResponse.createPlayerTurnPointsResponse(players.get(i).getName(), players.get(i).getPoints(), getPlayerIndex(players.get(i)));
-                    }
-                }
+                playerTurn = uiResponse.createPlayerTurnResponse(board.getBoardType(), board.getLapsToWin(), players.get(i), getPlayerIndex(players.get(i)));
                 descriptiveMap = uiResponse.createDescriptiveMapResponse(players.get(i).getCurrentPosition(), board.getTiles().size());
                 inGameMenu = uiResponse.createInGameResponse();
+
                 System.out.print(playerTurn.getMessage() + descriptiveMap.getMessage() + inGameMenu.getMessage());
+                do
+                {
+                    userInput = userInputScreen.checkUserInput(EnumClass.InputRestriction.GAME_MENU.getMin(), EnumClass.InputRestriction.GAME_MENU.getMax());
 
-
-                do {
-                    userInput = uiScreen.checkUserInput(1, 3);
-                    Options userOption = Options.values()[userInput - 1];
-
+                    EnumClass.InGameMenuOption userOption = EnumClass.InGameMenuOption.values()[userInput - 1];
                     switch (userOption)
                     {
                         case ROLL:
@@ -227,7 +189,7 @@ public class Game
                             endGame = true;
                             break;
                         default:
-                            System.out.print(uiResponse.printInvalidOption().getMessage());
+                            System.out.print(uiResponse.createInvalidOptionResponse().getMessage());
                             break;
                     }
                 }while(userInput <=0 || userInput >3);
@@ -247,37 +209,12 @@ public class Game
 
             if(isLoaded)
             {
-                playerIndex = 0;
+                turnIndex = 0;
                 isLoaded = false;
             }
         }
     }
 
-    private int getPlayerPlayAgain(int previousPlayer, int i)
-    {
-        if (players.get(previousPlayer).getHasPlayAgainCard())
-        {
-            players.get(previousPlayer).setHasPlayAgainCard(false);
-            i = previousPlayer;
-        }
-        return i;
-    }
-
-//    public boolean hasGameEnded(boolean endGame, boolean isWinner, int playerIndex, String playerName)
-//    {
-//        if(endGame)
-//        {
-//            return("\nGame ending.");
-//        }
-//        else if(isWinner)
-//        {
-//            return (screen.printWinner(playerIndex, playerName));
-//        }
-//        else
-//        {
-//            return ("");
-//        }
-//    }
 
     // Debug only
     /*

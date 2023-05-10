@@ -2,27 +2,13 @@ package GamePackage;
 
 import java.util.ArrayList;
 import java.util.Collections;
+
+import MainPackage.EnumClass;
 import TilesPackage.*;
 import WinningConditionsPackage.*;
 
 public class Board
 {
-    public enum StringEnum
-    {
-        SQUARE_BOARD("Square"),
-        CIRCULAR_BOARD("Circular"),
-        CARD_TILE("CardTile");
-        public final String option;
-        StringEnum(String option)
-        {
-            this.option = option;
-        }
-        public String getOption()
-        {
-            return option;
-        }
-
-    }
     private final WinningCondition[] winningConditions = new WinningCondition[]{new WinByFirst(), new WinByLaps(), new WinByPoints()};
     private final ArrayList<Tile> tiles;
     private final int maxPoints;
@@ -30,10 +16,9 @@ public class Board
     private String boardType;
     private int enhancedTiles = 0;
 
-    // Creates a board with both cards and enhanced tiles.
-    public Board(int tileAmount, int enTiles, String maxPoints)
+    public Board(int tileAmount, int enTiles, int maxPoints)
     {
-        this.maxPoints = Integer.parseInt(maxPoints);
+        this.maxPoints = maxPoints;
 
         tiles = new ArrayList<>();
 
@@ -43,7 +28,7 @@ public class Board
         }
 
         setupEnhancedTiles(enTiles);
-        setupCardTiles(Integer.parseInt(maxPoints));
+        setupCardTiles(maxPoints);
     }
 
     public String getBoardType() {
@@ -117,9 +102,9 @@ public class Board
     // Sets the card-type tiles in the middle of each side of the board.
     private void setupCardTiles(int maxPoints)
     {
-        int maxAmountOfCardTiles = (tiles.size() / 5);
-        int cardTilePositionCurrent = 0;
+        int maxAmountOfCardTiles = (tiles.size() / 5), cardTilePositionCurrent = 0;
         int cardTilePositionPrevious = cardTilePositionCurrent;
+
         if(maxPoints != 0)
         {
             for (int cardTile = 0; cardTile < maxAmountOfCardTiles; cardTile++)
@@ -133,6 +118,7 @@ public class Board
 
     public Response movePlayer(Player player,int diceRoll)
     {
+        String cardTileClassName = "CardTile";
         Response responsePlayerStatus;
 
         player.setPersonalRoll(diceRoll);
@@ -146,15 +132,12 @@ public class Board
         responseCheckPlayerPos = checkPlayerPosition(player);
         System.out.print(responseCheckPlayerPos.getMessage());
 
-        // If the player is changed by an enhanced tile and lands on a card tile, execute card's updatePlayerStatus.
-        // After the action reset players isFromEnhanced to false.
-        if (getTiles().get(player.getCurrentPosition() - 1).getClass().getName().equals(StringEnum.CARD_TILE.getOption()))
+        // If the player's position is changed by an enhanced tile and the player lands on a card tile,
+        // execute card's updatePlayerStatus. After the action reset player's isFromEnhanced to false.
+        if (player.isFromEnhanced() && getTiles().get(player.getCurrentPosition() - 1).getClass().getName().equals(cardTileClassName))
         {
-            if (player.isFromEnhanced())
-            {
                 getTiles().get(player.getCurrentPosition() - 1).updatePlayerStatus(player);
                 player.setIsFromEnhanced(false);
-            }
         }
         return responsePlayerStatus;
     }
@@ -162,37 +145,39 @@ public class Board
     // Keeps position updated according to the board type.
     public Response checkPlayerPosition(Player player)
     {
-        String lapAwardMessage = "";
-        if(boardType.equals(StringEnum.SQUARE_BOARD.getOption()))
+        String lapRewardMessage = "";
+        if(boardType.equals(EnumClass.BoardType.SQUARE_BOARD.getDescription()))
         {
             if(player.getCurrentPosition() >= getTiles().size())
             {
                 player.setCurrentPosition(getTiles().size());
             }
         }
-        else if(boardType.equals(StringEnum.CIRCULAR_BOARD.getOption()))
+        else if(boardType.equals(EnumClass.BoardType.CIRCULAR_BOARD.getDescription()))
         {
             if(player.getCurrentPosition() > getTiles().size())
             {
-                lapAwardMessage = updateLap(player).getMessage();
+                lapRewardMessage = updateLap(player).getMessage();
                 player.setCurrentPosition(player.getCurrentPosition() - getTiles().size());
             }
         }
-        return new Response(lapAwardMessage);
+        return new Response(lapRewardMessage);
     }
 
     private Response updateLap(Player player)
     {
-        String awardMessage = "\n" + "\033[32m" + "You completed a lap and are awarded " + getMaxPoints() / 10
+        int lapCompletionRewardValue = getMaxPoints() / 10;
+        String rewardMessage = "\n" + "\033[32m" + "You completed a lap and are awarded " + lapCompletionRewardValue
                 + " points!" + "\033[0m" + "\n";
+
         if(getLapsToWin() != 0)
         {
             player.increaseBy(1);
-            awardMessage = "";
+            rewardMessage = "";
         }
 
-        player.setNewPoints(getMaxPoints() / 10); // Set points awarded to the player when completing a lap.
-        return new Response(awardMessage);
+        player.setNewPoints(lapCompletionRewardValue); // Set points awarded to the player when completing a lap.
+        return new Response(rewardMessage);
     }
 
     public boolean isWinner(Player player, Board board)

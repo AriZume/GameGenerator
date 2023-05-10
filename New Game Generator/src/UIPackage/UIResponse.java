@@ -1,9 +1,10 @@
 package UIPackage;
 
+import java.util.*;
+
 import GamePackage.Player;
 import GamePackage.Response;
-
-import java.util.*;
+import MainPackage.EnumClass;
 
 public class UIResponse
 {
@@ -39,22 +40,24 @@ public class UIResponse
         return new Response("\nYou are placed on tile " + playerPos + " of " + boardSize+"\n");
     }
 
-    public Response createPlayerTurnResponse(String playerName, int playerIndex)
+    public Response createPlayerTurnResponse(String boardType, int lapsToWin, Player player, int playerIndex)
     {
-        return new Response("-----------------------------------------------------------------------\n"+ "It's " +
-        colors[playerIndex] + playerName + resetColor + "'s turn.\n(Player " + (playerIndex + 1) + ")\n");
-    }
-
-    public Response createPlayerTurnLapResponse(String playerName, int playerIndex, int lap)
-    {
-        return new Response("-----------------------------------------------------------------------\n"+"It's " +
-        colors[playerIndex] + playerName + resetColor + "'s turn.\n(Player " + (playerIndex + 1) + ") - Lap " + lap + "\n");
-    }
-
-    public Response createPlayerTurnPointsResponse(String playerName, int playerPoints, int playerIndex)
-    {
-        return new Response("-----------------------------------------------------------------------\n"+"It's " + colors[playerIndex]
-        + playerName + resetColor + "'s turn.\n(Player " + (playerIndex + 1) + "), you have " + playerPoints + " points.\n");
+        if(boardType.equals(EnumClass.BoardType.SQUARE_BOARD.getDescription()))
+        {
+            return new Response("-----------------------------------------------------------------------\n"+ "It's " +
+                colors[playerIndex] + player.getName() + resetColor + "'s turn.\n(Player " + (playerIndex + 1) + ")\n");
+        }
+        else
+        {
+            if(lapsToWin != 0)
+            {
+                return new Response("-----------------------------------------------------------------------\n"+"It's " +
+                        colors[playerIndex] + player.getName() + resetColor + "'s turn.\n(Player " + (playerIndex + 1) + ") - Lap " + player.getLap() + "\n");            }
+            else
+            {
+                return new Response("-----------------------------------------------------------------------\n"+"It's " + colors[playerIndex]
+                        + player.getName() + resetColor + "'s turn.\n(Player " + (playerIndex + 1) + "), you have " + player.getPoints() + " points.\n");            }
+        }
     }
 
     public Response createInGameResponse()
@@ -64,11 +67,10 @@ public class UIResponse
 
     public Response createEndTurnResponse(ArrayList<Player> players)
     {
-        StringBuilder  endOfTurn= new StringBuilder("\nEnd of turn.\n") ;
+        StringBuilder endOfTurn = new StringBuilder("\nEnd of turn.\n") ;
         for (Player p : players)
         {
             endOfTurn.append(p.getName() + " is on tile " + p.getCurrentPosition()+"\n");
-
         }
         return new Response(endOfTurn.toString());
     }
@@ -90,6 +92,10 @@ public class UIResponse
                 "HAVE FUN! ^_^");
     }
 
+    public Response createInvalidOptionResponse()
+    {
+        return new Response("Invalid input. Please try again: ");
+    }
     public int getIntegerInputValidation(Scanner input, String promptMessage, String errorMessage, int min, int max)
     {
         int number;
@@ -104,7 +110,7 @@ public class UIResponse
                     break; // Exit loop when condition is met
                 }
             } catch (InputMismatchException e) {
-                System.out.print(printInvalidOption().getMessage());
+                System.out.print(createInvalidOptionResponse().getMessage());
                 input.nextLine();
             }
         }
@@ -124,9 +130,5 @@ public class UIResponse
             }
         }while(!userInput.matches(regexCondition) && !userInput.isEmpty());
         return userInput;
-    }
-    public Response printInvalidOption()
-    {
-        return new Response("Invalid input. Please try again: ");
     }
 }

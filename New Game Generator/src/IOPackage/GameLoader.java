@@ -1,11 +1,11 @@
 package IOPackage;
 
-import GamePackage.Game;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import GamePackage.Game;
 
 public class GameLoader
 {
@@ -92,7 +92,7 @@ public class GameLoader
                 }
                 isLoaded = true;
             }
-            Game game = new Game(players.size(), tiles, dice, enhancedTiles, Integer.toString(maxPoints), isLoaded);
+            Game game = new Game(players.size(), tiles, dice, enhancedTiles, maxPoints, isLoaded);
             game.createPlayers(players);
 
             game.getBoard().setBoardType(boardType);

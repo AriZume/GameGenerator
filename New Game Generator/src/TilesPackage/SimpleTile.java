@@ -12,6 +12,6 @@ public class SimpleTile implements Tile
     public Response updatePlayerStatus(Player player)
     {
 
-        return new Response("\n This tile is a simple one\n");
+        return new Response("\nThis tile is a simple one\n");
     }
 }

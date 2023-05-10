@@ -1,11 +1,11 @@
-Names: stelios kostas 
-Current Position: 5 13 
-Points: 120 95 
+Names: 1 2 
+Current Position: 17 6 
+Points: 207 288 
 Laps: 0 0 
-Player Index: 1
+Player Index: 0
 BoardType: Circular
-Tiles: 15
+Tiles: 25
 EnhancedTiles: 0
-MaxPoints: 600
+MaxPoints: 654
 Laps: 0
 Dice: 1

@@ -1,10 +1,10 @@
 package TilesPackage;
 
+import java.util.Random;
+
 import GamePackage.Player;
 import GamePackage.Tile;
 import GamePackage.Response;
-
-import java.util.Random;
 
 public class ForwardTile implements Tile
 {

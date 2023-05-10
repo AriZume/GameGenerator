@@ -1,5 +1,7 @@
 package TilesPackage;
 
+import java.util.*;
+
 import CardsPackage.GainPointsCard;
 import CardsPackage.LosePointsCard;
 import CardsPackage.PlayAgainCard;
@@ -8,7 +10,6 @@ import GamePackage.Player;
 import GamePackage.Tile;
 import GamePackage.Response;
 
-import java.util.*;
 public class CardTile implements Tile
 {
     private final int maxPoints;
