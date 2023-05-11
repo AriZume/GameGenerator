@@ -10,12 +10,10 @@ public class GameSetupHelper
 {
     public void createNewGame(UIResponse uiResponse, UserInputScreen userInputScreen)
     {
-        Game newGame;
-
         int playerAmount, tileAmount, diceAmount, enhancedTiles = 0, boardType;
-        int maxPoints = 0; // Cards winning condition.
-        int lapsToWins = 0; // Default winning condition for circular board.
-        String hasEnhanced, hasCards = "N";
+        int maxPoints = 0;
+        int lapsToWins = 0;
+        String hasEnhanced, hasCards;
 
         Response designGameTitle = uiResponse.createDesignGameTitleResponse();
         System.out.print(designGameTitle.getMessage());
@@ -43,7 +41,7 @@ public class GameSetupHelper
                 lapsToWins = userInputScreen.declareLapsToWin(EnumClass.InputRestriction.LAPS_TO_WIN.getMin(), EnumClass.InputRestriction.LAPS_TO_WIN.getMax());
             }
         }
-        newGame = new Game(playerAmount, tileAmount, diceAmount, enhancedTiles, maxPoints);
+        Game newGame = new Game(playerAmount, tileAmount, diceAmount, enhancedTiles, maxPoints);
 
         EnumClass.BoardType boardTypeVerify = EnumClass.BoardType.values()[boardType-1];
         newGame.getBoard().setBoardType(boardTypeVerify.getDescription());

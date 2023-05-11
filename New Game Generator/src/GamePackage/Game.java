@@ -116,7 +116,7 @@ public class Game
         System.out.println("\nLet's see who's starting first!");
         for (Player player : players)
         {
-            System.out.print(player.getName() + ": ");
+            System.out.print(player.getName() + ". ");
             int roll = getDiceRoll();
             player.setQueuePosition(roll);
         }

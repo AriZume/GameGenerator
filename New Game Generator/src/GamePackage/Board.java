@@ -45,6 +45,7 @@ public class Board
     {
         return this.lapsToWin;
     }
+
     public int getMaxPoints()
     {
         return maxPoints;

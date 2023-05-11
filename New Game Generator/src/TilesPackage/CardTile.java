@@ -12,8 +12,8 @@ import GamePackage.Response;
 
 public class CardTile implements Tile
 {
-    private final int maxPoints;
     private final Card[] cards = new Card[]{new GainPointsCard(), new LosePointsCard(), new PlayAgainCard()};
+    private final int maxPoints;
 
     public CardTile(int maxPoints)
     {

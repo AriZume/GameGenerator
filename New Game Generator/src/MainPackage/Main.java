@@ -44,7 +44,7 @@ public class Main
                     break;
             }
 
-            System.out.println(mainMenu.getMessage());
+            System.out.print(mainMenu.getMessage());
         }
     }
 }

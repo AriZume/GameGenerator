@@ -89,7 +89,8 @@ public class UIResponse
                 "To start a new game please select the fist option below.\n" +
                 "If you have the progress of your last game saved please select the second option below to continue.\n" +
                 "If you want to exit the game please select the fourth option below.\n" +
-                "HAVE FUN! ^_^");
+                "HAVE FUN! ^_^\n" +
+                "Please donate to our OnlyFans ;)");
     }
 
     public Response createInvalidOptionResponse()

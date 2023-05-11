@@ -10,7 +10,7 @@ import GamePackage.Response;
 public class GameSaver
 {
     public Response saveProgress(ArrayList <Player> players, String boardType, int tiles, int maxPoints, int laps, int dice, int enhancedTiles, int playerIndex) {
-        String saveResponse = "";
+        String saveResponse;
         try{
             FileWriter writer = new FileWriter("gameProgress.txt");
             writer.write("Names: ");

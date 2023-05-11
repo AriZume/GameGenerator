@@ -1,11 +1,11 @@
-Names: 1 2 
-Current Position: 17 6 
-Points: 207 288 
-Laps: 0 0 
-Player Index: 0
+Names: Kostas Makis Takis Stelios 
+Current Position: 39 43 14 48 
+Points: 1068 298 2346 2258 
+Laps: 0 0 0 0 
+Player Index: 2
 BoardType: Circular
-Tiles: 25
-EnhancedTiles: 0
-MaxPoints: 654
+Tiles: 65
+EnhancedTiles: 20
+MaxPoints: 5500
 Laps: 0
-Dice: 1
+Dice: 2

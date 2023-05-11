@@ -10,6 +10,6 @@ public class LoseTurnTile implements Tile
     public Response updatePlayerStatus(Player player)
     {
         player.setCurrentPosition(player.getCurrentPosition() - player.getPersonalRoll());
-        return new Response("\n" + "\033[31m" + "You lose your turn. " + "\033[0m" + "\n");
+        return new Response("\n" + "\033[31m" + "The Gods consider you a disgrace. You lose your turn." + "\033[0m" + "\n");
     }
 }

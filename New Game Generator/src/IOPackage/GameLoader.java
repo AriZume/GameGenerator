@@ -106,8 +106,6 @@ public class GameLoader
                 game.getPlayer().get(i).setPoints(Integer.parseInt(playerPoints.get(i)));
             }
 
-            //game.getBoard().setMaxPoints(maxPoints);
-            //game.getBoard().createTilesAndCards(enhancedTiles, maxPoints);
             return game;
         }
         catch (FileNotFoundException e)
