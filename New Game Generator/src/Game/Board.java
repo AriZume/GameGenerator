@@ -1,9 +1,6 @@
 package Game;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
+import java.util.*;
 import Main.EnumClass;
 import Tiles.*;
 import UserInterface.Response;

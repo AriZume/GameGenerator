@@ -3,6 +3,7 @@ package UserInterface;
 import java.util.*;
 
 import Game.Player;
+import Game.Players;
 import Main.EnumClass;
 
 public class UIResponse
@@ -134,4 +135,40 @@ public class UIResponse
         }while(!userInput.matches(regexCondition) && !userInput.isEmpty());
         return userInput;
     }
+
+    public Response createDiceRollsResponse(ArrayList<Integer> diceRolls)
+    {
+        StringBuilder  diceResponse = new StringBuilder("You rolled: ");
+        for(int i = 0; i < diceRolls.size(); i++)
+        {
+            diceResponse.append(diceRolls.get(i));
+            if(!((i+1) >= diceRolls.size()))
+            {
+            diceResponse.append(" and ");
+            }
+        }
+        return new Response(diceResponse.toString());
+    }
+
+    public Response createPlayerPriorityResponse(Players players,int diceAmount)
+    {
+        StringBuilder priorityResponse = new StringBuilder("\nLet's see who's starting first!\n");
+        for (Player player : players.getPlayers())
+        {
+            priorityResponse.append(player.getName());
+            if (diceAmount==2)
+            {
+                priorityResponse.append(" rolled a total of: ");
+                priorityResponse.append(player.getQueuePosition());
+            }
+            else
+            {
+                priorityResponse.append(" rolled: ");
+                priorityResponse.append(player.getQueuePosition());
+            }
+            priorityResponse.append("\n");
+        }
+        return new Response(priorityResponse.toString());
+    }
+
 }

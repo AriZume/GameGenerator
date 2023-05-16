@@ -30,6 +30,7 @@ public class Players
         this.currentPlayerIndex = loadPlayerIndex;
         this.currentPlayer = players.get(currentPlayerIndex);
     }
+    //TODO: NA VGALOUME TA SYSTEMOUT SOSOSOSOSOSOSSOS!
     private void createPlayers(int playerAmount, int maxPoints) {
         Scanner scanner = new Scanner(System.in);
 

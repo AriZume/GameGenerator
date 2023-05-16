@@ -1,7 +1,6 @@
 package Game;
 
 import java.util.*;
-import java.util.ArrayList;
 
 import Main.EnumClass;
 import Tiles.Tile;
@@ -12,6 +11,7 @@ public class Game
 {
     private final int diceAmount;
     private boolean isLoaded;
+    private final ArrayList<Integer> diceRolls;
     private final Players players;
     private final Board board;
     private final UIResponse uiResponse = new UIResponse();
@@ -32,7 +32,7 @@ public class Game
         this.diceAmount = diceAm;
         this.board = new Board(tileAm, enTiles , maxPoints, boardType, lapsToWin);
         this.isLoaded = (loadedNames != null && loadedPositions != null && loadedLaps !=null && loadedPoints != null);
-
+        this.diceRolls = new ArrayList<>();
         if(!isLoaded)
         {
             this.players = new Players(playerAm, maxPoints);
@@ -45,35 +45,24 @@ public class Game
 
     private int getDiceRoll()
     {
-        int diceRoll, totalRoll = 0;
+        int  totalRoll=0,diceRoll;
         Random roll = new Random();
-
-        System.out.print("You rolled: ");
-
         for(int i = 0; i < diceAmount; i++)
         {
             diceRoll = roll.nextInt(6)+1;
-            System.out.print(diceRoll);
-
-            if(!((i+1) >= diceAmount))
-            {
-                System.out.print(" and ");
-            }
-            totalRoll += diceRoll;
+            diceRolls.add(diceRoll);
+            totalRoll += diceRolls.get(i);
         }
-
-        System.out.print("\n");
         return totalRoll;
     }
 
     public void decidePlayerPriority()
     {
-        System.out.println("\nLet's see who's starting first!");
         for (Player player : players.getPlayers())
         {
-            System.out.print(player.getName() + ". ");
-            int roll = getDiceRoll();
-            player.setQueuePosition(roll);
+            player.setQueuePosition(getDiceRoll());
+            diceRolls.clear();
+
         }
         players.shufflePlayers();
     }
@@ -91,6 +80,7 @@ public class Game
         if(!isLoaded)
         {
             decidePlayerPriority();
+            System.out.print( uiResponse.createPlayerPriorityResponse(players,diceAmount).getMessage());
             isLoaded = false;
         }
         while (true)
@@ -109,6 +99,7 @@ public class Game
                 {
                     case ROLL:
                         List<Response> responses = board.movePlayer(currentPlayer, getDiceRoll());
+                        responses.set(0,uiResponse.createDiceRollsResponse(diceRolls));
                         for (Response response:responses)
                         {
                             System.out.print(response.getMessage());
@@ -139,6 +130,7 @@ public class Game
                 System.out.print(uiResponse.createWinnerResponse(players.getCurrentPlayerIndex(),currentPlayer.getName()).getMessage());
                 break;
             }
+            diceRolls.clear();
             currentPlayer = players.getNextPlayer();
         }
     }

@@ -11,7 +11,7 @@ public class GameLoader
 {
     public Game  loadProgress()
     {
-        File saveFile = new File("C:\\Users\\etzer\\Documents\\IntelliJ Save Files\\New Game Generator\\gameProgress.txt");
+        File saveFile = new File("N:\\pragmata sxolhs\\Java Projects\\New Game Generator\\gameProgress.txt");
 
         //boolean isLoaded = false;
         int tiles = 0, enhancedTiles = 0, maxPoints = 0, totalLaps = 0, dice = 0, playerIndex = 0;

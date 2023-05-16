@@ -1,14 +1,12 @@
 package Main;
 
 import Game.Game;
-import UserInterface.Response;
 import IO.GameLoader;
-import UserInterface.UIResponse;
-import UserInterface.UserInputScreen;
+import UserInterface.*;
 
+// TODO: GAME LOADER GET PATH
 // TODO: ASK ABOUT EXCEPTIONS AND TRY-CATCH BLOCKS
 // TODO: ASK ABOUT PACKAGE DIVISION
-// TODO: ASK ABOUT THE DICE ROLL METHOD TO USE A LIST FOR THE INDIVIDUAL DIE TO REFACTOR FROM VOID TO RESPONSE
 public class Main
 {
     public static void main(String[] args)
@@ -22,7 +20,6 @@ public class Main
         Response mainMenu = uiResponse.createMainMenuResponse(EnumClass.MainMenuOption.DESIGN_PLAY.getValue(), EnumClass.MainMenuOption.LOAD.getValue(),
                 EnumClass.MainMenuOption.HELP.getValue(), EnumClass.MainMenuOption.EXIT.getValue());
         System.out.print(mainMenu.getMessage());
-
         while(true)
         {
             userInput = userInputScreen.checkUserInput(EnumClass.InputRestriction.MAIN_MENU.getMin(), EnumClass.InputRestriction.MAIN_MENU.getMax());

@@ -19,6 +19,7 @@ public class Player
     public Player(String name, int maxPoints) {
         this.name = name;
         this.currentPosition = 1;
+        this.queuePosition = 0;
         setPoints(maxPoints);
     }
 
