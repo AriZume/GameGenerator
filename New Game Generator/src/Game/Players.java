@@ -1,5 +1,7 @@
 package Game;
 
+import UserInterface.UIResponse;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Scanner;
@@ -30,34 +32,28 @@ public class Players
         this.currentPlayerIndex = loadPlayerIndex;
         this.currentPlayer = players.get(currentPlayerIndex);
     }
-    //TODO: NA VGALOUME TA SYSTEMOUT SOSOSOSOSOSOSSOS!
-    private void createPlayers(int playerAmount, int maxPoints) {
-        Scanner scanner = new Scanner(System.in);
 
-        ArrayList<String> names = new ArrayList<>();
+    private void createPlayers(int playerAmount, int maxPoints)
+    {
         for (int i = 0; i < playerAmount; i++) {
-            System.out.print("Player : ");
-            String name;
-            do {
-                name = scanner.nextLine();
-                if (name.isBlank()) {
-                    System.out.print("Invalid name. Please try again: ");
-                } else {
-                    names.add(name);
-                }
-            } while (name.isBlank());
-
-            players.add(new Player(name, maxPoints / 10));
+            players.add(new Player("Player "+ (i+1), maxPoints / 10));
         }
+    }
+
+    public void setPlayerNames(Player player, String name)
+    {
+        player.setName(name);
     }
     public Player getCurrentPlayer()
     {
         return this.currentPlayer;
     }
+
     public ArrayList<Player> getPlayers()
     {
         return this.players;
     }
+
     public int getCurrentPlayerIndex()
     {
         return this.currentPlayerIndex;

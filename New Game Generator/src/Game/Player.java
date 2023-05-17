@@ -2,7 +2,7 @@ package Game;
 
 public class Player
 {
-    private final String name;
+    private String name;
     private int currentPosition;
     private int personalRoll;
     private int queuePosition;
@@ -26,6 +26,10 @@ public class Player
     public String getName()
     {
         return name;
+    }
+    public void setName(String name)
+    {
+        this.name = name;
     }
 
     public void setCurrentPosition(int position)

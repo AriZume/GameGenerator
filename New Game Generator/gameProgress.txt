@@ -1,11 +1,11 @@
-Names: Kostas Stelios
-CurrentPosition: 1 1 
-Points: 43 90 
-PlayerLaps: 0 0 
-PlayerIndex: 0
+Names: stelios kostas ddsadasdasdsa 
+CurrentPosition: 8 10 8 
+Points: 0 0 0 
+PlayerLaps: 2 2 1 
+PlayerIndex: 2
 BoardType: Circular
-Tiles: 32
-EnhancedTiles: 15
-MaxPoints: 600
-LapsToWin: 0
+Tiles: 15
+EnhancedTiles: 0
+MaxPoints: 0
+LapsToWin: 3
 Dice: 1

@@ -6,12 +6,13 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import Game.Game;
+import Main.EnumClass;
 
 public class GameLoader
 {
     public Game  loadProgress()
     {
-        File saveFile = new File("N:\\pragmata sxolhs\\Java Projects\\New Game Generator\\gameProgress.txt");
+        File saveFile = new File(EnumClass.SaveFile.SAVE_FILE.getPath());
 
         //boolean isLoaded = false;
         int tiles = 0, enhancedTiles = 0, maxPoints = 0, totalLaps = 0, dice = 0, playerIndex = 0;

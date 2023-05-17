@@ -1,5 +1,9 @@
 package UserInterface;
 
+import Game.Player;
+import Game.Players;
+
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class UserInputScreen
@@ -70,5 +74,28 @@ public class UserInputScreen
     public int checkUserInput(int min, int max)
     {
         return uiResponse.getIntegerInputValidation(input, "", uiResponse.createInvalidOptionResponse().getMessage(), min, max);
+    }
+
+    public void declarePlayerNames(Players players, int playerAmount)
+    {
+        Scanner scanner = new Scanner(System.in);
+
+        String prompt ="Enter player names:\n";
+        String string = "Player : ";
+        String errorMessage = "\nInvalid name. Please try again: ";
+
+        System.out.print(prompt);
+        for(int i = 0; i < playerAmount; i++)
+        {
+            System.out.print(string);
+            String name;
+            do {
+                name = scanner.nextLine();
+                if (name.isBlank()) {
+                    System.out.print(errorMessage);
+                }
+            } while (name.isBlank());
+            players.setPlayerNames(players.getPlayers().get(i), name);
+        }
     }
 }

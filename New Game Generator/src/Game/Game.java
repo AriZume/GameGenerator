@@ -75,11 +75,13 @@ public class Game
         boolean endGame = false;
         int userInput;
 
-        showTileObj();
+        //showTileObj(); //Debug
 
         if(!isLoaded)
         {
+            userInputScreen.declarePlayerNames(players, players.getPlayers().size());
             decidePlayerPriority();
+            currentPlayer = players.getCurrentPlayer();
             System.out.print( uiResponse.createPlayerPriorityResponse(players,diceAmount).getMessage());
             isLoaded = false;
         }
