@@ -30,7 +30,7 @@ public class GameSetupHelper
             enhancedTiles = userInputScreen.declareEnhancedTileAmount(EnumClass.InputRestriction.ENHANCED_TILE_AMOUNT.getMin(), tileAmount - EnumClass.InputRestriction.ENHANCED_TILE_AMOUNT.getMax());
         }
 
-        if(boardType == EnumClass.BoardType.CIRCULAR_BOARD.getValue())
+        if(boardType == BoardType.CIRCULAR_BOARD.getValue())
         {
             hasCards = userInputScreen.declareCards("[yYnN]");
             if(hasCards.matches("[Yy]"))
@@ -42,7 +42,7 @@ public class GameSetupHelper
                 lapsToWins = userInputScreen.declareLapsToWin(EnumClass.InputRestriction.LAPS_TO_WIN.getMin(), EnumClass.InputRestriction.LAPS_TO_WIN.getMax());
             }
         }
-        return new Game(playerAmount, tileAmount, diceAmount, enhancedTiles, maxPoints, EnumClass.BoardType.values()[boardType-1].getDescription(), lapsToWins);
+        return new Game(playerAmount, tileAmount, diceAmount, enhancedTiles, maxPoints, BoardType.values()[boardType-1].getDescription(), lapsToWins);
     }
 
     public QuickGame createQuickGame(UIResponse uiResponse, UserInputScreen userInputScreen)

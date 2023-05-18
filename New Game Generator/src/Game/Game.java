@@ -105,7 +105,7 @@ public class Game
                         {
                             System.out.print(response.message());
                         }
-                        Response endTurn = uiResponse.createEndTurnResponse(players.getPlayers());
+                        Response endTurn = uiResponse.createEndTurnResponse(players.getPlayers(),board.getBoardType());
                         System.out.print("\n" + endTurn.message());
                         break;
                     case SAVE:

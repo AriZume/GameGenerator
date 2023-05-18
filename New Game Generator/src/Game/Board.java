@@ -1,7 +1,7 @@
 package Game;
 
 import java.util.*;
-import Main.EnumClass;
+
 import Tiles.*;
 import UserInterface.Response;
 import WinningConditions.*;
@@ -14,6 +14,7 @@ public class Board
     private final int lapsToWin;
     private final String boardType;
     private int enhancedTiles = 0;
+    private TilePlacementStrategy tilePlacementStrategy = new RandomPlacementStrategy();
 
     public Board(int tileAmount, int enTiles, int maxPoints, String boardType, int lapsToWin)
     {
@@ -29,6 +30,10 @@ public class Board
 
         generateEnhancedTiles(enTiles);
         generateCardTiles(maxPoints);
+    }
+
+    public void setTilePlacementStrategy(TilePlacementStrategy tilePlacementStrategy) {
+        this.tilePlacementStrategy = tilePlacementStrategy;
     }
 
     public String getBoardType() {
@@ -62,35 +67,7 @@ public class Board
     private void generateEnhancedTiles(int enTiles)
     {
         enhancedTiles = enTiles;
-
-        ArrayList<Integer> tempList = new ArrayList<>();
-        for (int i = 1; i < tiles.size(); i++)
-        {
-            tempList.add(i);
-        }
-        tempList.remove(tempList.size()-1);
-        Collections.shuffle(tempList);
-
-        int loseTurnTiles = enTiles/3;
-        int backwardTiles = (enTiles - loseTurnTiles) / 2;
-
-        for (int i = 0; i < enTiles; i++)
-        {
-            for (int j = 0; j < tiles.size(); j++)
-            {
-                if (j == tempList.get(i) && i < loseTurnTiles)
-                {
-                    tiles.set(j, new LoseTurnTile());
-                }else if(j == tempList.get(i) && i < (backwardTiles+loseTurnTiles))
-                {
-                    tiles.set(j, new BackwardTile());
-                }
-                else if(j == tempList.get(i))
-                {
-                    tiles.set(j, new ForwardTile());
-                }
-            }
-        }
+        tilePlacementStrategy.placeTiles(enTiles,tiles);
     }
 
     // Generates a fair amount of card tiles depending on the board size.
@@ -133,14 +110,14 @@ public class Board
     public Response checkPlayerPosition(Player player)
     {
         String lapRewardMessage = "";
-        if(boardType.equals(EnumClass.BoardType.SQUARE_BOARD.getDescription()))
+        if(boardType.equals(BoardType.SQUARE_BOARD.getDescription()))
         {
             if(player.getCurrentPosition() > getTiles().size())
             {
                 player.setCurrentPosition(getTiles().size());
             }
         }
-        else if(boardType.equals(EnumClass.BoardType.CIRCULAR_BOARD.getDescription()))
+        else if(boardType.equals(BoardType.CIRCULAR_BOARD.getDescription()))
         {
             if(player.getCurrentPosition() > getTiles().size())
             {

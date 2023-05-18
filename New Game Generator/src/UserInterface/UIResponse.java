@@ -4,7 +4,7 @@ import java.util.*;
 
 import Game.Player;
 import Game.Players;
-import Main.EnumClass;
+import Game.BoardType;
 
 public class UIResponse
 {
@@ -42,7 +42,7 @@ public class UIResponse
 
     public Response createPlayerTurnResponse(String boardType, int lapsToWin, Player player, int playerIndex)
     {
-        if(boardType.equals(EnumClass.BoardType.SQUARE_BOARD.getDescription()))
+        if(boardType.equals(BoardType.SQUARE_BOARD.getDescription()))
         {
             return new Response("-----------------------------------------------------------------------\n"+ "It's " +
                 colors[playerIndex] + player.getName() + resetColor + "'s turn.\n(Player " + (playerIndex + 1) + ")\n");
@@ -65,7 +65,7 @@ public class UIResponse
         return new Response("\n1. Roll Dice\n2. Save Game\n3. Exit\n");
     }
 
-    public Response createEndTurnResponse(ArrayList<Player> players)
+    public Response createEndTurnResponse(ArrayList<Player> players,String boardType)
     {
         StringBuilder endOfTurn = new StringBuilder("\nEnd of turn.\n") ;
         for (Player p : players)
@@ -73,6 +73,12 @@ public class UIResponse
             endOfTurn.append(p.getName());
             endOfTurn.append(" is on tile ");
             endOfTurn.append(p.getCurrentPosition());
+            if(boardType.equals(BoardType.CIRCULAR_BOARD.getDescription()))
+            {
+                endOfTurn.append(" and has ");
+                endOfTurn.append(p.getPoints());
+                endOfTurn.append(" points. ");
+            }
             endOfTurn.append("\n");
         }
         return new Response(endOfTurn.toString());
