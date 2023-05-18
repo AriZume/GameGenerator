@@ -4,7 +4,7 @@ public class EnumClass
 {
     public enum InputRestriction
     {
-        MAIN_MENU(1,4),
+        MAIN_MENU(1,5),
         GAME_MENU(1,3),
         BOARD_TYPE(1,2),
         PLAYER_AMOUNT(2,10),
@@ -33,9 +33,10 @@ public class EnumClass
     public enum MainMenuOption
     {
         DESIGN_PLAY(1),
-        LOAD(2),
-        HELP(3),
-        EXIT(4);
+        QUICK_GAME(2),
+        LOAD(3),
+        HELP(4),
+        EXIT(5);
 
         public final int value;
         MainMenuOption(int value)

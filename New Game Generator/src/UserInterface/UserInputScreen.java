@@ -1,9 +1,7 @@
 package UserInterface;
 
-import Game.Player;
 import Game.Players;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class UserInputScreen
@@ -73,7 +71,7 @@ public class UserInputScreen
 
     public int checkUserInput(int min, int max)
     {
-        return uiResponse.getIntegerInputValidation(input, "", uiResponse.createInvalidOptionResponse().getMessage(), min, max);
+        return uiResponse.getIntegerInputValidation(input, "", uiResponse.createInvalidOptionResponse().message(), min, max);
     }
 
     public void declarePlayerNames(Players players, int playerAmount)

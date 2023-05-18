@@ -1,7 +1,6 @@
 package IO;
 
 import java.io.FileWriter;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -16,9 +15,8 @@ public class GameSaver
         try{
             FileWriter writer = new FileWriter(EnumClass.SaveFile.SAVE_FILE.getName());
             writer.write("Names: ");
-            for (int i = 0; i <players.size() ; i++)
-            {
-                writer.write(players.get(i).getName() + " " );
+            for (Player player : players) {
+                writer.write(player.getName() + " ");
             }
 
             writer.write("\nCurrentPosition: ");

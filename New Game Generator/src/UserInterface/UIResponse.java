@@ -23,10 +23,10 @@ public class UIResponse
             "\u001b[38;2;139;69;19m" // Brown
             };
 
-    public Response createMainMenuResponse(int optDesignPlay, int optLoad, int optHelp, int optExit) {
+    public Response createMainMenuResponse(int optDesignPlay, int optQuickGame,int optLoad, int optHelp, int optExit) {
         // Change the color to rose gold
         return new Response("\033[38;2;255;192;203m" + "\n========================\n" + "\t\t  MENU" + "\n========================" +
-        resetColor + "\n"+ optDesignPlay + ". Design Game and Play\n" + optLoad + ". Load Game\n" + optHelp + ". Help\n" + optExit + ". Exit\n");
+        resetColor + "\n"+ optDesignPlay + ". Design Game and Play\n" + optQuickGame + ". Quick Game\n" + optLoad + ". Load Game\n" + optHelp + ". Help\n" + optExit + ". Exit\n");
     }
 
     public Response createDesignGameTitleResponse()
@@ -143,14 +143,16 @@ public class UIResponse
         while (true) {
             try {
                 number = input.nextInt();
-                if (number < min || number > max) {
+                if (number < min || number > max)
+                {
                     System.out.print(errorMessage);
                 } else
                 {
                     break; // Exit loop when condition is met
                 }
-            } catch (InputMismatchException e) {
-                System.out.print(createInvalidOptionResponse().getMessage());
+            } catch (InputMismatchException e)
+            {
+                System.out.print(createInvalidOptionResponse().message());
                 input.nextLine();
             }
         }

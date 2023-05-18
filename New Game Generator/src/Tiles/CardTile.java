@@ -27,7 +27,7 @@ public class CardTile implements Tile
         Card card = cards[cardIndex];
 
         Response response = card.getCardStatus(player, maxPoints);
-         return new Response("\n" + "\033[34m" + "You landed on a tile that provides you a card\n"+ "\033[0m" + response.getMessage());
+         return new Response("\n" + "\033[34m" + "You landed on a tile that provides you a card\n"+ "\033[0m" + response.message());
     }
     @Override
      public Response fromEnhanced(Player player)

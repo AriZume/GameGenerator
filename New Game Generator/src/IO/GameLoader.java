@@ -14,7 +14,6 @@ public class GameLoader
     {
         File saveFile = new File(EnumClass.SaveFile.SAVE_FILE.getPath());
 
-        //boolean isLoaded = false;
         int tiles = 0, enhancedTiles = 0, maxPoints = 0, totalLaps = 0, dice = 0, playerIndex = 0;
         ArrayList<String> playerNames = new ArrayList<>();
         ArrayList<String> playerPositions = new ArrayList<>();

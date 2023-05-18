@@ -144,7 +144,7 @@ public class Board
         {
             if(player.getCurrentPosition() > getTiles().size())
             {
-                lapRewardMessage = updateLap(player).getMessage();
+                lapRewardMessage = updateLap(player).message();
                 player.setCurrentPosition(player.getCurrentPosition() - getTiles().size());
             }
         }

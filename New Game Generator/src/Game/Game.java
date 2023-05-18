@@ -31,8 +31,8 @@ public class Game
     {
         this.diceAmount = diceAm;
         this.board = new Board(tileAm, enTiles , maxPoints, boardType, lapsToWin);
-        this.isLoaded = (loadedNames != null && loadedPositions != null && loadedLaps !=null && loadedPoints != null);
         this.diceRolls = new ArrayList<>();
+        this.isLoaded = (loadedNames != null && loadedPositions != null && loadedLaps !=null && loadedPoints != null);
         if(!isLoaded)
         {
             this.players = new Players(playerAm, maxPoints);
@@ -62,7 +62,6 @@ public class Game
         {
             player.setQueuePosition(getDiceRoll());
             diceRolls.clear();
-
         }
         players.shufflePlayers();
     }
@@ -82,7 +81,7 @@ public class Game
             userInputScreen.declarePlayerNames(players, players.getPlayers().size());
             decidePlayerPriority();
             currentPlayer = players.getCurrentPlayer();
-            System.out.print( uiResponse.createPlayerPriorityResponse(players,diceAmount).getMessage());
+            System.out.print( uiResponse.createPlayerPriorityResponse(players,diceAmount).message());
             isLoaded = false;
         }
         while (true)
@@ -91,7 +90,7 @@ public class Game
             descriptiveMap = uiResponse.createDescriptiveMapResponse(currentPlayer.getCurrentPosition(), board.getTiles().size());
             inGameMenu = uiResponse.createInGameResponse();
 
-            System.out.print(playerTurn.getMessage() + descriptiveMap.getMessage() + inGameMenu.getMessage());
+            System.out.print(playerTurn.message() + descriptiveMap.message() + inGameMenu.message());
             do
             {
                 userInput = userInputScreen.checkUserInput(EnumClass.InputRestriction.GAME_MENU.getMin(), EnumClass.InputRestriction.GAME_MENU.getMax());
@@ -104,21 +103,21 @@ public class Game
                         responses.set(0,uiResponse.createDiceRollsResponse(diceRolls));
                         for (Response response:responses)
                         {
-                            System.out.print(response.getMessage());
+                            System.out.print(response.message());
                         }
                         Response endTurn = uiResponse.createEndTurnResponse(players.getPlayers());
-                        System.out.print("\n" + endTurn.getMessage());
+                        System.out.print("\n" + endTurn.message());
                         break;
                     case SAVE:
                         userInput = 0;
                         saveResponse = saveGame.saveProgress(players.getPlayers(), board.getBoardType(), board.getTiles().size(), board.getMaxPoints(), board.getLapsToWin(), diceAmount, board.getEnhancedTiles(), players.getCurrentPlayerIndex());
-                        System.out.print(saveResponse.getMessage() + inGameMenu.getMessage());
+                        System.out.print(saveResponse.message() + inGameMenu.message());
                         break;
                     case EXIT:
                         endGame = true;
                         break;
                     default:
-                        System.out.print(uiResponse.createInvalidOptionResponse().getMessage());
+                        System.out.print(uiResponse.createInvalidOptionResponse().message());
                         break;
                 }
             }while(userInput <=0 || userInput >3);
@@ -129,7 +128,7 @@ public class Game
             }
             else if(board.isWinner(currentPlayer, board))
             {
-                System.out.print(uiResponse.createWinnerResponse(players.getCurrentPlayerIndex(),currentPlayer.getName()).getMessage());
+                System.out.print(uiResponse.createWinnerResponse(players.getCurrentPlayerIndex(),currentPlayer.getName()).message());
                 break;
             }
             diceRolls.clear();

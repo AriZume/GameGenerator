@@ -1,6 +1,7 @@
 package Main;
 
 import Game.Game;
+import Game.QuickGame;
 import UserInterface.Response;
 import IO.GameLoader;
 import UserInterface.UIResponse;
@@ -16,7 +17,7 @@ public class GameSetupHelper
         String hasEnhanced, hasCards;
 
         Response designGameTitle = uiResponse.createDesignGameTitleResponse();
-        System.out.print(designGameTitle.getMessage());
+        System.out.print(designGameTitle.message());
 
         boardType = userInputScreen.declareBoardType(EnumClass.InputRestriction.BOARD_TYPE.getMin(), EnumClass.InputRestriction.BOARD_TYPE.getMax());
         playerAmount = userInputScreen.declarePlayerAmount(EnumClass.InputRestriction.PLAYER_AMOUNT.getMin(), EnumClass.InputRestriction.PLAYER_AMOUNT.getMax());
@@ -44,24 +45,31 @@ public class GameSetupHelper
         return new Game(playerAmount, tileAmount, diceAmount, enhancedTiles, maxPoints, EnumClass.BoardType.values()[boardType-1].getDescription(), lapsToWins);
     }
 
+    public QuickGame createQuickGame(UIResponse uiResponse, UserInputScreen userInputScreen)
+    {
+        int playerAmount, boardType;
+        boardType = userInputScreen.declareBoardType(EnumClass.InputRestriction.BOARD_TYPE.getMin(), EnumClass.InputRestriction.BOARD_TYPE.getMax());
+        playerAmount = userInputScreen.declarePlayerAmount(EnumClass.InputRestriction.PLAYER_AMOUNT.getMin(), EnumClass.InputRestriction.PLAYER_AMOUNT.getMax());
+        return new QuickGame(playerAmount, boardType);
+    }
+
     public Game loadGame(GameLoader loader)
     {
-        Response fileNotFoundResponse = new Response("");
+        Response fileNotFoundResponse;
         try
         {
-            Game loadGame = loader.loadProgress();
-            return loadGame;
+            return loader.loadProgress();
         } catch (Exception e)
         {
             fileNotFoundResponse = new Response("\nFile not found. Please create a new game.");
         }
-        System.out.print(fileNotFoundResponse.getMessage());
+        System.out.print(fileNotFoundResponse.message());
         return null;
     }
 
     public void showHelp(UIResponse uiResponse)
     {
         Response help = uiResponse.createHelpResponse();
-        System.out.print(help.getMessage());
+        System.out.print(help.message());
     }
 }
