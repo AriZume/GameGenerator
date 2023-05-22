@@ -26,18 +26,18 @@ public class UIResponse
     public Response createMainMenuResponse(int optDesignPlay, int optQuickGame,int optLoad, int optHelp, int optExit) {
         // Change the color to rose gold
         return new Response("\033[38;2;255;192;203m" + "\n========================\n" + "\t\t  MENU" + "\n========================" +
-        resetColor + "\n"+ optDesignPlay + ". Design Game and Play\n" + optQuickGame + ". Quick Game\n" + optLoad + ". Load Game\n" + optHelp + ". Help\n" + optExit + ". Exit\n");
+        resetColor + "\n"+ optDesignPlay + ". New Game\n" + optQuickGame + ". Quick Game\n" + optLoad + ". Load Game\n" + optHelp + ". Help\n" + optExit + ". Exit\n");
     }
 
     public Response createDesignGameTitleResponse()
     {
         // Change the color to rose gold
-        return new Response("\033[38;2;255;192;203m\n"+"========================\n"+"\t  GAME DESIGN\n"+"========================"+ resetColor+"\n");
+        return new Response("\033[38;2;255;192;203m\n"+"========================\n"+"\t  GAME CREATION\n"+"========================"+ resetColor+"\n");
     }
 
     public Response createDescriptiveMapResponse(int playerPos, int boardSize)
     {
-        return new Response("\nYou are placed on tile " + playerPos + " of " + boardSize+"\n");
+        return new Response("\n" + "\033[1m" + "You are placed on tile " + playerPos + " of " + boardSize+"\n" + "\033[0m");
     }
 
     public Response createPlayerTurnResponse(String boardType, int lapsToWin, Player player, int playerIndex)
@@ -65,13 +65,13 @@ public class UIResponse
         return new Response("\n1. Roll Dice\n2. Save Game\n3. Exit\n");
     }
 
-    public Response createEndTurnResponse(ArrayList<Player> players,String boardType)
+    public Response createEndTurnResponse(ArrayList<Player> players,String boardType, int lapsToWin)
     {
         StringBuilder endOfTurn = new StringBuilder("\nEnd of turn.\n") ;
         for (Player p : players)
         {
             endOfTurn.append(p.getName());
-            if(boardType.equals(BoardType.CIRCULAR_BOARD.getDescription()))
+            if(boardType.equals(BoardType.CIRCULAR_BOARD.getDescription()) && lapsToWin == 0)
             {
                 endOfTurn.append(" (");
                 endOfTurn.append(p.getPoints());

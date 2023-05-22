@@ -17,7 +17,7 @@ public class Players
         this.currentPlayer = players.get(currentPlayerIndex);
     }
     public Players(ArrayList<String> loadPlayers, int loadPlayerIndex, ArrayList<String> loadPositions,
-                   ArrayList<String> loadLaps, ArrayList<String> loadPoints)
+                   ArrayList<String> loadPoints, ArrayList<String> loadLaps)
     {
         this.players = new ArrayList<>();
         for (String loadPlayer : loadPlayers)
@@ -56,13 +56,13 @@ public class Players
         return this.currentPlayerIndex;
     }
 
-    public void loadPlayerStats(ArrayList<String> playerPositions, ArrayList<String> playerLaps, ArrayList<String> playerPoints)
+    public void loadPlayerStats(ArrayList<String> playerPositions, ArrayList<String> playerPoints, ArrayList<String> playerLaps)
     {
         for (int i=0; i < players.size();i++)
         {
             players.get(i).setCurrentPosition(Integer.parseInt(playerPositions.get(i)));
-            players.get(i).setLap(Integer.parseInt(playerLaps.get(i)));
             players.get(i).setPoints(Integer.parseInt(playerPoints.get(i)));
+            players.get(i).setLap(Integer.parseInt(playerLaps.get(i)));
         }
     }
     public void shufflePlayers()

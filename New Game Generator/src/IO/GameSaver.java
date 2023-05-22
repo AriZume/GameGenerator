@@ -33,7 +33,7 @@ public class GameSaver
                 writer.write(player.getLap() + " ");
             }
 
-            writer.write("\nPlayerIndex: " + playerIndex + "\nBoardType: " + boardType + "\nCardsAndTiles.Cards.Tiles: " + tiles + "\nEnhancedTiles: " + enhancedTiles + "\nMaxPoints: " + maxPoints + "\nLapsToWin: " + laps + "\nDice: " + dice + "\n");
+            writer.write("\nPlayerIndex: " + playerIndex + "\nBoardType: " + boardType + "\nTiles: " + tiles + "\nEnhancedTiles: " + enhancedTiles + "\nMaxPoints: " + maxPoints + "\nLapsToWin: " + laps + "\nDice: " + dice + "\n");
             writer.close();
             saveResponse = "\nGame Saved!";
 

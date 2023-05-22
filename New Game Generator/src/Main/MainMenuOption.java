@@ -2,7 +2,7 @@ package Main;
 
 public enum MainMenuOption
 {
-    DESIGN_PLAY(1),
+    NEW_GAME(1),
     QUICK_GAME(2),
     LOAD(3),
     HELP(4),

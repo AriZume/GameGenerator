@@ -14,25 +14,17 @@ public class Game
     private final ArrayList<Integer> diceRolls;
     private final Players players;
     private final Board board;
-    private final UIResponse uiResponse = new UIResponse();
-    private final UserInputScreen userInputScreen = new UserInputScreen();
+    private final UIResponse uiResponse;
+    private final UserInputScreen userInputScreen;
 
-
-    // Constructor for new game
-    public Game(String boardType, int playerAm, int tileAm, int diceAm, int enTiles, int maxPoints, int lapsToWin)
-    {
-        this(boardType, playerAm, tileAm, diceAm, enTiles, maxPoints, 0,  lapsToWin,
-                null, null, null, null);
-    }
-
-    // Final constructor.
-    public Game(String boardType, int playerAm, int tileAm, int diceAm, int enTiles, int maxPoints, int loadedPlayerIndex,
-                 int lapsToWin, ArrayList<String> loadedNames,
-                ArrayList<String> loadedPositions, ArrayList<String> loadedLaps, ArrayList<String> loadedPoints)
+    Game(String boardType, int playerAm, int tileAm, int diceAm, int enTiles, int maxPoints, int lapsToWin,
+                int loadedPlayerIndex, ArrayList<String> loadedNames,
+                ArrayList<String> loadedPositions, ArrayList<String> loadedPoints, ArrayList<String> loadedLaps)
     {
         this.diceAmount = diceAm;
         this.board = new Board(tileAm, enTiles , maxPoints, boardType, lapsToWin);
         this.diceRolls = new ArrayList<>();
+
         this.isLoaded = (loadedNames != null && loadedPositions != null && loadedLaps !=null && loadedPoints != null);
         if(!isLoaded)
         {
@@ -40,8 +32,11 @@ public class Game
         }
         else
         {
-            this.players = new Players(loadedNames, loadedPlayerIndex, loadedPositions, loadedLaps, loadedPoints);
+            this.players = new Players(loadedNames, loadedPlayerIndex, loadedPositions, loadedPoints, loadedLaps);
         }
+
+        this.uiResponse = new UIResponse();
+        this.userInputScreen = new UserInputScreen();
     }
 
     private int getDiceRoll()
@@ -72,6 +67,7 @@ public class Game
         GameSaver saveGame = new GameSaver();
         Player currentPlayer = players.getCurrentPlayer();
         Response descriptiveMap, inGameMenu, playerTurn, saveResponse;
+
         boolean endGame = false;
         int userInput;
 
@@ -106,7 +102,7 @@ public class Game
                         {
                             System.out.print(response.message());
                         }
-                        Response endTurn = uiResponse.createEndTurnResponse(players.getPlayers(),board.getBoardType());
+                        Response endTurn = uiResponse.createEndTurnResponse(players.getPlayers(),board.getBoardType(), board.getLapsToWin());
                         System.out.print("\n" + endTurn.message());
                         break;
                     case SAVE:

@@ -2,7 +2,9 @@ package Game;
 
 import CardsAndTiles.Tiles.*;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class RandomPlacementStrategy implements TilePlacementStrategy {
     @Override
@@ -54,4 +56,5 @@ public class RandomPlacementStrategy implements TilePlacementStrategy {
             }
         }
     }
+
 }

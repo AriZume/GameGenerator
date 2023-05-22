@@ -1,5 +1,7 @@
 package IO;
 
+import Game.GameBuilder;
+import Game.Director;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -9,8 +11,10 @@ import Game.Game;
 
 public class GameLoader
 {
-    public Game  loadProgress()
+    public Game loadProgress()
     {
+        Director director = new Director();
+        GameBuilder builder = new GameBuilder();
         File saveFile = new File(SaveFile.SAVE_FILE.getPath());
 
         int tiles = 0, enhancedTiles = 0, maxPoints = 0, totalLaps = 0, dice = 0, playerIndex = 0;
@@ -91,8 +95,10 @@ public class GameLoader
                 }
             }
 
-            return new Game(boardType, playerNames.size(), tiles, dice, enhancedTiles, maxPoints, playerIndex,
-                     totalLaps, playerNames, playerPositions, playerLaps, playerPoints);
+            director.buildLoadedGame(builder, boardType, playerNames.size(), tiles, dice, enhancedTiles,
+                                  maxPoints, totalLaps, playerIndex, playerNames, playerPositions,
+                                  playerPoints, playerLaps);
+            return builder.build();
         }
         catch (FileNotFoundException e)
         {

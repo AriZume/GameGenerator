@@ -1,7 +1,6 @@
 package Main;
 
 import Game.Game;
-import Game.QuickGame;
 import IO.GameLoader;
 import UserInterface.*;
 
@@ -20,7 +19,7 @@ public class Main
         GameLoader loader = new GameLoader();
         UIResponse uiResponse = new UIResponse();
 
-        Response mainMenu = uiResponse.createMainMenuResponse(MainMenuOption.DESIGN_PLAY.getValue(), MainMenuOption.QUICK_GAME.getValue(),
+        Response mainMenu = uiResponse.createMainMenuResponse(MainMenuOption.NEW_GAME.getValue(), MainMenuOption.QUICK_GAME.getValue(),
                 MainMenuOption.LOAD.getValue(), MainMenuOption.HELP.getValue(), MainMenuOption.EXIT.getValue());
         System.out.print(mainMenu.message());
         while(true)
@@ -34,12 +33,12 @@ public class Main
             MainMenuOption userOption = MainMenuOption.values()[userInput - 1];
             switch (userOption)
             {
-                case DESIGN_PLAY:
+                case NEW_GAME:
                     Game newGame = gameSetupHelper.createNewGame(uiResponse, userInputScreen);
                     newGame.startGame();
                     break;
                 case QUICK_GAME:
-                    QuickGame quickGame = gameSetupHelper.createQuickGame(uiResponse, userInputScreen);
+                    Game quickGame = gameSetupHelper.createQuickGame(userInputScreen);
                     quickGame.startGame();
                     break;
                 case LOAD:

@@ -1,11 +1,11 @@
-Names: stelios kostas ddsadasdasdsa 
-CurrentPosition: 8 10 8 
-Points: 0 0 0 
-PlayerLaps: 2 2 1 
-PlayerIndex: 2
+Names: dsads kos 
+CurrentPosition: 9 3 
+Points: 0 0 
+PlayerLaps: 2 3 
+PlayerIndex: 1
 BoardType: Circular
-CardsAndTiles.Cards.Tiles: 15
-EnhancedTiles: 0
+Tiles: 15
+EnhancedTiles: 10
 MaxPoints: 0
-LapsToWin: 3
+LapsToWin: 4
 Dice: 1
