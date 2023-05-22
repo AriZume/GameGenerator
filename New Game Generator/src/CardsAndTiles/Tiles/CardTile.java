@@ -1,11 +1,11 @@
-package Tiles;
+package CardsAndTiles.Tiles;
 
 import java.util.*;
 
-import Cards.GainPointsCard;
-import Cards.LosePointsCard;
-import Cards.PlayAgainCard;
-import Cards.Card;
+import CardsAndTiles.Cards.Card;
+import CardsAndTiles.Cards.GainPointsCard;
+import CardsAndTiles.Cards.LosePointsCard;
+import CardsAndTiles.Cards.PlayAgainCard;
 import Game.Player;
 import UserInterface.Response;
 

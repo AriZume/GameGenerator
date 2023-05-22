@@ -1,4 +1,4 @@
-package Tiles;
+package CardsAndTiles.Tiles;
 
 import Game.Player;
 import UserInterface.Response;

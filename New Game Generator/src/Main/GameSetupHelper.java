@@ -2,6 +2,8 @@ package Main;
 
 import Game.Game;
 import Game.QuickGame;
+import Game.BoardType;
+import Game.QuickGameBuilder;
 import UserInterface.Response;
 import IO.GameLoader;
 import UserInterface.UIResponse;
@@ -19,15 +21,15 @@ public class GameSetupHelper
         Response designGameTitle = uiResponse.createDesignGameTitleResponse();
         System.out.print(designGameTitle.message());
 
-        boardType = userInputScreen.declareBoardType(EnumClass.InputRestriction.BOARD_TYPE.getMin(), EnumClass.InputRestriction.BOARD_TYPE.getMax());
-        playerAmount = userInputScreen.declarePlayerAmount(EnumClass.InputRestriction.PLAYER_AMOUNT.getMin(), EnumClass.InputRestriction.PLAYER_AMOUNT.getMax());
-        tileAmount = userInputScreen.declareTileAmount(EnumClass.InputRestriction.TILE_AMOUNT.getMin(), EnumClass.InputRestriction.TILE_AMOUNT.getMax());
-        diceAmount = userInputScreen.declareDiceAmount(EnumClass.InputRestriction.DICE_AMOUNT.getMin(), EnumClass.InputRestriction.DICE_AMOUNT.getMax());
+        boardType = userInputScreen.declareBoardType(InputRestriction.BOARD_TYPE.getMin(), InputRestriction.BOARD_TYPE.getMax());
+        playerAmount = userInputScreen.declarePlayerAmount(InputRestriction.PLAYER_AMOUNT.getMin(), InputRestriction.PLAYER_AMOUNT.getMax());
+        tileAmount = userInputScreen.declareTileAmount(InputRestriction.TILE_AMOUNT.getMin(), InputRestriction.TILE_AMOUNT.getMax());
+        diceAmount = userInputScreen.declareDiceAmount(InputRestriction.DICE_AMOUNT.getMin(), InputRestriction.DICE_AMOUNT.getMax());
 
         hasEnhanced = userInputScreen.declareEnhancedTiles("[yYnN]");
         if(hasEnhanced.matches("[Yy]"))
         {
-            enhancedTiles = userInputScreen.declareEnhancedTileAmount(EnumClass.InputRestriction.ENHANCED_TILE_AMOUNT.getMin(), tileAmount - EnumClass.InputRestriction.ENHANCED_TILE_AMOUNT.getMax());
+            enhancedTiles = userInputScreen.declareEnhancedTileAmount(InputRestriction.ENHANCED_TILE_AMOUNT.getMin(), tileAmount - InputRestriction.ENHANCED_TILE_AMOUNT.getMax());
         }
 
         if(boardType == BoardType.CIRCULAR_BOARD.getValue())
@@ -35,22 +37,38 @@ public class GameSetupHelper
             hasCards = userInputScreen.declareCards("[yYnN]");
             if(hasCards.matches("[Yy]"))
             {
-                maxPoints = userInputScreen.declareMaxPoints(EnumClass.InputRestriction.MAX_POINTS.getMin(), EnumClass.InputRestriction.MAX_POINTS.getMax());
+                maxPoints = userInputScreen.declareMaxPoints(InputRestriction.MAX_POINTS.getMin(), InputRestriction.MAX_POINTS.getMax());
             }
             else
             {
-                lapsToWins = userInputScreen.declareLapsToWin(EnumClass.InputRestriction.LAPS_TO_WIN.getMin(), EnumClass.InputRestriction.LAPS_TO_WIN.getMax());
+                lapsToWins = userInputScreen.declareLapsToWin(InputRestriction.LAPS_TO_WIN.getMin(), InputRestriction.LAPS_TO_WIN.getMax());
             }
         }
-        return new Game(playerAmount, tileAmount, diceAmount, enhancedTiles, maxPoints, BoardType.values()[boardType-1].getDescription(), lapsToWins);
+        return new Game(BoardType.values()[boardType-1].getDescription(), playerAmount, tileAmount, diceAmount, enhancedTiles, maxPoints,  lapsToWins);
     }
 
     public QuickGame createQuickGame(UIResponse uiResponse, UserInputScreen userInputScreen)
     {
-        int playerAmount, boardType;
-        boardType = userInputScreen.declareBoardType(EnumClass.InputRestriction.BOARD_TYPE.getMin(), EnumClass.InputRestriction.BOARD_TYPE.getMax());
-        playerAmount = userInputScreen.declarePlayerAmount(EnumClass.InputRestriction.PLAYER_AMOUNT.getMin(), EnumClass.InputRestriction.PLAYER_AMOUNT.getMax());
-        return new QuickGame(playerAmount, boardType);
+        int playerAmount, boardType, maxPoints;
+        QuickGameBuilder builder = new QuickGameBuilder();
+        boardType = userInputScreen.declareBoardType(InputRestriction.BOARD_TYPE.getMin(), InputRestriction.BOARD_TYPE.getMax());
+        playerAmount = userInputScreen.declarePlayerAmount(InputRestriction.PLAYER_AMOUNT.getMin(), InputRestriction.PLAYER_AMOUNT.getMax());
+        if(boardType == BoardType.SQUARE_BOARD.getValue())
+        {
+            maxPoints = 0;
+        }
+        else
+        {
+            maxPoints = 1000;
+        }
+        return builder.boardType(BoardType.values()[boardType-1].getDescription())
+                .playerAm(playerAmount)
+                .tileAm(25)
+                .diceAm(1)
+                .enTiles(10)
+                .maxPoints(maxPoints)
+                .lapsToWin(0)
+                .build();
     }
 
     public Game loadGame(GameLoader loader)

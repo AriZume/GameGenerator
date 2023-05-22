@@ -6,13 +6,12 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import Game.Game;
-import Main.EnumClass;
 
 public class GameLoader
 {
     public Game  loadProgress()
     {
-        File saveFile = new File(EnumClass.SaveFile.SAVE_FILE.getPath());
+        File saveFile = new File(SaveFile.SAVE_FILE.getPath());
 
         int tiles = 0, enhancedTiles = 0, maxPoints = 0, totalLaps = 0, dice = 0, playerIndex = 0;
         ArrayList<String> playerNames = new ArrayList<>();
@@ -92,8 +91,8 @@ public class GameLoader
                 }
             }
 
-            return new Game(playerNames.size(), tiles, dice, enhancedTiles, maxPoints, playerIndex,
-                    boardType, totalLaps, playerNames, playerPositions, playerLaps, playerPoints);
+            return new Game(boardType, playerNames.size(), tiles, dice, enhancedTiles, maxPoints, playerIndex,
+                     totalLaps, playerNames, playerPositions, playerLaps, playerPoints);
         }
         catch (FileNotFoundException e)
         {

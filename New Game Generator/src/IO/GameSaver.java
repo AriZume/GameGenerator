@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import Game.Player;
-import Main.EnumClass;
 import UserInterface.Response;
 
 public class GameSaver
@@ -13,7 +12,7 @@ public class GameSaver
     public Response saveProgress(ArrayList <Player> players, String boardType, int tiles, int maxPoints, int laps, int dice, int enhancedTiles, int playerIndex) {
         String saveResponse;
         try{
-            FileWriter writer = new FileWriter(EnumClass.SaveFile.SAVE_FILE.getName());
+            FileWriter writer = new FileWriter(SaveFile.SAVE_FILE.getName());
             writer.write("Names: ");
             for (Player player : players) {
                 writer.write(player.getName() + " ");
@@ -34,7 +33,7 @@ public class GameSaver
                 writer.write(player.getLap() + " ");
             }
 
-            writer.write("\nPlayerIndex: " + playerIndex + "\nBoardType: " + boardType + "\nTiles: " + tiles + "\nEnhancedTiles: " + enhancedTiles + "\nMaxPoints: " + maxPoints + "\nLapsToWin: " + laps + "\nDice: " + dice + "\n");
+            writer.write("\nPlayerIndex: " + playerIndex + "\nBoardType: " + boardType + "\nCardsAndTiles.Cards.Tiles: " + tiles + "\nEnhancedTiles: " + enhancedTiles + "\nMaxPoints: " + maxPoints + "\nLapsToWin: " + laps + "\nDice: " + dice + "\n");
             writer.close();
             saveResponse = "\nGame Saved!";
 

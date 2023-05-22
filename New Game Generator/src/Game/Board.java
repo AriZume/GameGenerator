@@ -2,7 +2,9 @@ package Game;
 
 import java.util.*;
 
-import Tiles.*;
+import CardsAndTiles.Tiles.CardTile;
+import CardsAndTiles.Tiles.SimpleTile;
+import CardsAndTiles.Tiles.Tile;
 import UserInterface.Response;
 import WinningConditions.*;
 

@@ -1,4 +1,4 @@
-package Tiles;
+package CardsAndTiles.Tiles;
 
 import java.util.Random;
 

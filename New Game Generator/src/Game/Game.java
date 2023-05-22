@@ -2,8 +2,8 @@ package Game;
 
 import java.util.*;
 
-import Main.EnumClass;
-import Tiles.Tile;
+import Main.InputRestriction;
+import CardsAndTiles.Tiles.Tile;
 import UserInterface.*;
 import IO.GameSaver;
 
@@ -17,16 +17,17 @@ public class Game
     private final UIResponse uiResponse = new UIResponse();
     private final UserInputScreen userInputScreen = new UserInputScreen();
 
+
     // Constructor for new game
-    public Game(int playerAm, int tileAm, int diceAm, int enTiles, int maxPoints, String boardType, int lapsToWin)
+    public Game(String boardType, int playerAm, int tileAm, int diceAm, int enTiles, int maxPoints, int lapsToWin)
     {
-        this(playerAm, tileAm, diceAm, enTiles, maxPoints, 0, boardType, lapsToWin,
+        this(boardType, playerAm, tileAm, diceAm, enTiles, maxPoints, 0,  lapsToWin,
                 null, null, null, null);
     }
 
     // Final constructor.
-    public Game(int playerAm, int tileAm, int diceAm, int enTiles, int maxPoints, int loadedPlayerIndex,
-                String boardType, int lapsToWin, ArrayList<String> loadedNames,
+    public Game(String boardType, int playerAm, int tileAm, int diceAm, int enTiles, int maxPoints, int loadedPlayerIndex,
+                 int lapsToWin, ArrayList<String> loadedNames,
                 ArrayList<String> loadedPositions, ArrayList<String> loadedLaps, ArrayList<String> loadedPoints)
     {
         this.diceAmount = diceAm;
@@ -93,9 +94,9 @@ public class Game
             System.out.print(playerTurn.message() + descriptiveMap.message() + inGameMenu.message());
             do
             {
-                userInput = userInputScreen.checkUserInput(EnumClass.InputRestriction.GAME_MENU.getMin(), EnumClass.InputRestriction.GAME_MENU.getMax());
+                userInput = userInputScreen.checkUserInput(InputRestriction.GAME_MENU.getMin(), InputRestriction.GAME_MENU.getMax());
 
-                EnumClass.InGameMenuOption userOption = EnumClass.InGameMenuOption.values()[userInput - 1];
+                InGameMenuOption userOption = InGameMenuOption.values()[userInput - 1];
                 switch(userOption)
                 {
                     case ROLL:

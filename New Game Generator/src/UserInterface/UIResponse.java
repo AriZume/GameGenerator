@@ -71,14 +71,15 @@ public class UIResponse
         for (Player p : players)
         {
             endOfTurn.append(p.getName());
-            endOfTurn.append(" is on tile ");
-            endOfTurn.append(p.getCurrentPosition());
             if(boardType.equals(BoardType.CIRCULAR_BOARD.getDescription()))
             {
-                endOfTurn.append(" and has ");
+                endOfTurn.append(" (");
                 endOfTurn.append(p.getPoints());
-                endOfTurn.append(" points. ");
+                endOfTurn.append(" points) ");
             }
+            endOfTurn.append(" is on tile ");
+            endOfTurn.append(p.getCurrentPosition());
+
             endOfTurn.append("\n");
         }
         return new Response(endOfTurn.toString());

@@ -20,18 +20,18 @@ public class Main
         GameLoader loader = new GameLoader();
         UIResponse uiResponse = new UIResponse();
 
-        Response mainMenu = uiResponse.createMainMenuResponse(EnumClass.MainMenuOption.DESIGN_PLAY.getValue(), EnumClass.MainMenuOption.QUICK_GAME.getValue(),
-                EnumClass.MainMenuOption.LOAD.getValue(), EnumClass.MainMenuOption.HELP.getValue(), EnumClass.MainMenuOption.EXIT.getValue());
+        Response mainMenu = uiResponse.createMainMenuResponse(MainMenuOption.DESIGN_PLAY.getValue(), MainMenuOption.QUICK_GAME.getValue(),
+                MainMenuOption.LOAD.getValue(), MainMenuOption.HELP.getValue(), MainMenuOption.EXIT.getValue());
         System.out.print(mainMenu.message());
         while(true)
         {
-            userInput = userInputScreen.checkUserInput(EnumClass.InputRestriction.MAIN_MENU.getMin(), EnumClass.InputRestriction.MAIN_MENU.getMax());
+            userInput = userInputScreen.checkUserInput(InputRestriction.MAIN_MENU.getMin(), InputRestriction.MAIN_MENU.getMax());
 
-            if(userInput == EnumClass.MainMenuOption.EXIT.getValue())
+            if(userInput == MainMenuOption.EXIT.getValue())
             {
                 break;
             }
-            EnumClass.MainMenuOption userOption = EnumClass.MainMenuOption.values()[userInput - 1];
+            MainMenuOption userOption = MainMenuOption.values()[userInput - 1];
             switch (userOption)
             {
                 case DESIGN_PLAY:

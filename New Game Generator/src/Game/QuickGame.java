@@ -2,9 +2,9 @@ package Game;
 
 public class QuickGame extends Game
 {
-    public QuickGame(int playerAmount, int boardType)
+    QuickGame(QuickGameBuilder builder)
     {
-        super(playerAmount, 25, 1, 10, 1500, BoardType.values()[boardType-1].getDescription(), 0);
+        super(builder.boardType, builder.playerAm, builder.tileAm, builder.diceAm, builder.enTiles, builder.maxPoints, builder.lapsToWin);
     }
 
     @Override

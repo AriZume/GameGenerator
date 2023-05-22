@@ -1,9 +1,9 @@
 package Game;
 
-import Tiles.BackwardTile;
-import Tiles.ForwardTile;
-import Tiles.LoseTurnTile;
-import Tiles.Tile;
+import CardsAndTiles.Tiles.BackwardTile;
+import CardsAndTiles.Tiles.ForwardTile;
+import CardsAndTiles.Tiles.LoseTurnTile;
+import CardsAndTiles.Tiles.Tile;
 
 import java.util.ArrayList;
 import java.util.Collections;
