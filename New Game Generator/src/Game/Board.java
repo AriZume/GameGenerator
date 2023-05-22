@@ -18,6 +18,7 @@ public class Board
     private int enhancedTiles = 0;
     private TilePlacementStrategy tilePlacementStrategy = new RandomPlacementStrategy();
 
+
     public Board(int tileAmount, int enTiles, int maxPoints, String boardType, int lapsToWin)
     {
         this.maxPoints = maxPoints;
@@ -70,23 +71,13 @@ public class Board
     {
         enhancedTiles = enTiles;
         tilePlacementStrategy.placeTiles(enTiles,tiles);
+
     }
 
     // Generates a fair amount of card tiles depending on the board size.
     private void generateCardTiles(int maxPoints)
     {
-        int maxAmountOfCardTiles = (tiles.size() / 5), cardTilePositionCurrent = 0;
-        int cardTilePositionPrevious = cardTilePositionCurrent;
-
-        if(maxPoints != 0)
-        {
-            for (int cardTile = 0; cardTile < maxAmountOfCardTiles; cardTile++)
-            {
-                cardTilePositionCurrent = (cardTilePositionPrevious + ((tiles.size() - cardTilePositionPrevious) / (maxAmountOfCardTiles - cardTile)));
-                tiles.set(((cardTilePositionCurrent + cardTilePositionPrevious) / 2), new CardTile(maxPoints));
-                cardTilePositionPrevious = cardTilePositionCurrent;
-            }
-        }
+        tilePlacementStrategy.placeCardTiles(maxPoints, tiles);
     }
 
 

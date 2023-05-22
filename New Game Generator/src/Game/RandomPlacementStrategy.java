@@ -1,13 +1,8 @@
 package Game;
 
-import CardsAndTiles.Tiles.BackwardTile;
-import CardsAndTiles.Tiles.ForwardTile;
-import CardsAndTiles.Tiles.LoseTurnTile;
-import CardsAndTiles.Tiles.Tile;
+import CardsAndTiles.Tiles.*;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class RandomPlacementStrategy implements TilePlacementStrategy {
     @Override
@@ -39,6 +34,23 @@ public class RandomPlacementStrategy implements TilePlacementStrategy {
                 {
                     tiles.set(j, new ForwardTile());
                 }
+            }
+        }
+    }
+
+    @Override
+    public void placeCardTiles(int maxPoints, List<Tile> tiles)
+    {
+        int maxAmountOfCardTiles = (tiles.size() / 5), cardTilePositionCurrent = 0;
+        int cardTilePositionPrevious = cardTilePositionCurrent;
+
+        if(maxPoints != 0)
+        {
+            for (int cardTile = 0; cardTile < maxAmountOfCardTiles; cardTile++)
+            {
+                cardTilePositionCurrent = (cardTilePositionPrevious + ((tiles.size() - cardTilePositionPrevious) / (maxAmountOfCardTiles - cardTile)));
+                tiles.set(((cardTilePositionCurrent + cardTilePositionPrevious) / 2), new CardTile(maxPoints));
+                cardTilePositionPrevious = cardTilePositionCurrent;
             }
         }
     }
