@@ -24,8 +24,7 @@ public class CardTile implements Tile
     public Response updatePlayerStatus(Player player)
     {
         Random random = new Random();
-        int cardIndex = random.nextInt(cards.length);
-        Card card = cards[cardIndex];
+        Card card = cards[random.nextInt(cards.length)];
 
         Response response = card.getCardStatus(player, maxPoints);
          return new Response("\n" + "\033[34m" + "You landed on a tile that provides you a card\n"+ "\033[0m" + response.message());

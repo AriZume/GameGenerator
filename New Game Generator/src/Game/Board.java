@@ -2,9 +2,7 @@ package Game;
 
 import java.util.*;
 
-import CardsAndTiles.Tiles.CardTile;
-import CardsAndTiles.Tiles.SimpleTile;
-import CardsAndTiles.Tiles.Tile;
+import CardsAndTiles.Tiles.*;
 import UserInterface.Response;
 import WinningConditions.*;
 
@@ -59,13 +57,6 @@ public class Board
         return enhancedTiles;
     }
 
-    // Initializes the position of the enhanced tiles.
-    // Creates a temporary list containing the index(integer) of each tile except the first(0)
-    // and the last(tiles.size()-1) index.
-    // Shuffles the temp list to create a random selection.The first third of the enTiles indexes from the temp list are
-    // selected to be the turn loss enhanced tiles, the next third are going to be the backward enhanced tiles
-    // and the rest will be the forward enhanced tiles.
-    // Replaces the corresponding index's with the enhanced one's.
     private void generateEnhancedTiles(int enTiles)
     {
         enhancedTiles = enTiles;
@@ -85,11 +76,9 @@ public class Board
 
         player.setPersonalRoll(diceRoll);
         player.setNewPosition(player.getPersonalRoll());
-
         responses.add(checkPlayerPosition(player));
         responses.add(getTiles().get(player.getCurrentPosition()-1).updatePlayerStatus(player));
         responses.add(checkPlayerPosition(player));
-
         // If the player's position is changed by an enhanced tile and the player lands on a card tile,
         // execute card's updatePlayerStatus. After the action reset player's isFromEnhanced to false.
         responses.add(getTiles().get(player.getCurrentPosition() - 1).fromEnhanced(player));
@@ -131,7 +120,7 @@ public class Board
             rewardMessage = "";
         }
 
-        player.setNewPoints(lapCompletionRewardValue); // Set points awarded to the player when completing a lap.
+        player.setNewPoints(getMaxPoints() / 10); // Set points awarded to the player when completing a lap.
         return new Response(rewardMessage);
     }
 
